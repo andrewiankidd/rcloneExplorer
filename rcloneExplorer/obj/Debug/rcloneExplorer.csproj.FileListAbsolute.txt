@@ -1,0 +1,10 @@
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\bin\Debug\rcloneExplorer.exe.config
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\bin\Debug\rcloneExplorer.exe
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\bin\Debug\rcloneExplorer.pdb
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.csprojResolveAssemblyReference.cache
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.Properties.Resources.resources
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.csproj.GenerateResource.Cache
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.exe
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.pdb
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.rcloneExplorer.resources
+c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.rcloneSplash.resources
