@@ -31,6 +31,7 @@
       this.lstExplorer = new System.Windows.Forms.ListView();
       this.colfileBytes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.colfileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.colModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.colfilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.txtRawOut = new System.Windows.Forms.TextBox();
       this.lblFooter = new System.Windows.Forms.Label();
@@ -58,6 +59,7 @@
       this.lstExplorer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colfileBytes,
             this.colfileSize,
+            this.colModified,
             this.colfilePath});
       this.lstExplorer.FullRowSelect = true;
       this.lstExplorer.Location = new System.Drawing.Point(0, 0);
@@ -70,12 +72,16 @@
       // 
       // colfileBytes
       // 
-      this.colfileBytes.Text = "colfileBytes";
-      this.colfileBytes.Width = 0;
+      this.colfileBytes.Text = "File Size (Bytes)";
+      this.colfileBytes.Width = 70;
       // 
       // colfileSize
       // 
       this.colfileSize.Text = "File Size";
+      // 
+      // colModified
+      // 
+      this.colModified.Text = "Modified";
       // 
       // colfilePath
       // 
@@ -166,7 +172,7 @@
       this.tabDownloads.Location = new System.Drawing.Point(4, 22);
       this.tabDownloads.Name = "tabDownloads";
       this.tabDownloads.Padding = new System.Windows.Forms.Padding(3);
-      this.tabDownloads.Size = new System.Drawing.Size(559, 309);
+      this.tabDownloads.Size = new System.Drawing.Size(559, 293);
       this.tabDownloads.TabIndex = 1;
       this.tabDownloads.Text = "Downloads";
       this.tabDownloads.UseVisualStyleBackColor = true;
@@ -234,6 +240,7 @@
     private System.Windows.Forms.ListView lstDownloads;
     private System.Windows.Forms.ColumnHeader colProgress;
     private System.Windows.Forms.ColumnHeader colDownloadPath;
+    private System.Windows.Forms.ColumnHeader colModified;
   }
 }
 

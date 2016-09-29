@@ -30,6 +30,7 @@
     {
       this.lblSplashTitle = new System.Windows.Forms.Label();
       this.lblSplashText = new System.Windows.Forms.Label();
+      this.lblVersionInfo = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // lblSplashTitle
@@ -57,16 +58,28 @@
       this.lblSplashText.TabIndex = 1;
       this.lblSplashText.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
       // 
+      // lblVersionInfo
+      // 
+      this.lblVersionInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+      this.lblVersionInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+      this.lblVersionInfo.Location = new System.Drawing.Point(0, 200);
+      this.lblVersionInfo.Name = "lblVersionInfo";
+      this.lblVersionInfo.Size = new System.Drawing.Size(300, 23);
+      this.lblVersionInfo.TabIndex = 2;
+      this.lblVersionInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
       // rcloneSplash
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(300, 300);
+      this.Controls.Add(this.lblVersionInfo);
       this.Controls.Add(this.lblSplashText);
       this.Controls.Add(this.lblSplashTitle);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "rcloneSplash";
       this.Text = "rcloneSplash";
+      this.TopMost = true;
       this.ResumeLayout(false);
 
     }
@@ -75,5 +88,6 @@
 
     private System.Windows.Forms.Label lblSplashTitle;
     private System.Windows.Forms.Label lblSplashText;
+    private System.Windows.Forms.Label lblVersionInfo;
   }
 }

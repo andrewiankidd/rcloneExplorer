@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace rcloneExplorer
@@ -6,11 +7,15 @@ namespace rcloneExplorer
   public partial class rcloneSplash : Form
   {
     private Timer splashTimer;
+    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+
     public rcloneSplash()
     {
       InitializeComponent();
       this.CenterToScreen();
       this.Visible = true;
+      lblVersionInfo.Text = fvi.ProductName + " v" + fvi.ProductVersion;
       initTimer();   
     }
     

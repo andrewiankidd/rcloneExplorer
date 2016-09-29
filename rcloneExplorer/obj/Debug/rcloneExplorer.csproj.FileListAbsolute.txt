@@ -8,3 +8,8 @@ c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplo
 c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.pdb
 c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.rcloneExplorer.resources
 c:\users\andrew\documents\visual studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.rcloneSplash.resources
+C:\Users\Andrew\Documents\Visual Studio 2015\Projects\rcloneExplorer\rcloneExplorer\bin\Debug\rcloneExplorer.exe.manifest
+C:\Users\Andrew\Documents\Visual Studio 2015\Projects\rcloneExplorer\rcloneExplorer\bin\Debug\rcloneExplorer.application
+C:\Users\Andrew\Documents\Visual Studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.TrustInfo.xml
+C:\Users\Andrew\Documents\Visual Studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.exe.manifest
+C:\Users\Andrew\Documents\Visual Studio 2015\Projects\rcloneExplorer\rcloneExplorer\obj\Debug\rcloneExplorer.application

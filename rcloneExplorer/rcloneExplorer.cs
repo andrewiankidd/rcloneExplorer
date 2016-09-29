@@ -43,9 +43,10 @@ namespace rcloneExplorer
       this.Visible = false;
       this.CenterToScreen();
       InitializeComponent();
-      lstExplorer.Columns[1].Width = 0;
+      lstExplorer.Columns[0].Width = 0;
       lstExplorer.Columns[2].Width = -2;
-      lstExplorer.Sort();
+      lstExplorer.Columns[3].Width = -2;
+      lstDownloads.Columns[1].Width = -2;
       //run rclone for the first time to get a list of files
       rcloneInit();
     }
@@ -60,7 +61,7 @@ namespace rcloneExplorer
         Environment.Exit(0);
       }
       //populate the listview with results
-      populatelstExplorer(internalExec("/c rclone.exe ls " + remoteConnectionName + ":"));
+      populatelstExplorer(internalExec("/c rclone.exe lsl " + remoteConnectionName + ":"));
       //set console text
       txtRawOut.Text = consoletxt;
       //show total filesize in footer
@@ -119,22 +120,24 @@ namespace rcloneExplorer
       foreach (string item in files)
       {
         //split entry into filesize and path
-        List<string> temp = item.TrimStart().Split(new string[] { " " }, 2, StringSplitOptions.None).ToList();
+        List<string> temp = item.TrimStart().Split(new string[] { " " }, 4, StringSplitOptions.None).ToList();
 
         string fileBytes = temp[0];
         string fileHuman = BytesToString(Convert.ToInt64(temp[0]));
-        string filePath = temp[1];
-        
+        string fileDate = temp[1];
+        string filetime = temp[2].Remove(temp[2].Length - 10);
+        string filePath = temp[3];
+
 
         if (filePath.Contains("/"))
         {
-          string thedir = temp[1].Split('/').ToList()[0];
+          string thedir = filePath.Split('/').ToList()[0];
           if (!fileDirList.Contains(thedir))
           {
             //note that this dir is saved
             fileDirList.Add(thedir);
             //create array
-            string[] temprow = new string[] { "0", "<dir>", thedir };
+            string[] temprow = new string[] { "0", "<dir>", fileDate + " " + filetime, thedir };
             //insert
             lstExplorer.Items.Add(new ListViewItem(temprow));
           }
@@ -146,19 +149,15 @@ namespace rcloneExplorer
         else
         {
           //this is a file not a dir, make array
-          string[] temprow = new string[] { fileBytes, fileHuman, filePath };
+          string[] temprow = new string[] { fileBytes, fileHuman, fileDate + " " + filetime, filePath };
           //insert
           lstExplorer.Items.Add(new ListViewItem(temprow));
         }
-
-
 
         //keep count of total filesize
         totalFilesize += Convert.ToInt64(fileBytes);
         
       }
-      //resize columns to fit
-      lstExplorer.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
     }
 
     static String BytesToString(long byteCount)
@@ -184,7 +183,7 @@ namespace rcloneExplorer
       if (storedFilesizeHuman == "<dir>")
       {
         remoteCD = storedFilepath + "/";
-        populatelstExplorer(internalExec("/c rclone.exe ls " + remoteConnectionName + ":" + remoteCD + "/"));
+        populatelstExplorer(internalExec("/c rclone.exe lsl " + remoteConnectionName + ":" + remoteCD + "/"));
         //set window title
         Form.ActiveForm.Text = remoteCD;
       }
@@ -192,7 +191,7 @@ namespace rcloneExplorer
       {
         //seperate directories in string, rebuild array without last two, join back to string
         remoteCD = String.Join(" ", remoteCD.Split('/').Take(remoteCD.Split('/').Count() - 2).ToArray());
-        populatelstExplorer(internalExec("/c rclone.exe ls " + remoteConnectionName + ":" + remoteCD + "/"));
+        populatelstExplorer(internalExec("/c rclone.exe lsl " + remoteConnectionName + ":" + remoteCD + "/"));
         //set window title
         Form.ActiveForm.Text = remoteCD;
       }
@@ -274,7 +273,6 @@ namespace rcloneExplorer
         Console.WriteLine("download finished before ticker could get to it");
       }
 
-      lstDownloads.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
 
     }
