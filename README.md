@@ -1,7 +1,7 @@
 # rcloneExplorer
 ![](http://i.imgur.com/T4We4ZK.png)
 
-Crappy windows rclone GUI/Wrapper for windows
+Crappy rclone GUI for Windows
   		  
 ![screenshot](http://i.imgur.com/fzF64a3.gif "screenshot")
 
