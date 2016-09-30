@@ -3,7 +3,7 @@
 
 Crappy windows rclone GUI/Wrapper
   		  
-![screenshot](http://i.imgur.com/dJ2x4vb.png "screenshot")
+![screenshot](http://i.imgur.com/fzF64a3.gif "screenshot")
 
 
 runs rclone commands and displays output based on the results
