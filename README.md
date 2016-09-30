@@ -1,19 +1,19 @@
-# rcloneExplorer
-![](http://i.imgur.com/T4We4ZK.png)
+#rcloneExplorer ![](http://i.imgur.com/T4We4ZK.png) 
 
 Crappy rclone GUI for Windows
-  		  
-![screenshot](http://i.imgur.com/fzF64a3.gif "screenshot")
+Runs rclone commands and displays output based on the results
 
-
-runs rclone commands and displays output based on the results
+##Screenshot:
+<p align="center">
+  <img src="http://i.imgur.com/wTQ1jcw.gif"/>
+</p>
 
 ##Usage
 1. Have a working rclone config on machine
 2. have rclone.exe in working directory
 3. run rcloneExplorer.exe
 
-##How it works
+##Features/How it works
 ###listing files
 1. Sends an rclone lsl command to a hidden cmd window and redirects output back to itself
 2. processes the input into files and directories
