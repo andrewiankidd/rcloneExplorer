@@ -28,12 +28,12 @@ Runs rclone commands and displays output based on the results
 2. when the cancel is requested the download process is killed
 3. after the process is killed the local file is deleted as it would be broken
 
-###quit (cancel transfers)
+###quit (continue transfers)
+1. simply closes the GUI application
+2. all background processes will still run
+
+###quit
 1. scans through all stored process ID's
 2. checks if they are still active
 3. kills them if they are
 4. this method doesnt cleanup broken files (yet)
-
-###quit (continue transfers)
-1. simply closes the GUI application
-2. all background processes will still run
