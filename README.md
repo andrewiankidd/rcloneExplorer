@@ -12,3 +12,24 @@ runs rclone commands and displays output based on the results
 1. Have a working rclone config on machine
 2. have rclone.exe in working directory
 3. run rcloneExplorer.exe
+
+##How it works
+###listing files
+1. Sends an rclone lsl command to a hidden cmd window and redirects output back to itself
+2. processes the input into files and directories
+3. displays them in a list view
+###downloading files
+4. when a file is selected it sends an rclone copy command to copy the file from remote to local
+5. periodically checks the filesize of the saved file, compares it against the remote file and shows a percentage
+####cancelling files
+1. when the download is started the process ID is stored
+2. when the cancel is requested the download process is killed
+3. after the process is killed the local file is deleted as it would be broken
+###quit (cancel transfers)
+1. scans through all stored process ID's
+2. checks if they are still active
+3. kills them if they are
+4. this method doesnt cleanup broken files (yet)
+###quit (continue transfers)
+1. simply closes the GUI application
+2. all background processes will still run
