@@ -30,7 +30,7 @@ namespace rcloneExplorer
     private void splashTimer_Tick(object sender, EventArgs e)
     {
       if (rcloneExplorer.loaded) { this.Close(); }
-      if (lblSplashText.Text == " .  .  . ") { lblSplashText.Text = ""; }
+      if (lblSplashText.Text == " .  .  .  .  . ") { lblSplashText.Text = ""; }
       lblSplashText.Text = lblSplashText.Text + " . ";
     }
   }

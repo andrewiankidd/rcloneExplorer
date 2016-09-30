@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rcloneExplorer));
       this.lstExplorer = new System.Windows.Forms.ListView();
       this.colfileBytes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.colfileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -38,6 +39,8 @@
       this.lblFooter = new System.Windows.Forms.Label();
       this.menuStrip = new System.Windows.Forms.MenuStrip();
       this.menuStripFile = new System.Windows.Forms.ToolStripMenuItem();
+      this.quitKillTransfersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStripView = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStripToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
       this.tabMainUI = new System.Windows.Forms.TabControl();
@@ -127,9 +130,26 @@
       // 
       // menuStripFile
       // 
+      this.menuStripFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.quitKillTransfersToolStripMenuItem,
+            this.quitToolStripMenuItem});
       this.menuStripFile.Name = "menuStripFile";
       this.menuStripFile.Size = new System.Drawing.Size(39, 21);
       this.menuStripFile.Text = "File";
+      // 
+      // quitKillTransfersToolStripMenuItem
+      // 
+      this.quitKillTransfersToolStripMenuItem.Name = "quitKillTransfersToolStripMenuItem";
+      this.quitKillTransfersToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+      this.quitKillTransfersToolStripMenuItem.Text = "Quit (Kill Transfers)";
+      this.quitKillTransfersToolStripMenuItem.Click += new System.EventHandler(this.quitKillTransfersToolStripMenuItem_Click);
+      // 
+      // quitToolStripMenuItem
+      // 
+      this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+      this.quitToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+      this.quitToolStripMenuItem.Text = "Quit (Keep Transfers)";
+      this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
       // 
       // menuStripView
       // 
@@ -211,12 +231,12 @@
       this.ctxtDownloadContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctxtDownloadContext_Cancel});
       this.ctxtDownloadContext.Name = "ctxtDownloadContext";
-      this.ctxtDownloadContext.Size = new System.Drawing.Size(153, 48);
+      this.ctxtDownloadContext.Size = new System.Drawing.Size(115, 26);
       // 
       // ctxtDownloadContext_Cancel
       // 
       this.ctxtDownloadContext_Cancel.Name = "ctxtDownloadContext_Cancel";
-      this.ctxtDownloadContext_Cancel.Size = new System.Drawing.Size(152, 22);
+      this.ctxtDownloadContext_Cancel.Size = new System.Drawing.Size(114, 22);
       this.ctxtDownloadContext_Cancel.Text = "Cancel";
       this.ctxtDownloadContext_Cancel.Click += new System.EventHandler(this.ctxtDownloadContext_Cancel_Click);
       // 
@@ -229,6 +249,7 @@
       this.Controls.Add(this.lblFooter);
       this.Controls.Add(this.txtRawOut);
       this.Controls.Add(this.menuStrip);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip;
       this.Name = "rcloneExplorer";
       this.Text = "rcloneExplorer";
@@ -264,6 +285,8 @@
     private System.Windows.Forms.ColumnHeader colModified;
     private System.Windows.Forms.ContextMenuStrip ctxtDownloadContext;
     private System.Windows.Forms.ToolStripMenuItem ctxtDownloadContext_Cancel;
+    private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem quitKillTransfersToolStripMenuItem;
   }
 }
 

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Management;
 
@@ -13,32 +12,54 @@ namespace rcloneExplorer
   {
     string[] files;
     string consoletxt;
+    IniFile iniSettings;
+    string remoteCD = "";
     long totalFilesize = 0;
     public static bool loaded = false;
     private System.Windows.Forms.Timer downloadTimer;
     List<String[]> downloading = new List<String[]>();
     List<String[]> downloadPID = new List<String[]>();
-    string remoteCD = "";
-    string remoteConnectionName = "";
 
     public rcloneExplorer()
     {
+
+      string inipath = Application.ExecutablePath.Remove(Application.ExecutablePath.Length - 4) + ".ini";
+      if (System.IO.File.Exists(inipath))
+      {
+        //config found, checking for settings
+        iniSettings = new IniFile();
+ 
+        if (string.IsNullOrEmpty(iniSettings.Read("rcloneRemote")))
+        {
+          MessageBox.Show("Incorrect config\r\n\r\nPlease add an rclone remote Name to the config ini");
+          Process.Start("cmd.exe", "/c rclone config");
+          Process.Start("notepad.exe", inipath);
+          Environment.Exit(0);
+        }
+        else
+        {
+          //config seems ok so read config settings
+          iniSettings.Read("rcloneRemote");
+        }
+      }
+      else
+      {
+        //file not found!
+        iniSettings = new IniFile();
+        iniSettings.Write("rcloneRemote", "");
+        iniSettings.Write("rcloneVerbose", "false");
+        MessageBox.Show("No ini file found!\r\n\r\nPlease add an rclone remote Name to the config ini");
+        Process.Start("cmd.exe", "/c rclone config");
+        Process.Start("notepad.exe", inipath);
+        Environment.Exit(0);
+      }
+
       //start the splashscreen in a background thread so the main form can work away
       new Thread(() =>
       {
         Application.Run(new rcloneSplash());
       }).Start();
 
-      if (System.IO.File.Exists("rcloneExplorer.ini"))
-      {
-        //config found, reading remote name
-        remoteConnectionName = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "\\rcloneExplorer.ini");
-      }else
-      {
-        //file not found!
-        MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory + "\\rcloneExplorer.ini \r\nfile not found!");
-        Environment.Exit(0);
-      }
 
       //hide the main window and do some minor UI adjustments
       this.Visible = false;
@@ -62,7 +83,7 @@ namespace rcloneExplorer
         Environment.Exit(0);
       }
       //populate the listview with results
-      populatelstExplorer(internalExec("lsl", remoteConnectionName + ":"));
+      populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":"));
       //set console text
       txtRawOut.Text = consoletxt;
       //show total filesize in footer
@@ -75,11 +96,18 @@ namespace rcloneExplorer
 
     private string internalExec(string command, string arguments)
     {
+
+      string rcloneLogs = "";
+      //check for verbose logging
+      if (iniSettings.Read("rcloneVerbose")=="true")
+      {
+        rcloneLogs = " --log-file logfile.log --verbose";
+      }
+
       //set up cmd to call rclone
       Process process = new Process();
       process.StartInfo.FileName = "cmd.exe";
-      //TODO set logging so verbose has to be true in config to display here
-      process.StartInfo.Arguments = "/c rclone.exe " + command + " " + arguments + " --log-file logfile.log --verbose";
+      process.StartInfo.Arguments = "/c rclone.exe " + command + " " + arguments + rcloneLogs;
       process.StartInfo.CreateNoWindow = true;
       process.StartInfo.UseShellExecute = false;
       process.StartInfo.RedirectStandardError = true;
@@ -130,6 +158,7 @@ namespace rcloneExplorer
         //split entry into filesize and path
         List<string> temp = item.TrimStart().Split(new string[] { " " }, 4, StringSplitOptions.None).ToList();
 
+        //organize stored/remote information
         string fileBytes = temp[0];
         string fileHuman = BytesToString(Convert.ToInt64(temp[0]));
         string fileDate = temp[1];
@@ -168,6 +197,12 @@ namespace rcloneExplorer
       }
     }
 
+    private void lstExplorer_MouseDoubleClick(object sender, MouseEventArgs e)
+    {
+      //call function that saves currently selected file
+      saveSelectedFile();
+    }
+
     static String BytesToString(long byteCount)
     {
       //http://stackoverflow.com/a/4975942
@@ -180,6 +215,7 @@ namespace rcloneExplorer
       double num = Math.Round(bytes / Math.Pow(1024, place), 1);
       return (Math.Sign(byteCount) * num).ToString() + suf[place];
     }
+
     private bool ProcessExists(int id)
     {
       //http://stackoverflow.com/questions/1545270/how-to-determine-if-a-process-id-exists
@@ -195,6 +231,7 @@ namespace rcloneExplorer
         }
       }
     }
+
     private static void KillProcessAndChildren(int pid)
     {
       //http://stackoverflow.com/questions/5901679/kill-process-tree-programatically-in-c-sharp/32595027
@@ -216,9 +253,9 @@ namespace rcloneExplorer
       }
     }
 
-    private void lstExplorer_MouseDoubleClick(object sender, MouseEventArgs e)
-    {    
-      //
+    private void saveSelectedFile()
+    {
+      //setup vars for Stored (remote) files
       long storedFilesizeBytes = Convert.ToInt64(lstExplorer.SelectedItems[0].SubItems[0].Text);
       string storedFilesizeHuman = lstExplorer.SelectedItems[0].SubItems[1].Text;
       string storedDatemodified = lstExplorer.SelectedItems[0].SubItems[2].Text;
@@ -230,7 +267,7 @@ namespace rcloneExplorer
         //set new path
         remoteCD = storedFilepath + "/";
         //populate lstview with new directory contents
-        populatelstExplorer(internalExec("lsl", remoteConnectionName + ":" + remoteCD + "/"));
+        populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
         //set window title
         //Form.ActiveForm.Text = remoteCD.ToString();
       }
@@ -239,11 +276,12 @@ namespace rcloneExplorer
         //seperate directories in string, rebuild array without last two, join back to string
         remoteCD = String.Join(" ", remoteCD.Split('/').Take(remoteCD.Split('/').Count() - 2).ToArray());
         //populate lstview with new directory contents
-        populatelstExplorer(internalExec("lsl", remoteConnectionName + ":" + remoteCD + "/"));
+        populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
         //set window title
-        Form.ActiveForm.Text = remoteCD;
+        //Form.ActiveForm.Text = remoteCD;
       }
-      else {
+      else
+      {
         MessageBox.Show("Saving file: " + storedFilename);
         //create save dialog
         FolderBrowserDialog savefile = new FolderBrowserDialog();
@@ -251,13 +289,15 @@ namespace rcloneExplorer
         if (savefile.ShowDialog() == DialogResult.OK)
         {
           //store the path selected via the dialog and filename taken from the selected entry
-          string[] storedvsaved = new string[] {storedFilesizeBytes.ToString(), savefile.SelectedPath + "\\" + storedFilename};
+          string[] storedvsaved = new string[] { storedFilesizeBytes.ToString(), savefile.SelectedPath + "\\" + storedFilename };
+          //store the info into the download history list
           downloading.Add(storedvsaved);
+          //then add to list view
           lstDownloads.Items.Add(new ListViewItem(storedvsaved));
           //in a new thread start downloading the file
           new Thread(() =>
           {
-            internalExec("copy", remoteConnectionName + ":\"" + storedFilepath + "\" \"" + savefile.SelectedPath + "\"");
+            internalExec("copy", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" \"" + savefile.SelectedPath + "\"");
           }).Start();
           //create a timer which can monitor progress periodically
           downloadTimer = new System.Windows.Forms.Timer();
@@ -269,12 +309,10 @@ namespace rcloneExplorer
           txtRawOut.Text = consoletxt;
         }
       }
-
     }
 
     private void downloadTimer_Tick(object sender, EventArgs e)
     {
-
       if (downloading.Count >= 0)
       {
         for (var i = 0; i < downloading.Count; i++)
@@ -299,13 +337,9 @@ namespace rcloneExplorer
             lblFooter.Text = "Total Filesize:" + BytesToString(totalFilesize).ToString() + " | Transferred: " + downloading.Count() + " file(s)";
             //update percentage
             lstDownloads.Items[i].SubItems[0].Text = percentage.ToString() + "%";
-
           }
         }
-
       }
-
-
     }
 
     private void menuStripToggleConsole_Click(object sender, EventArgs e)
@@ -324,8 +358,6 @@ namespace rcloneExplorer
       }
     }
 
-
-
     private void ctxtDownloadContext_Cancel_Click(object sender, EventArgs e)
     {
       //find PID for current transfer (list item order should match with downloadPID list... :( )
@@ -335,19 +367,22 @@ namespace rcloneExplorer
       //get progress of file (cant cancel 100%)
       string FP = lstDownloads.SelectedItems[0].SubItems[0].Text;
 
+      //if the file process is 100%, it's done
       if (FP == "100%")
       {
         MessageBox.Show("ERR: Can't cancel a transferred file!");
       }
+      //if it's not 100%, it might still be ongoing, so check the process is no longer active
       else if(!ProcessExists(PID))
       {
         MessageBox.Show("ERR: Transfer already completed");
       }
+      //file is not 100% and the process is still active
       else
       {
         //kill PID
         KillProcessAndChildren(PID);
-        //delete file
+        //if the file exists, delete it
         if (System.IO.File.Exists(FN))
         {
           System.IO.File.Delete(FN);
@@ -355,6 +390,30 @@ namespace rcloneExplorer
         //mark list entry as cancelled
         lstDownloads.SelectedItems[0].SubItems[0].Text = "Cancelled";
      }
+    }
+
+    private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      //quit app, no worries
+      Environment.Exit(0);
+    }
+
+    private void quitKillTransfersToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      //go through every rclone download process on record
+      foreach (string[] entry in downloadPID)
+      {
+        //get process ID
+        int PID = Convert.ToInt32(entry[0]);
+        //check if the process is still active
+        if (ProcessExists(PID))
+        {
+          //kill PID
+          KillProcessAndChildren(PID);
+        }
+      }
+      //close app
+      Environment.Exit(0);
     }
   }
 }

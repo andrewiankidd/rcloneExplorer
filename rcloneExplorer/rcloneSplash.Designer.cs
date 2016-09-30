@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rcloneSplash));
       this.lblSplashTitle = new System.Windows.Forms.Label();
       this.lblSplashText = new System.Windows.Forms.Label();
       this.lblVersionInfo = new System.Windows.Forms.Label();
@@ -77,6 +78,7 @@
       this.Controls.Add(this.lblSplashText);
       this.Controls.Add(this.lblSplashTitle);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "rcloneSplash";
       this.Text = "rcloneSplash";
       this.TopMost = true;
