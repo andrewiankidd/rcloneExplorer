@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.lstExplorer = new System.Windows.Forms.ListView();
       this.colfileBytes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.colfileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -45,10 +46,13 @@
       this.lstDownloads = new System.Windows.Forms.ListView();
       this.colProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.colDownloadPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.ctxtDownloadContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.ctxtDownloadContext_Cancel = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip.SuspendLayout();
       this.tabMainUI.SuspendLayout();
       this.tabRemote.SuspendLayout();
       this.tabDownloads.SuspendLayout();
+      this.ctxtDownloadContext.SuspendLayout();
       this.SuspendLayout();
       // 
       // lstExplorer
@@ -185,12 +189,14 @@
       this.lstDownloads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colProgress,
             this.colDownloadPath});
+      this.lstDownloads.FullRowSelect = true;
       this.lstDownloads.Location = new System.Drawing.Point(0, 0);
       this.lstDownloads.Name = "lstDownloads";
       this.lstDownloads.Size = new System.Drawing.Size(559, 309);
       this.lstDownloads.TabIndex = 0;
       this.lstDownloads.UseCompatibleStateImageBehavior = false;
       this.lstDownloads.View = System.Windows.Forms.View.Details;
+      this.lstDownloads.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstDownloads_MouseClick);
       // 
       // colProgress
       // 
@@ -199,6 +205,20 @@
       // colDownloadPath
       // 
       this.colDownloadPath.Text = "Download";
+      // 
+      // ctxtDownloadContext
+      // 
+      this.ctxtDownloadContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxtDownloadContext_Cancel});
+      this.ctxtDownloadContext.Name = "ctxtDownloadContext";
+      this.ctxtDownloadContext.Size = new System.Drawing.Size(153, 48);
+      // 
+      // ctxtDownloadContext_Cancel
+      // 
+      this.ctxtDownloadContext_Cancel.Name = "ctxtDownloadContext_Cancel";
+      this.ctxtDownloadContext_Cancel.Size = new System.Drawing.Size(152, 22);
+      this.ctxtDownloadContext_Cancel.Text = "Cancel";
+      this.ctxtDownloadContext_Cancel.Click += new System.EventHandler(this.ctxtDownloadContext_Cancel_Click);
       // 
       // rcloneExplorer
       // 
@@ -217,6 +237,7 @@
       this.tabMainUI.ResumeLayout(false);
       this.tabRemote.ResumeLayout(false);
       this.tabDownloads.ResumeLayout(false);
+      this.ctxtDownloadContext.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -241,6 +262,8 @@
     private System.Windows.Forms.ColumnHeader colProgress;
     private System.Windows.Forms.ColumnHeader colDownloadPath;
     private System.Windows.Forms.ColumnHeader colModified;
+    private System.Windows.Forms.ContextMenuStrip ctxtDownloadContext;
+    private System.Windows.Forms.ToolStripMenuItem ctxtDownloadContext_Cancel;
   }
 }
 
