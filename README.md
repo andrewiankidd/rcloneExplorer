@@ -1,7 +1,7 @@
-# rcloneExplorer ![](http://i.imgur.com/9mZAHsZ.png)
+# rcloneExplorer ![](http://i.imgur.com/FNXr95Z.png)
 Crappy windows rclone GUI/Wrapper
-
-![screenshot](http://i.imgur.com/FNXr95Z.png "screenshot")
+  		  
+![screenshot](http://i.imgur.com/dJ2x4vb.png "screenshot")
 
 
 runs rclone commands and displays output based on the results
