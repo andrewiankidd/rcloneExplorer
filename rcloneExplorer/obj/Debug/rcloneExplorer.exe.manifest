@@ -4,7 +4,7 @@
   <description asmv2:iconFile="rcloneExplorer.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="rcloneExplorer" version="0.3.6.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="rcloneExplorer" version="0.3.9.1" language="neutral" processorArchitecture="msil" />
     <commandLine file="rcloneExplorer.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -44,13 +44,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="rcloneExplorer.exe" size="1140672">
-      <assemblyIdentity name="rcloneExplorer" version="0.3.6.0" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="rcloneExplorer" version="0.3.9.1" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Id2OvJADHdNCk1SNOd0aIx43+qlHM+FyuHbCsOqqId4=</dsig:DigestValue>
+        <dsig:DigestValue>KCIxNpvdIZPmtBZRPxD4ku1/dWolqz6V5OCN9QbV7xc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

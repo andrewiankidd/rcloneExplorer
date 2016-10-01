@@ -134,7 +134,7 @@ namespace rcloneExplorer
         {
           uploadingPID.Add(new string[] { process.Id.ToString(), arguments });
         }
-        else if (direction == "up")
+        else if (direction == "down")
         {
           downloadPID.Add(new string[] { process.Id.ToString(), arguments });
         }
@@ -328,23 +328,26 @@ namespace rcloneExplorer
         for (var i = 0; i < downloading.Count; i++)
         {
           {
-            string[] entry = downloading[i];
-            //store the filename of the saved file
-            string savedFilename = entry[1];
-            //set default filesize for saved file
-            long savedFilesizeBytes = 0;
-            //check the filesize of the saved file so far
-            if (System.IO.File.Exists(savedFilename))
+            if (lstDownloads.Items[i].SubItems[0].Text != "100%")
             {
-              //get file size
-              savedFilesizeBytes = new System.IO.FileInfo(savedFilename).Length;
+              string[] entry = downloading[i];
+              //store the filename of the saved file
+              string savedFilename = entry[1];
+              //set default filesize for saved file
+              long savedFilesizeBytes = 0;
+              //check the filesize of the saved file so far
+              if (System.IO.File.Exists(savedFilename))
+              {
+                //get file size
+                savedFilesizeBytes = new System.IO.FileInfo(savedFilename).Length;
+              }
+              //store the filesize of the stored file in bytes for comparison
+              long storedFilesizeBytes = Convert.ToInt64(entry[0]);
+              //calc percentage
+              long percentage = (long)((float)savedFilesizeBytes / storedFilesizeBytes * 100);
+              //update percentage
+              lstDownloads.Items[i].SubItems[0].Text = percentage.ToString() + "%";
             }
-            //store the filesize of the stored file in bytes for comparison
-            long storedFilesizeBytes = Convert.ToInt64(entry[0]);
-            //calc percentage
-            long percentage = (long)((float)savedFilesizeBytes / storedFilesizeBytes * 100);
-            //update percentage
-            lstDownloads.Items[i].SubItems[0].Text = percentage.ToString() + "%";
           }
         }
         tabDownloads.Text = "Downloads (" + lstDownloads.Items.Count + ")";
