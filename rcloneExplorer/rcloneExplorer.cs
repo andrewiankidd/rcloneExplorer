@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Collections.Generic;
 using System.Management;
+using System.IO;
 
 namespace rcloneExplorer
 {
@@ -16,9 +17,11 @@ namespace rcloneExplorer
     string remoteCD = "";
     long totalFilesize = 0;
     public static bool loaded = false;
-    private System.Windows.Forms.Timer downloadTimer;
+    private System.Windows.Forms.Timer transferTimer;
     List<String[]> downloading = new List<String[]>();
     List<String[]> downloadPID = new List<String[]>();
+    List<String[]> uploading = new List<String[]>();
+    List<String[]> uploadingPID = new List<String[]>();
 
     public rcloneExplorer()
     {
@@ -76,6 +79,8 @@ namespace rcloneExplorer
       lstExplorer.Columns[2].Width = -2;
       lstExplorer.Columns[3].Width = -2;
       lstDownloads.Columns[1].Width = -2;
+      lstUploads.Columns[1].Width = 30;
+      lstUploads.Columns[1].Width = -2;
       //run rclone for the first time to get a list of files
       rcloneInit();
     }
@@ -92,16 +97,22 @@ namespace rcloneExplorer
       loaded = true;
       //show window
       this.Visible = true;
+      //create a timer which can monitor progress periodically
+      transferTimer = new System.Windows.Forms.Timer();
+      transferTimer.Tick += new EventHandler(transferTimer_Tick);
+      transferTimer.Interval = 1000;
+      //start timer
+      transferTimer.Start();
     }
 
-    private string internalExec(string command, string arguments)
+    private string internalExec(string command, string arguments, string direction = null)
     {
 
       string rcloneLogs = "";
       //check for verbose logging
       if (iniSettings.Read("rcloneVerbose")=="true")
       {
-        rcloneLogs = " --log-file logfile.log --verbose";
+        rcloneLogs = " --log-file rclone.log --verbose";
       }
 
       //set up cmd to call rclone
@@ -117,9 +128,17 @@ namespace rcloneExplorer
       process.Start();
 
       //log process ID
-      if (command == "copy")
+      if (!String.IsNullOrEmpty(direction))
       {
-        downloadPID.Add(new string[] { process.Id.ToString(), arguments });
+        if (direction == "up")
+        {
+          uploadingPID.Add(new string[] { process.Id.ToString(), arguments });
+        }
+        else if (direction == "up")
+        {
+          downloadPID.Add(new string[] { process.Id.ToString(), arguments });
+        }
+       
       }
       
       // Synchronously read the standard output of the spawned process. 
@@ -144,7 +163,7 @@ namespace rcloneExplorer
       //clear total
       totalFilesize = 0;
       //add up [..]
-      lstExplorer.Items.Add(new ListViewItem(new string[] { "0", "<up>", ".." }));
+      lstExplorer.Items.Add(new ListViewItem(new string[] { "0", "<up>", "", ".." }));
       //breakdown output
       files = fileArray.Split('\n');
       //remove last value which is always null
@@ -199,8 +218,57 @@ namespace rcloneExplorer
 
     private void lstExplorer_MouseDoubleClick(object sender, MouseEventArgs e)
     {
-      //call function that saves currently selected file
-      saveSelectedFile();
+      //setup vars for Stored (remote) files
+      long storedFilesizeBytes = Convert.ToInt64(lstExplorer.SelectedItems[0].SubItems[0].Text);
+      string storedFilesizeHuman = lstExplorer.SelectedItems[0].SubItems[1].Text;
+      string storedDatemodified = lstExplorer.SelectedItems[0].SubItems[2].Text;
+      string storedFilepath = remoteCD + lstExplorer.SelectedItems[0].SubItems[3].Text;
+      string storedFilename = storedFilepath.Split('/').ToList()[storedFilepath.Split('/').GetUpperBound(0)];
+
+      if (storedFilesizeHuman == "<dir>")
+      {
+        //set new path
+        remoteCD = storedFilepath + "/";
+        //show loading in list
+        lstExplorer.Items.Clear();
+        string[] temprow = new string[] { "0", "0", "0", "loading..." };
+        //insert
+        lstExplorer.Items.Add(new ListViewItem(temprow));
+        //populate lstview with new directory contents
+        populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
+      }
+      else if (storedFilesizeHuman == "<up>")
+      {
+        //seperate directories in string, rebuild array without last two, join back to string
+        remoteCD = String.Join(" ", remoteCD.Split('/').Take(remoteCD.Split('/').Count() - 2).ToArray());
+        //populate lstview with new directory contents
+        populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
+      }
+      else
+      {
+        MessageBox.Show("Saving file: " + storedFilename);
+        //create save dialog
+        FolderBrowserDialog savefile = new FolderBrowserDialog();
+        //once a folder has been selected
+        if (savefile.ShowDialog() == DialogResult.OK)
+        {
+          //store the path selected via the dialog and filename taken from the selected entry
+          string[] storedvsaved = new string[] { storedFilesizeBytes.ToString(), savefile.SelectedPath + "\\" + storedFilename };
+          //store the info into the download history list
+          downloading.Add(storedvsaved);
+          //then add to list view
+          lstDownloads.Items.Add(new ListViewItem(storedvsaved));
+          //in a new thread start downloading the file
+          new Thread(() =>
+          {
+            internalExec("copy", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" \"" + savefile.SelectedPath + "\"", "down");
+          }).Start();
+          //set output in console
+          txtRawOut.Text = consoletxt;
+        }
+      }
+      //set window title
+      this.Text = "rcloneExplorer :" + remoteCD;
     }
 
     static String BytesToString(long byteCount)
@@ -253,65 +321,7 @@ namespace rcloneExplorer
       }
     }
 
-    private void saveSelectedFile()
-    {
-      //setup vars for Stored (remote) files
-      long storedFilesizeBytes = Convert.ToInt64(lstExplorer.SelectedItems[0].SubItems[0].Text);
-      string storedFilesizeHuman = lstExplorer.SelectedItems[0].SubItems[1].Text;
-      string storedDatemodified = lstExplorer.SelectedItems[0].SubItems[2].Text;
-      string storedFilepath = remoteCD + lstExplorer.SelectedItems[0].SubItems[3].Text;
-      string storedFilename = storedFilepath.Split('/').ToList()[storedFilepath.Split('/').GetUpperBound(0)];
-
-      if (storedFilesizeHuman == "<dir>")
-      {
-        //set new path
-        remoteCD = storedFilepath + "/";
-        //populate lstview with new directory contents
-        populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
-        //set window title
-        //Form.ActiveForm.Text = remoteCD.ToString();
-      }
-      else if (storedFilesizeHuman == "<up>")
-      {
-        //seperate directories in string, rebuild array without last two, join back to string
-        remoteCD = String.Join(" ", remoteCD.Split('/').Take(remoteCD.Split('/').Count() - 2).ToArray());
-        //populate lstview with new directory contents
-        populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
-        //set window title
-        //Form.ActiveForm.Text = remoteCD;
-      }
-      else
-      {
-        MessageBox.Show("Saving file: " + storedFilename);
-        //create save dialog
-        FolderBrowserDialog savefile = new FolderBrowserDialog();
-        //once a folder has been selected
-        if (savefile.ShowDialog() == DialogResult.OK)
-        {
-          //store the path selected via the dialog and filename taken from the selected entry
-          string[] storedvsaved = new string[] { storedFilesizeBytes.ToString(), savefile.SelectedPath + "\\" + storedFilename };
-          //store the info into the download history list
-          downloading.Add(storedvsaved);
-          //then add to list view
-          lstDownloads.Items.Add(new ListViewItem(storedvsaved));
-          //in a new thread start downloading the file
-          new Thread(() =>
-          {
-            internalExec("copy", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" \"" + savefile.SelectedPath + "\"");
-          }).Start();
-          //create a timer which can monitor progress periodically
-          downloadTimer = new System.Windows.Forms.Timer();
-          downloadTimer.Tick += new EventHandler(downloadTimer_Tick);
-          downloadTimer.Interval = 1000;
-          //start timer
-          downloadTimer.Start();
-          //set output in console
-          txtRawOut.Text = consoletxt;
-        }
-      }
-    }
-
-    private void downloadTimer_Tick(object sender, EventArgs e)
+    private void transferTimer_Tick(object sender, EventArgs e)
     {
       if (downloading.Count >= 0)
       {
@@ -333,12 +343,46 @@ namespace rcloneExplorer
             long storedFilesizeBytes = Convert.ToInt64(entry[0]);
             //calc percentage
             long percentage = (long)((float)savedFilesizeBytes / storedFilesizeBytes * 100);
-            //set footer text
-            lblFooter.Text = "Total Filesize:" + BytesToString(totalFilesize).ToString() + " | Transferred: " + downloading.Count() + " file(s)";
             //update percentage
             lstDownloads.Items[i].SubItems[0].Text = percentage.ToString() + "%";
           }
         }
+        tabDownloads.Text = "Downloads (" + lstDownloads.Items.Count + ")";
+      }
+      if (uploading.Count >= 0)
+      {
+        for (var i = 0; i < uploading.Count; i++)
+        {
+          {
+            //store current iteration from list
+            string[] entry = uploading[i];
+            //entry filename
+            string uploadedFilename = entry[1];
+
+            //check downloadPId proces.exists to see if uploadis complete yet
+            int PID = Convert.ToInt32(uploadingPID[i][0]);
+            if (ProcessExists(PID))
+            {
+              //upload still in progress
+              lstUploads.Items[i].SubItems[0].Text += ".";
+              if (lstUploads.Items[i].SubItems[0].Text == "Uploading...") { lstUploads.Items[i].SubItems[0].Text = "Uploading"; }
+            }
+            else
+            {
+              if (lstUploads.Items[i].SubItems[0].Text == "Uploaded!")
+              {
+                //do nothing
+              }
+              else
+              {
+                //upload complete (guessing! probs best to validate this)
+                lstUploads.Items[i].SubItems[0].Text = "Uploaded!";
+                refreshlstExplorer();
+              }  
+            }
+          }
+        }
+        tabUploads.Text = "Uploads (" + lstUploads.Items.Count + ")";
       }
     }
 
@@ -414,6 +458,63 @@ namespace rcloneExplorer
       }
       //close app
       Environment.Exit(0);
+    }
+
+    private void lstExplorer_DragDrop(object sender, DragEventArgs e)
+    {
+      string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+      foreach (string file in files)
+      {
+        // get the file attributes for file or directory
+        FileAttributes attr = File.GetAttributes(file);
+
+        //detect whether its a directory or file
+        if (attr.HasFlag(FileAttributes.Directory))
+        {
+          //its a folder
+          MessageBox.Show("Uploading directory: " + file);
+          //in a new thread start uploading the file
+          new Thread(() =>
+          {
+            //get directory name so it can be sent to rclone process
+            string dirName = new DirectoryInfo(file).Name;
+            //copy local path to rclone folder + directory name
+            internalExec("copy", "\"" + file + "\" " + iniSettings.Read("rcloneRemote") + ":\"" + remoteCD + "\\" + dirName + "\"");
+          }).Start();
+        }
+        else
+        {
+          //its a file
+          MessageBox.Show("Uploading file: " + file);
+          //in a new thread start uploading the file
+          new Thread(() =>
+          {
+            //copy local path to rclone folder
+            internalExec("copy", "\"" + file + "\" " + iniSettings.Read("rcloneRemote") + ":\"" + remoteCD + "\"", "up");
+          }).Start();
+        }
+
+        //store the path selected via the dialog and filename taken from the selected entry
+        string[] temp = new string[] { "Uploading", file };
+        //store the info into the download history list
+        uploading.Add(temp);
+        //add tolistview
+        lstUploads.Items.Add(new ListViewItem(temp));
+      }
+    }
+
+    private void lstExplorer_DragEnter(object sender, DragEventArgs e)
+    {
+      if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+    }
+
+    private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      refreshlstExplorer();
+    }
+    private void refreshlstExplorer()
+    {
+      populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
     }
   }
 }
