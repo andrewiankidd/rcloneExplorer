@@ -23,6 +23,11 @@ Runs rclone commands and displays output based on the results
 1. when a file is selected it sends an rclone copy command to copy the file from remote to local
 2. periodically checks the filesize of the saved file, compares it against the remote file and shows a percentage
 
+###uploading files
+1. when a file is dropped onto the UI, it checks if it's a file or folder
+2. afterwards it builds the appropriate command and sends it off to rclone
+2. periodically checks for the PID of the upload process to check if it's done
+
 ####cancelling files
 1. when the download is started the process ID is stored
 2. when the cancel is requested the download process is killed
