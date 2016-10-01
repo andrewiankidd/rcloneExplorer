@@ -5,7 +5,7 @@ Runs rclone commands and displays output based on the results
 
 ##Screenshot:
 <p align="center">
-  <img src="http://i.imgur.com/wTQ1jcw.gif"/>
+  <img src="http://i.imgur.com/rA0vdht.gif"/>
 </p>
 
 ##Usage
