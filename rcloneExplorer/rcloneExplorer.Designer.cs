@@ -131,8 +131,8 @@
       // menuStripFile
       // 
       this.menuStripFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.quitKillTransfersToolStripMenuItem,
-            this.quitToolStripMenuItem});
+            this.quitToolStripMenuItem,
+            this.quitKillTransfersToolStripMenuItem});
       this.menuStripFile.Name = "menuStripFile";
       this.menuStripFile.Size = new System.Drawing.Size(39, 21);
       this.menuStripFile.Text = "File";
@@ -140,15 +140,15 @@
       // quitKillTransfersToolStripMenuItem
       // 
       this.quitKillTransfersToolStripMenuItem.Name = "quitKillTransfersToolStripMenuItem";
-      this.quitKillTransfersToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-      this.quitKillTransfersToolStripMenuItem.Text = "Quit (Kill Transfers)";
+      this.quitKillTransfersToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      this.quitKillTransfersToolStripMenuItem.Text = "Quit";
       this.quitKillTransfersToolStripMenuItem.Click += new System.EventHandler(this.quitKillTransfersToolStripMenuItem_Click);
       // 
       // quitToolStripMenuItem
       // 
       this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-      this.quitToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-      this.quitToolStripMenuItem.Text = "Quit (Keep Transfers)";
+      this.quitToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      this.quitToolStripMenuItem.Text = "Quit (Continue Transfers)";
       this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
       // 
       // menuStripView
@@ -252,6 +252,7 @@
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip;
       this.Name = "rcloneExplorer";
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "rcloneExplorer";
       this.menuStrip.ResumeLayout(false);
       this.menuStrip.PerformLayout();

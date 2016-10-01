@@ -54,6 +54,14 @@ namespace rcloneExplorer
         Environment.Exit(0);
       }
 
+      //check local dir for rclone
+      if (!System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\rclone.exe"))
+      {
+        //rclone not found, quit
+        MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory + "\\rclone.exe \r\nfile not found!");
+        Environment.Exit(0);
+      }
+
       //start the splashscreen in a background thread so the main form can work away
       new Thread(() =>
       {
@@ -63,7 +71,6 @@ namespace rcloneExplorer
 
       //hide the main window and do some minor UI adjustments
       this.Visible = false;
-      this.CenterToScreen();
       InitializeComponent();
       lstExplorer.Columns[0].Width = 0;
       lstExplorer.Columns[2].Width = -2;
@@ -75,13 +82,6 @@ namespace rcloneExplorer
 
     private void rcloneInit()
     {
-      //check local dir for rclone
-      if (!System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\rclone.exe"))
-      {
-        //rclone not found, quit
-        MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory + "\\rclone.exe \r\nfile not found!");
-        Environment.Exit(0);
-      }
       //populate the listview with results
       populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":"));
       //set console text
@@ -388,7 +388,7 @@ namespace rcloneExplorer
           System.IO.File.Delete(FN);
         }
         //mark list entry as cancelled
-        lstDownloads.SelectedItems[0].SubItems[0].Text = "Cancelled";
+        lstDownloads.SelectedItems[0].SubItems[1].Text = "Cancelled:" + lstDownloads.SelectedItems[0].SubItems[1].Text;
      }
     }
 
