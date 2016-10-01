@@ -5,6 +5,7 @@ Runs rclone commands and displays output based on the results
 
 ##Screenshot:
 <p align="center">
+  (the big freeze is because the UI refreshes after upload)
   <img src="https://i.imgur.com/eubVkGw.gif"/>
 </p>
 
