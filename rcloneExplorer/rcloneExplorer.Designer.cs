@@ -43,25 +43,28 @@
       this.quitKillTransfersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStripView = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStripToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
+      this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabMainUI = new System.Windows.Forms.TabControl();
       this.tabRemote = new System.Windows.Forms.TabPage();
       this.tabDownloads = new System.Windows.Forms.TabPage();
       this.lstDownloads = new System.Windows.Forms.ListView();
       this.colDProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.colDPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.ctxtDownloadContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.ctxtDownloadContext_Cancel = new System.Windows.Forms.ToolStripMenuItem();
-      this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabUploads = new System.Windows.Forms.TabPage();
       this.lstUploads = new System.Windows.Forms.ListView();
       this.colUProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.colUPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.ctxtDownloadContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.ctxtDownloadContext_Cancel = new System.Windows.Forms.ToolStripMenuItem();
+      this.ctxtUploadContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip.SuspendLayout();
       this.tabMainUI.SuspendLayout();
       this.tabRemote.SuspendLayout();
       this.tabDownloads.SuspendLayout();
-      this.ctxtDownloadContext.SuspendLayout();
       this.tabUploads.SuspendLayout();
+      this.ctxtDownloadContext.SuspendLayout();
+      this.ctxtUploadContext.SuspendLayout();
       this.SuspendLayout();
       // 
       // lstExplorer
@@ -176,6 +179,13 @@
       this.menuStripToggleConsole.Text = "Toggle Console";
       this.menuStripToggleConsole.Click += new System.EventHandler(this.menuStripToggleConsole_Click);
       // 
+      // refreshToolStripMenuItem
+      // 
+      this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+      this.refreshToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+      this.refreshToolStripMenuItem.Text = "Refresh";
+      this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+      // 
       // tabMainUI
       // 
       this.tabMainUI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -237,27 +247,6 @@
       // 
       this.colDPath.Text = "Path";
       // 
-      // ctxtDownloadContext
-      // 
-      this.ctxtDownloadContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxtDownloadContext_Cancel});
-      this.ctxtDownloadContext.Name = "ctxtDownloadContext";
-      this.ctxtDownloadContext.Size = new System.Drawing.Size(115, 26);
-      // 
-      // ctxtDownloadContext_Cancel
-      // 
-      this.ctxtDownloadContext_Cancel.Name = "ctxtDownloadContext_Cancel";
-      this.ctxtDownloadContext_Cancel.Size = new System.Drawing.Size(114, 22);
-      this.ctxtDownloadContext_Cancel.Text = "Cancel";
-      this.ctxtDownloadContext_Cancel.Click += new System.EventHandler(this.ctxtDownloadContext_Cancel_Click);
-      // 
-      // refreshToolStripMenuItem
-      // 
-      this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-      this.refreshToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-      this.refreshToolStripMenuItem.Text = "Refresh";
-      this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
-      // 
       // tabUploads
       // 
       this.tabUploads.Controls.Add(this.lstUploads);
@@ -284,6 +273,7 @@
       this.lstUploads.TabIndex = 1;
       this.lstUploads.UseCompatibleStateImageBehavior = false;
       this.lstUploads.View = System.Windows.Forms.View.Details;
+      this.lstUploads.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstUploads_MouseClick);
       // 
       // colUProgress
       // 
@@ -292,6 +282,34 @@
       // colUPath
       // 
       this.colUPath.Text = "Path";
+      // 
+      // ctxtDownloadContext
+      // 
+      this.ctxtDownloadContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxtDownloadContext_Cancel});
+      this.ctxtDownloadContext.Name = "ctxtDownloadContext";
+      this.ctxtDownloadContext.Size = new System.Drawing.Size(115, 26);
+      // 
+      // ctxtDownloadContext_Cancel
+      // 
+      this.ctxtDownloadContext_Cancel.Name = "ctxtDownloadContext_Cancel";
+      this.ctxtDownloadContext_Cancel.Size = new System.Drawing.Size(114, 22);
+      this.ctxtDownloadContext_Cancel.Text = "Cancel";
+      this.ctxtDownloadContext_Cancel.Click += new System.EventHandler(this.ctxtDownloadContext_Cancel_Click);
+      // 
+      // ctxtUploadContext
+      // 
+      this.ctxtUploadContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cancelToolStripMenuItem});
+      this.ctxtUploadContext.Name = "ctxtUploadContext";
+      this.ctxtUploadContext.Size = new System.Drawing.Size(115, 26);
+      // 
+      // cancelToolStripMenuItem
+      // 
+      this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
+      this.cancelToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+      this.cancelToolStripMenuItem.Text = "Cancel";
+      this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
       // 
       // rcloneExplorer
       // 
@@ -312,8 +330,9 @@
       this.tabMainUI.ResumeLayout(false);
       this.tabRemote.ResumeLayout(false);
       this.tabDownloads.ResumeLayout(false);
-      this.ctxtDownloadContext.ResumeLayout(false);
       this.tabUploads.ResumeLayout(false);
+      this.ctxtDownloadContext.ResumeLayout(false);
+      this.ctxtUploadContext.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -347,6 +366,8 @@
     private System.Windows.Forms.ListView lstUploads;
     private System.Windows.Forms.ColumnHeader colUProgress;
     private System.Windows.Forms.ColumnHeader colUPath;
+    private System.Windows.Forms.ContextMenuStrip ctxtUploadContext;
+    private System.Windows.Forms.ToolStripMenuItem cancelToolStripMenuItem;
   }
 }
 

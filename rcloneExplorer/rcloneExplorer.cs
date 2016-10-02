@@ -51,6 +51,7 @@ namespace rcloneExplorer
         iniSettings = new IniFile();
         iniSettings.Write("rcloneRemote", "");
         iniSettings.Write("rcloneVerbose", "false");
+        iniSettings.Write("refreshAfterUpload", "false");
         MessageBox.Show("No ini file found!\r\n\r\nPlease add an rclone remote Name to the config ini");
         Process.Start("cmd.exe", "/c rclone config");
         Process.Start("notepad.exe", inipath);
@@ -235,7 +236,7 @@ namespace rcloneExplorer
         //insert
         lstExplorer.Items.Add(new ListViewItem(temprow));
         //populate lstview with new directory contents
-        populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
+        populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":\"" + remoteCD + "\""));
       }
       else if (storedFilesizeHuman == "<up>")
       {
@@ -296,6 +297,17 @@ namespace rcloneExplorer
         if (lstDownloads.FocusedItem.Bounds.Contains(e.Location) == true)
         {
           ctxtDownloadContext.Show(Cursor.Position);
+        }
+      }
+    }
+
+    private void lstUploads_MouseClick(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Right)
+      {
+        if (lstUploads.FocusedItem.Bounds.Contains(e.Location) == true)
+        {
+          ctxtUploadContext.Show(Cursor.Position);
         }
       }
     }
@@ -372,15 +384,18 @@ namespace rcloneExplorer
             }
             else
             {
-              if (lstUploads.Items[i].SubItems[0].Text == "Uploaded!")
+              if (lstUploads.Items[i].SubItems[0].Text == "Done!")
               {
                 //do nothing
               }
               else
               {
                 //upload complete (guessing! probs best to validate this)
-                lstUploads.Items[i].SubItems[0].Text = "Uploaded!";
-                refreshlstExplorer();
+                lstUploads.Items[i].SubItems[0].Text = "Done!";
+                if (iniSettings.Read("refreshAfterUpload")=="true")
+                {
+                  refreshlstExplorer();
+                }
               }  
             }
           }
@@ -437,6 +452,34 @@ namespace rcloneExplorer
         //mark list entry as cancelled
         lstDownloads.SelectedItems[0].SubItems[1].Text = "Cancelled:" + lstDownloads.SelectedItems[0].SubItems[1].Text;
      }
+    }
+    private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      //find PID for current transfer (list item order should match with downloadPID list... :( )
+      int PID = Convert.ToInt32(uploadingPID[lstUploads.SelectedItems[0].Index][0]);
+      //find filename for current transfer (easy enough to pick it from the list since it's selected)
+      string FN = lstUploads.SelectedItems[0].SubItems[1].Text;
+      //get progress of file (cant cancel 100%)
+      string FP = lstUploads.SelectedItems[0].SubItems[0].Text;
+
+      //if the file process is 100%, it's done
+      if (FP == "Done!")
+      {
+        MessageBox.Show("ERR: Can't cancel a transferred file!");
+      }
+      //if it's not 100%, it might still be ongoing, so check the process is no longer active
+      else if (!ProcessExists(PID))
+      {
+        MessageBox.Show("ERR: Transfer already completed");
+      }
+      //file is not 100% and the process is still active
+      else
+      {
+        //kill PID
+        KillProcessAndChildren(PID);
+        //mark list entry as cancelled
+        lstUploads.SelectedItems[0].SubItems[1].Text = "Cancelled:" + lstUploads.SelectedItems[0].SubItems[1].Text;
+      }
     }
 
     private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -519,5 +562,6 @@ namespace rcloneExplorer
     {
       populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
     }
+
   }
 }
