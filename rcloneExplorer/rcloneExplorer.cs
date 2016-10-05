@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Management;
 using System.IO;
+using System.Text;
 
 namespace rcloneExplorer
 {
@@ -22,9 +23,17 @@ namespace rcloneExplorer
     List<String[]> downloadPID = new List<String[]>();
     List<String[]> uploading = new List<String[]>();
     List<String[]> uploadingPID = new List<String[]>();
+    int syncingPID = 0;
 
     public rcloneExplorer()
     {
+      //check local dir for rclone
+      if (!System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\rclone.exe"))
+      {
+        //rclone not found, quit
+        MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory + "\\rclone.exe \r\nfile not found!");
+        Environment.Exit(0);
+      }
 
       string inipath = Application.ExecutablePath.Remove(Application.ExecutablePath.Length - 4) + ".ini";
       if (System.IO.File.Exists(inipath))
@@ -34,7 +43,7 @@ namespace rcloneExplorer
  
         if (string.IsNullOrEmpty(iniSettings.Read("rcloneRemote")))
         {
-          MessageBox.Show("Incorrect config\r\n\r\nPlease add an rclone remote Name to the config ini");
+          MessageBox.Show("ERR: Incorrect config\r\n\r\nPlease add an rclone remote Name to the config ini");
           Process.Start("cmd.exe", "/c rclone config");
           Process.Start("notepad.exe", inipath);
           Environment.Exit(0);
@@ -52,19 +61,20 @@ namespace rcloneExplorer
         iniSettings.Write("rcloneRemote", "");
         iniSettings.Write("rcloneVerbose", "false");
         iniSettings.Write("refreshAfterUpload", "false");
+        iniSettings.Write("rcloneSyncSource", "");
+        iniSettings.Write("rcloneSyncDestination", "");
+        iniSettings.Write("rcloneSyncEnabled", "false");
+        iniSettings.Write("rcloneSyncFrequency", "0");
+        iniSettings.Write("rcloneSyncSvC", "copy");
+        iniSettings.Write("rcloneSyncBandwidthLimit", "0");
+        iniSettings.Write("rcloneSyncMinFileSize", "0");
+        iniSettings.Write("rcloneSyncMaxFileSize", "0");
         MessageBox.Show("No ini file found!\r\n\r\nPlease add an rclone remote Name to the config ini");
         Process.Start("cmd.exe", "/c rclone config");
         Process.Start("notepad.exe", inipath);
         Environment.Exit(0);
       }
 
-      //check local dir for rclone
-      if (!System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\rclone.exe"))
-      {
-        //rclone not found, quit
-        MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory + "\\rclone.exe \r\nfile not found!");
-        Environment.Exit(0);
-      }
 
       //start the splashscreen in a background thread so the main form can work away
       new Thread(() =>
@@ -83,9 +93,22 @@ namespace rcloneExplorer
       lstUploads.Columns[1].Width = 30;
       lstUploads.Columns[1].Width = -2;
       //run rclone for the first time to get a list of files
+      loadSyncSettings();
       rcloneInit();
+      
     }
-
+    private void loadSyncSettings()
+    {
+      //get sync settings  
+      txtSyncSource.Text = iniSettings.Read("rcloneSyncSource");
+      txtSyncDestination.Text = iniSettings.Read("rcloneSyncDestination");
+      cmbSyncOptionsEnabled.Text = iniSettings.Read("rcloneSyncEnabled");
+      numSyncOptionsFrequency.Text = iniSettings.Read("rcloneSyncFrequency");
+      cmbSyncOptionsSvC.Text = iniSettings.Read("rcloneSyncSvC");
+      numSyncOptionsBandwidthLimit.Text = iniSettings.Read("rcloneSyncBandwidthLimit");
+      numSyncOptionsMinSize.Text = iniSettings.Read("rcloneSyncMinFileSize");
+      numSyncOptionsMaxSize.Text = iniSettings.Read("rcloneSyncMaxFileSize");
+    }
     private void rcloneInit()
     {
       //populate the listview with results
@@ -111,7 +134,11 @@ namespace rcloneExplorer
 
       string rcloneLogs = "";
       //check for verbose logging
-      if (iniSettings.Read("rcloneVerbose")=="true")
+      if (direction=="sync")
+      {
+        rcloneLogs = " --log-file sync.log --verbose";
+      }
+      else if (iniSettings.Read("rcloneVerbose")=="true")
       {
         rcloneLogs = " --log-file rclone.log --verbose";
       }
@@ -139,7 +166,11 @@ namespace rcloneExplorer
         {
           downloadPID.Add(new string[] { process.Id.ToString(), arguments });
         }
-       
+        else if (direction == "sync")
+        {
+          syncingPID = process.Id;
+        }
+
       }
       
       // Synchronously read the standard output of the spawned process. 
@@ -335,7 +366,7 @@ namespace rcloneExplorer
 
     private void transferTimer_Tick(object sender, EventArgs e)
     {
-      if (downloading.Count >= 0)
+      if (downloading.Count > 0)
       {
         for (var i = 0; i < downloading.Count; i++)
         {
@@ -362,9 +393,12 @@ namespace rcloneExplorer
             }
           }
         }
-        tabDownloads.Text = "Downloads (" + lstDownloads.Items.Count + ")";
+        if (tabDownloads.Text != "Downloads (" + lstDownloads.Items.Count + ")")
+        { 
+          tabDownloads.Text = "Downloads (" + lstDownloads.Items.Count + ")";
+        }
       }
-      if (uploading.Count >= 0)
+      if (uploading.Count > 0)
       {
         for (var i = 0; i < uploading.Count; i++)
         {
@@ -400,7 +434,21 @@ namespace rcloneExplorer
             }
           }
         }
-        tabUploads.Text = "Uploads (" + lstUploads.Items.Count + ")";
+       if (tabUploads.Text != "Uploads (" + lstUploads.Items.Count + ")")
+        {
+          tabUploads.Text = "Uploads (" + lstUploads.Items.Count + ")";
+        }
+      }
+      if (syncingPID > 0) {
+        if (File.Exists("sync.log"))
+        {      
+          using (var fs = new FileStream("sync.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+          using (var sr = new StreamReader(fs, Encoding.Default))
+          {
+            string tmp = sr.ReadToEnd();
+            txtSyncLog.AppendText(tmp.Replace("\n", Environment.NewLine));
+          }
+        }
       }
     }
 
@@ -563,5 +611,131 @@ namespace rcloneExplorer
       populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
     }
 
+    private void llblSyncOptionsHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      string synchelp = "";
+      synchelp += "\r\n" + "Auto Sync Enabled:";
+      synchelp += "\r\n" + "If rcloneExplorer should automatically sync on a schedule";
+      synchelp += "\r\n" + "";
+      synchelp = "\r\n" + "Sync Frequency (hrs):";
+      synchelp += "\r\n" + "How often rcloneExplorer will check run rclone to sync data to the remote connection.";
+      synchelp += "\r\n" + "";
+      synchelp += "\r\n" + "Sync or Copy:";
+      synchelp += "\r\n" + "Sync copies source to the destination. Destination is updated to match source, including deleting files if necessary.";
+      synchelp += "\r\n" + "Copy copies source to the destination. Source files are added to destination and will be kept even if deleted locally.";
+      synchelp += "\r\n" + "";
+      synchelp += "\r\n" + "Bandwidth Limit (kbps):";
+      synchelp += "\r\n" + "How much bandwidth the sync process can use in kbps";
+      synchelp += "\r\n" + "";
+      synchelp += "\r\n" + "Ignore files under (kb)";
+      synchelp += "\r\n" + "Defines the minimum filesize to be considered for sync";
+      synchelp += "\r\n" + "";
+      synchelp += "\r\n" + "Ignore files over (kb)";
+      synchelp += "\r\n" + "Defines the maximum filesize to be considered for sync";
+      MessageBox.Show(synchelp,"Sync Options Help");
+    }
+    private void btnSyncDestinationSelect_Click(object sender, EventArgs e)
+    {
+      string dirName = "";
+      if (!String.IsNullOrEmpty(txtSyncSource.Text))
+      { dirName += new DirectoryInfo(txtSyncSource.Text).Name; }
+      txtSyncDestination.Text = "/" + remoteCD + dirName;
+    }
+    private void btnSyncSourceSelect_Click(object sender, EventArgs e)
+    {
+      //create save dialog
+      FolderBrowserDialog syncsourcedir = new FolderBrowserDialog();
+      //once a folder has been selected
+      if (syncsourcedir.ShowDialog() == DialogResult.OK)
+      {
+        txtSyncSource.Text = syncsourcedir.SelectedPath;
+        string dirName = new DirectoryInfo(txtSyncSource.Text).Name; 
+        txtSyncDestination.Text = remoteCD + dirName;
+      }
+    }
+    private void btnSyncSave_Click(object sender, EventArgs e)
+    {
+      iniSettings.Write("rcloneSyncSource", txtSyncSource.Text);
+      iniSettings.Write("rcloneSyncDestination", txtSyncDestination.Text);
+      iniSettings.Write("rcloneSyncEnabled", cmbSyncOptionsEnabled.Text);
+      iniSettings.Write("rcloneSyncFrequency", numSyncOptionsFrequency.Value.ToString());
+      iniSettings.Write("rcloneSyncSvC", cmbSyncOptionsSvC.Text);
+      iniSettings.Write("rcloneSyncBandwidthLimit", numSyncOptionsBandwidthLimit.Text);
+      iniSettings.Write("rcloneSyncMinFileSize", numSyncOptionsMinSize.Text);
+      iniSettings.Write("rcloneSyncMaxFileSize", numSyncOptionsMaxSize.Text);
+    }
+
+    private void rcloneExplorer_Resize(object sender, EventArgs e)
+    {
+      if (FormWindowState.Minimized == this.WindowState)
+      {
+        notifyIcon.Visible = true;
+        notifyIcon.ShowBalloonTip(500, "Minimized to tray!", "Transfers will still run in the background", ToolTipIcon.Info);
+        this.Hide();
+      }
+
+      else if (FormWindowState.Normal == this.WindowState)
+      {
+        notifyIcon.Visible = false;
+      }
+    }
+
+    private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+    {
+      this.Show();
+      this.WindowState = FormWindowState.Normal;
+    }
+
+    private void btnSyncStart_Click(object sender, EventArgs e)
+    {
+      if (btnSyncStart.Text == "Start Sync")
+      {
+        startSync();
+      }
+      if (btnSyncStart.Text == "Cancel Sync")
+      {
+        //enable ui
+        btnSyncSourceSelect.Enabled = true;
+        btnSyncDestinationSelect.Enabled = true;
+        cmbSyncOptionsEnabled.Enabled = true;
+        numSyncOptionsFrequency.Enabled = true;
+        cmbSyncOptionsSvC.Enabled = true;
+        numSyncOptionsBandwidthLimit.Enabled = true;
+        numSyncOptionsMaxSize.Enabled = true;
+        numSyncOptionsMinSize.Enabled = true;
+        btnSyncSave.Enabled = true;
+        btnSyncStart.Text = "Start Sync";
+
+
+
+      }
+
+    }
+    private void startSync()
+    {
+      //disable ui
+      btnSyncSourceSelect.Enabled = false;
+      btnSyncDestinationSelect.Enabled = false;
+      cmbSyncOptionsEnabled.Enabled = false;
+      numSyncOptionsFrequency.Enabled = false;
+      cmbSyncOptionsSvC.Enabled = false;
+      numSyncOptionsBandwidthLimit.Enabled = false;
+      numSyncOptionsMaxSize.Enabled = false;
+      numSyncOptionsMinSize.Enabled = false;
+      btnSyncSave.Enabled = false;
+      btnSyncStart.Text = "Cancel Sync";
+      //TODO might have to turn on logging for syncs and just read the file into the console, then when it's done delete the log
+      //write basic sync command
+      string synccmd = iniSettings.Read("rcloneSyncSvC");
+      string syncargs = "\"" + iniSettings.Read("rcloneSyncSource") + "\" " + iniSettings.Read("rcloneRemote") + ":\"" + iniSettings.Read("rcloneSyncDestination") + "/\"";
+      //add extra options
+      if (iniSettings.Read("rcloneSyncBandwidthLimit") != "0") { syncargs += " --bwlimit " + iniSettings.Read("rcloneSyncBandwidthLimit"); }
+      if (iniSettings.Read("rcloneSyncMinFileSize") != "0") { syncargs += " --max-size " + iniSettings.Read("rcloneSyncMinFileSize"); }
+      if (iniSettings.Read("rcloneSyncMaxFileSize") != "0") { syncargs += " --min-size " + iniSettings.Read("rcloneSyncMaxFileSize"); }
+      new Thread(() =>
+      {
+        internalExec(synccmd, syncargs, "sync");
+      }).Start();
+    }
   }
 }
