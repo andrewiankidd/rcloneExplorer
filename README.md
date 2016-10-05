@@ -5,8 +5,7 @@ Runs rclone commands and displays output based on the results
 
 ##Screenshot:
 <p align="center">
-  (the big freeze is because the UI refreshes after upload)
-  <img src="https://i.imgur.com/eubVkGw.gif"/>
+  <img src="https://i.imgur.com/ebJq30W.gif"/>
 </p>
 
 ##Usage
@@ -14,32 +13,24 @@ Runs rclone commands and displays output based on the results
 2. have rclone.exe in working directory
 3. run rcloneExplorer.exe
 
-##Features/How it works
-###listing files
-1. Sends an rclone lsl command to a hidden cmd window and redirects output back to itself
-2. processes the input into files and directories
-3. displays them in a list view
+##Features
+###Browse encrypted remotes transparently
+rcloneExplorer merely takes output from rclone, which does all the heavy lifting. If you have an encrypted remote set up in rclone and point rcloneExplorer to it, it will work just as well as with a non-encrypted remote. rcloneExplorer can only access rclone configured remotes.
 
-###downloading files
-1. when a file is selected it sends an rclone copy command to copy the file from remote to local
-2. periodically checks the filesize of the saved file, compares it against the remote file and shows a percentage
+###Syncing
+rcloneExplorer provides a simple GUI to set up and schedule a regular sync option, to keep your files backed up and safe on a regular basis. [Currently a WIP]
 
-###uploading files
-1. when a file is dropped onto the UI, it checks if it's a file or folder
-2. afterwards it builds the appropriate command and sends it off to rclone
-2. periodically checks for the PID of the upload process to check if it's done
+###Downloading Files
+You can download files from the remote directly to your machine, with a simple click-and-save GUI.
 
-####cancelling files
-1. when the download is started the process ID is stored
-2. when the cancel is requested the download process is killed
-3. after the process is killed the local file is deleted as it would be broken
+###Uploading Files
+To quickly upload some files to your remote, drag and drop them onto the remote folder and the upload will start automatically. If you're uploading to an encrypted remote, the file will be encrypted on the fly courtesy of rclone.
 
-###quit (continue transfers)
-1. simply closes the GUI application
-2. all background processes will still run
+###Cancelling Transfers
+You can cancel uploads and downloads just as easily as starting them, just right click and cancel. Any partial files downloaded will be deleted automatically.
 
-###quit
-1. scans through all stored process ID's
-2. checks if they are still active
-3. kills them if they are
-4. this method doesnt cleanup broken files (yet)
+###Quit (continue transfers)
+simply closes the GUI application, all background processes will still run
+
+###Quit
+quits the GUI application, and also kills any rclone transfers in process. NOTE: this method does not delete partly transferred files.
