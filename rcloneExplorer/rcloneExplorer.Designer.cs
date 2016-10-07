@@ -30,11 +30,6 @@
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rcloneExplorer));
-      this.lstExplorer = new System.Windows.Forms.ListView();
-      this.colfileBytes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.colfileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.colModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.colfilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.txtRawOut = new System.Windows.Forms.TextBox();
       this.lblFooter = new System.Windows.Forms.Label();
       this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -45,7 +40,6 @@
       this.menuStripToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
       this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabMainUI = new System.Windows.Forms.TabControl();
-      this.tabRemote = new System.Windows.Forms.TabPage();
       this.tabDownloads = new System.Windows.Forms.TabPage();
       this.lstDownloads = new System.Windows.Forms.ListView();
       this.colDProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -83,9 +77,18 @@
       this.ctxtUploadContext = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+      this.ctxtExplorerContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.newFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.deleteFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.lstExplorer = new System.Windows.Forms.ListView();
+      this.colfileBytes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.colfileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.colModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.colfilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.tabRemote = new System.Windows.Forms.TabPage();
+      this.lblLoading = new System.Windows.Forms.Label();
       this.menuStrip.SuspendLayout();
       this.tabMainUI.SuspendLayout();
-      this.tabRemote.SuspendLayout();
       this.tabDownloads.SuspendLayout();
       this.tabUploads.SuspendLayout();
       this.tabSyncing.SuspendLayout();
@@ -96,46 +99,9 @@
       ((System.ComponentModel.ISupportInitialize)(this.numSyncOptionsFrequency)).BeginInit();
       this.ctxtDownloadContext.SuspendLayout();
       this.ctxtUploadContext.SuspendLayout();
+      this.ctxtExplorerContext.SuspendLayout();
+      this.tabRemote.SuspendLayout();
       this.SuspendLayout();
-      // 
-      // lstExplorer
-      // 
-      this.lstExplorer.AllowDrop = true;
-      this.lstExplorer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.lstExplorer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colfileBytes,
-            this.colfileSize,
-            this.colModified,
-            this.colfilePath});
-      this.lstExplorer.FullRowSelect = true;
-      this.lstExplorer.Location = new System.Drawing.Point(0, 0);
-      this.lstExplorer.Name = "lstExplorer";
-      this.lstExplorer.Size = new System.Drawing.Size(559, 293);
-      this.lstExplorer.TabIndex = 0;
-      this.lstExplorer.UseCompatibleStateImageBehavior = false;
-      this.lstExplorer.View = System.Windows.Forms.View.Details;
-      this.lstExplorer.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstExplorer_DragDrop);
-      this.lstExplorer.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstExplorer_DragEnter);
-      this.lstExplorer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstExplorer_MouseDoubleClick);
-      // 
-      // colfileBytes
-      // 
-      this.colfileBytes.Text = "File Size (Bytes)";
-      this.colfileBytes.Width = 70;
-      // 
-      // colfileSize
-      // 
-      this.colfileSize.Text = "File Size";
-      // 
-      // colModified
-      // 
-      this.colModified.Text = "Modified";
-      // 
-      // colfilePath
-      // 
-      this.colfilePath.Text = "File Path";
       // 
       // txtRawOut
       // 
@@ -231,17 +197,6 @@
       this.tabMainUI.SelectedIndex = 0;
       this.tabMainUI.Size = new System.Drawing.Size(567, 319);
       this.tabMainUI.TabIndex = 4;
-      // 
-      // tabRemote
-      // 
-      this.tabRemote.Controls.Add(this.lstExplorer);
-      this.tabRemote.Location = new System.Drawing.Point(4, 22);
-      this.tabRemote.Name = "tabRemote";
-      this.tabRemote.Padding = new System.Windows.Forms.Padding(3);
-      this.tabRemote.Size = new System.Drawing.Size(559, 293);
-      this.tabRemote.TabIndex = 0;
-      this.tabRemote.Text = "Remote";
-      this.tabRemote.UseVisualStyleBackColor = true;
       // 
       // tabDownloads
       // 
@@ -488,9 +443,8 @@
       // 
       // llblSyncOptionsHelp
       // 
-      this.llblSyncOptionsHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.llblSyncOptionsHelp.AutoSize = true;
-      this.llblSyncOptionsHelp.Location = new System.Drawing.Point(429, 65);
+      this.llblSyncOptionsHelp.Location = new System.Drawing.Point(423, 63);
       this.llblSyncOptionsHelp.Name = "llblSyncOptionsHelp";
       this.llblSyncOptionsHelp.Size = new System.Drawing.Size(117, 13);
       this.llblSyncOptionsHelp.TabIndex = 4;
@@ -607,11 +561,95 @@
       this.notifyIcon.Text = "rcloneExplorer";
       this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
       // 
+      // ctxtExplorerContext
+      // 
+      this.ctxtExplorerContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newFolderToolStripMenuItem,
+            this.deleteFolderToolStripMenuItem});
+      this.ctxtExplorerContext.Name = "ctxtExplorerContext";
+      this.ctxtExplorerContext.Size = new System.Drawing.Size(193, 48);
+      // 
+      // newFolderToolStripMenuItem
+      // 
+      this.newFolderToolStripMenuItem.Name = "newFolderToolStripMenuItem";
+      this.newFolderToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+      this.newFolderToolStripMenuItem.Text = "New Folder";
+      this.newFolderToolStripMenuItem.Click += new System.EventHandler(this.newFolderToolStripMenuItem_Click);
+      // 
+      // deleteFolderToolStripMenuItem
+      // 
+      this.deleteFolderToolStripMenuItem.Name = "deleteFolderToolStripMenuItem";
+      this.deleteFolderToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+      this.deleteFolderToolStripMenuItem.Text = "Delete Selected Item";
+      this.deleteFolderToolStripMenuItem.Click += new System.EventHandler(this.deleteFolderToolStripMenuItem_Click);
+      // 
+      // lstExplorer
+      // 
+      this.lstExplorer.AllowDrop = true;
+      this.lstExplorer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.lstExplorer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colfileBytes,
+            this.colfileSize,
+            this.colModified,
+            this.colfilePath});
+      this.lstExplorer.FullRowSelect = true;
+      this.lstExplorer.Location = new System.Drawing.Point(0, 0);
+      this.lstExplorer.Name = "lstExplorer";
+      this.lstExplorer.Size = new System.Drawing.Size(559, 293);
+      this.lstExplorer.TabIndex = 0;
+      this.lstExplorer.UseCompatibleStateImageBehavior = false;
+      this.lstExplorer.View = System.Windows.Forms.View.Details;
+      this.lstExplorer.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstExplorer_DragDrop);
+      this.lstExplorer.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstExplorer_DragEnter);
+      this.lstExplorer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstExplorer_MouseClick);
+      this.lstExplorer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstExplorer_MouseDoubleClick);
+      // 
+      // colfileBytes
+      // 
+      this.colfileBytes.Text = "File Size (Bytes)";
+      this.colfileBytes.Width = 70;
+      // 
+      // colfileSize
+      // 
+      this.colfileSize.Text = "File Size";
+      // 
+      // colModified
+      // 
+      this.colModified.Text = "Modified";
+      // 
+      // colfilePath
+      // 
+      this.colfilePath.Text = "File Path";
+      // 
+      // tabRemote
+      // 
+      this.tabRemote.Controls.Add(this.lstExplorer);
+      this.tabRemote.Location = new System.Drawing.Point(4, 22);
+      this.tabRemote.Name = "tabRemote";
+      this.tabRemote.Padding = new System.Windows.Forms.Padding(3);
+      this.tabRemote.Size = new System.Drawing.Size(559, 293);
+      this.tabRemote.TabIndex = 0;
+      this.tabRemote.Text = "Remote";
+      this.tabRemote.UseVisualStyleBackColor = true;
+      // 
+      // lblLoading
+      // 
+      this.lblLoading.Location = new System.Drawing.Point(12, 28);
+      this.lblLoading.Name = "lblLoading";
+      this.lblLoading.Size = new System.Drawing.Size(568, 319);
+      this.lblLoading.TabIndex = 5;
+      this.lblLoading.Text = "Loading...";
+      this.lblLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.lblLoading.Visible = false;
+      // 
       // rcloneExplorer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(592, 372);
+      this.Controls.Add(this.lblLoading);
       this.Controls.Add(this.tabMainUI);
       this.Controls.Add(this.lblFooter);
       this.Controls.Add(this.txtRawOut);
@@ -626,7 +664,6 @@
       this.menuStrip.ResumeLayout(false);
       this.menuStrip.PerformLayout();
       this.tabMainUI.ResumeLayout(false);
-      this.tabRemote.ResumeLayout(false);
       this.tabDownloads.ResumeLayout(false);
       this.tabUploads.ResumeLayout(false);
       this.tabSyncing.ResumeLayout(false);
@@ -639,30 +676,25 @@
       ((System.ComponentModel.ISupportInitialize)(this.numSyncOptionsFrequency)).EndInit();
       this.ctxtDownloadContext.ResumeLayout(false);
       this.ctxtUploadContext.ResumeLayout(false);
+      this.ctxtExplorerContext.ResumeLayout(false);
+      this.tabRemote.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
     }
 
     #endregion
-
-    private System.Windows.Forms.ListView lstExplorer;
     private System.Windows.Forms.TextBox txtRawOut;
     private System.Windows.Forms.Label lblFooter;
     private System.Windows.Forms.MenuStrip menuStrip;
     private System.Windows.Forms.ToolStripMenuItem menuStripFile;
     private System.Windows.Forms.ToolStripMenuItem menuStripView;
     private System.Windows.Forms.ToolStripMenuItem menuStripToggleConsole;
-    private System.Windows.Forms.ColumnHeader colfileSize;
-    private System.Windows.Forms.ColumnHeader colfilePath;
-    private System.Windows.Forms.ColumnHeader colfileBytes;
     private System.Windows.Forms.TabControl tabMainUI;
-    private System.Windows.Forms.TabPage tabRemote;
     private System.Windows.Forms.TabPage tabDownloads;
     private System.Windows.Forms.ListView lstDownloads;
     private System.Windows.Forms.ColumnHeader colDProgress;
     private System.Windows.Forms.ColumnHeader colDPath;
-    private System.Windows.Forms.ColumnHeader colModified;
     private System.Windows.Forms.ContextMenuStrip ctxtDownloadContext;
     private System.Windows.Forms.ToolStripMenuItem ctxtDownloadContext_Cancel;
     private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
@@ -699,6 +731,16 @@
     private System.Windows.Forms.NotifyIcon notifyIcon;
     private System.Windows.Forms.TextBox txtSyncLog;
     private System.Windows.Forms.Button btnSyncStart;
+    private System.Windows.Forms.ContextMenuStrip ctxtExplorerContext;
+    private System.Windows.Forms.ToolStripMenuItem newFolderToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem deleteFolderToolStripMenuItem;
+    private System.Windows.Forms.TabPage tabRemote;
+    private System.Windows.Forms.ListView lstExplorer;
+    private System.Windows.Forms.ColumnHeader colfileBytes;
+    private System.Windows.Forms.ColumnHeader colfileSize;
+    private System.Windows.Forms.ColumnHeader colModified;
+    private System.Windows.Forms.ColumnHeader colfilePath;
+    private System.Windows.Forms.Label lblLoading;
   }
 }
 

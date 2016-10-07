@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="iniFile.cs" />
+    <Compile Include="Prompt.cs" />
     <Compile Include="rcloneExplorer.cs">
       <SubType>Form</SubType>
     </Compile>

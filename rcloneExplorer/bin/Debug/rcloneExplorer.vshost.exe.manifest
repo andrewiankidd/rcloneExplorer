@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="rcloneExplorer.exe" size="1524160">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="rcloneExplorer.exe" size="1526720">
       <assemblyIdentity name="rcloneExplorer" version="0.4.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>PM2llrEW+IiifHR/WgxY0OEaoArsFgzOqmHKD7D5zIw=</dsig:DigestValue>
+        <dsig:DigestValue>6EnhyJOWiXvL38Oc3AtPx6ZH3lLDCF7MxN2tczM4iOM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

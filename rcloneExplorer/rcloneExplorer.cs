@@ -60,7 +60,7 @@ namespace rcloneExplorer
         iniSettings = new IniFile();
         iniSettings.Write("rcloneRemote", "");
         iniSettings.Write("rcloneVerbose", "false");
-        iniSettings.Write("refreshAfterUpload", "false");
+        iniSettings.Write("refreshAutomatically", "false");
         iniSettings.Write("rcloneSyncSource", "");
         iniSettings.Write("rcloneSyncDestination", "");
         iniSettings.Write("rcloneSyncEnabled", "false");
@@ -129,12 +129,12 @@ namespace rcloneExplorer
       transferTimer.Start();
     }
 
-    private string internalExec(string command, string arguments, string direction = null)
+    private string internalExec(string command, string arguments, string operation = null)
     {
 
       string rcloneLogs = "";
       //check for verbose logging
-      if (direction=="sync")
+      if (operation=="sync")
       {
         rcloneLogs = " --log-file sync.log --verbose";
       }
@@ -155,18 +155,18 @@ namespace rcloneExplorer
       process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
       process.Start();
 
-      //log process ID
-      if (!String.IsNullOrEmpty(direction))
+      //log process ID for uploads, downloads and sync operations
+      if (!String.IsNullOrEmpty(operation))
       {
-        if (direction == "up")
+        if (operation == "up")
         {
           uploadingPID.Add(new string[] { process.Id.ToString(), arguments });
         }
-        else if (direction == "down")
+        else if (operation == "down")
         {
           downloadPID.Add(new string[] { process.Id.ToString(), arguments });
         }
-        else if (direction == "sync")
+        else if (operation == "sync")
         {
           syncingPID = process.Id;
         }
@@ -261,13 +261,11 @@ namespace rcloneExplorer
       {
         //set new path
         remoteCD = storedFilepath + "/";
-        //show loading in list
-        lstExplorer.Items.Clear();
-        string[] temprow = new string[] { "0", "0", "0", "loading..." };
-        //insert
-        lstExplorer.Items.Add(new ListViewItem(temprow));
-        //populate lstview with new directory contents
+        //refresh
+        lblLoading.Visible = true;
+        lblLoading.Refresh();
         populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":\"" + remoteCD + "\""));
+        lblLoading.Visible = false;
       }
       else if (storedFilesizeHuman == "<up>")
       {
@@ -321,6 +319,17 @@ namespace rcloneExplorer
       //http://stackoverflow.com/questions/1545270/how-to-determine-if-a-process-id-exists
       return Process.GetProcesses().Any(x => x.Id == id);
     }
+    private void lstExplorer_MouseClick(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Right)
+      {
+        if (lstExplorer.FocusedItem.Bounds.Contains(e.Location) == true)
+        {
+          ctxtExplorerContext.Show(Cursor.Position);
+        }
+      }
+    }
+
     private void lstDownloads_MouseClick(object sender, MouseEventArgs e)
     {
       if (e.Button == MouseButtons.Right)
@@ -426,7 +435,7 @@ namespace rcloneExplorer
               {
                 //upload complete (guessing! probs best to validate this)
                 lstUploads.Items[i].SubItems[0].Text = "Done!";
-                if (iniSettings.Read("refreshAfterUpload")=="true")
+                if (iniSettings.Read("refreshAutomatically")=="true")
                 {
                   refreshlstExplorer();
                 }
@@ -501,6 +510,7 @@ namespace rcloneExplorer
         lstDownloads.SelectedItems[0].SubItems[1].Text = "Cancelled:" + lstDownloads.SelectedItems[0].SubItems[1].Text;
      }
     }
+
     private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
     {
       //find PID for current transfer (list item order should match with downloadPID list... :( )
@@ -606,9 +616,13 @@ namespace rcloneExplorer
     {
       refreshlstExplorer();
     }
+
     private void refreshlstExplorer()
     {
+      lblLoading.Visible = true;
+      lblLoading.Refresh();
       populatelstExplorer(internalExec("lsl", iniSettings.Read("rcloneRemote") + ":" + remoteCD + "/"));
+      lblLoading.Visible = false;
     }
 
     private void llblSyncOptionsHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -634,6 +648,7 @@ namespace rcloneExplorer
       synchelp += "\r\n" + "Defines the maximum filesize to be considered for sync";
       MessageBox.Show(synchelp,"Sync Options Help");
     }
+
     private void btnSyncDestinationSelect_Click(object sender, EventArgs e)
     {
       string dirName = "";
@@ -641,6 +656,7 @@ namespace rcloneExplorer
       { dirName += new DirectoryInfo(txtSyncSource.Text).Name; }
       txtSyncDestination.Text = "/" + remoteCD + dirName;
     }
+
     private void btnSyncSourceSelect_Click(object sender, EventArgs e)
     {
       //create save dialog
@@ -705,12 +721,9 @@ namespace rcloneExplorer
         numSyncOptionsMinSize.Enabled = true;
         btnSyncSave.Enabled = true;
         btnSyncStart.Text = "Start Sync";
-
-
-
       }
-
     }
+
     private void startSync()
     {
       //disable ui
@@ -736,6 +749,43 @@ namespace rcloneExplorer
       {
         internalExec(synccmd, syncargs, "sync");
       }).Start();
+    }
+
+    private void newFolderToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      string dirName = Prompt.ShowDialog("Folder Name:", "New Folder");
+      internalExec("mkdir", iniSettings.Read("rcloneRemote") + ":\"" + remoteCD + "\\" + dirName + "\"");
+      //refresh
+      if (iniSettings.Read("refreshAutomatically") == "true")
+      {
+        refreshlstExplorer();
+      }
+    }
+
+    private void deleteFolderToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      string storedFilesizeHuman = lstExplorer.SelectedItems[0].SubItems[1].Text;
+      string storedFilepath = remoteCD + lstExplorer.SelectedItems[0].SubItems[3].Text;
+
+
+      DialogResult promptdelete = MessageBox.Show("Delete " + storedFilepath + "?", "Confirm Delete", MessageBoxButtons.YesNo);
+      if (promptdelete == DialogResult.Yes)
+      {
+        if (storedFilesizeHuman == "<dir>")
+        {
+          new Thread(() =>
+          {
+            internalExec("purge", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\"");
+          }).Start();
+        }
+        else
+        {
+          new Thread(() =>
+          {
+            internalExec("delete", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\"");
+          }).Start();
+        }
+      }    
     }
   }
 }
