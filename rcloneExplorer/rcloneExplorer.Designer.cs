@@ -4,13 +4,18 @@
   {
     /// <summary>
     /// Required designer variable.
+    /// syncingHandler = rcloneExplorer.syncingHandler;
+    /// uploadsHandler = rcloneExplorer.uploadsHandler;
+    /// downloadsHandler = rcloneExplorer.downloadsHandler;
     /// </summary>
     private System.ComponentModel.IContainer components = null;
+    
 
     /// <summary>
     /// Clean up any resources being used.
     /// </summary>
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    ///
     protected override void Dispose(bool disposing)
     {
       if (disposing && (components != null))
@@ -34,12 +39,19 @@
       this.lblFooter = new System.Windows.Forms.Label();
       this.menuStrip = new System.Windows.Forms.MenuStrip();
       this.menuStripFile = new System.Windows.Forms.ToolStripMenuItem();
-      this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.quitKillTransfersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuStripFile_Quit = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuStripQuitKill = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStripView = new System.Windows.Forms.ToolStripMenuItem();
-      this.menuStripToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
-      this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuStripView_ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuStripView_Refresh = new System.Windows.Forms.ToolStripMenuItem();
       this.tabMainUI = new System.Windows.Forms.TabControl();
+      this.tabRemote = new System.Windows.Forms.TabPage();
+      this.lblLoading = new System.Windows.Forms.Label();
+      this.lstExplorer = new System.Windows.Forms.ListView();
+      this.colfileBytes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.colfileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.colModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.colfilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.tabDownloads = new System.Windows.Forms.TabPage();
       this.lstDownloads = new System.Windows.Forms.ListView();
       this.colDProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -52,9 +64,13 @@
       this.btnSyncStart = new System.Windows.Forms.Button();
       this.txtSyncLog = new System.Windows.Forms.TextBox();
       this.btnSyncSave = new System.Windows.Forms.Button();
+      this.grpSyncOptions = new System.Windows.Forms.GroupBox();
       this.btnSyncDestinationSelect = new System.Windows.Forms.Button();
       this.btnSyncSourceSelect = new System.Windows.Forms.Button();
-      this.grpSyncOptions = new System.Windows.Forms.GroupBox();
+      this.txtSyncDestination = new System.Windows.Forms.TextBox();
+      this.lblSyncDestination = new System.Windows.Forms.Label();
+      this.lblSyncSource = new System.Windows.Forms.Label();
+      this.txtSyncSource = new System.Windows.Forms.TextBox();
       this.numSyncOptionsBandwidthLimit = new System.Windows.Forms.NumericUpDown();
       this.lblSyncOptionsMaxSize = new System.Windows.Forms.Label();
       this.numSyncOptionsMaxSize = new System.Windows.Forms.NumericUpDown();
@@ -68,27 +84,17 @@
       this.lblSyncOptionsSvC = new System.Windows.Forms.Label();
       this.lblSyncOptionsFrequency = new System.Windows.Forms.Label();
       this.numSyncOptionsFrequency = new System.Windows.Forms.NumericUpDown();
-      this.txtSyncDestination = new System.Windows.Forms.TextBox();
-      this.lblSyncDestination = new System.Windows.Forms.Label();
-      this.lblSyncSource = new System.Windows.Forms.Label();
-      this.txtSyncSource = new System.Windows.Forms.TextBox();
       this.ctxtDownloadContext = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxtDownloadContext_Cancel = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxtUploadContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.ctxtUploadContext_Cancel = new System.Windows.Forms.ToolStripMenuItem();
       this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
       this.ctxtExplorerContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.newFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.deleteFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.lstExplorer = new System.Windows.Forms.ListView();
-      this.colfileBytes = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.colfileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.colModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.colfilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.tabRemote = new System.Windows.Forms.TabPage();
-      this.lblLoading = new System.Windows.Forms.Label();
+      this.ctxtExplorerContext_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
+      this.ctxtExplorerContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip.SuspendLayout();
       this.tabMainUI.SuspendLayout();
+      this.tabRemote.SuspendLayout();
       this.tabDownloads.SuspendLayout();
       this.tabUploads.SuspendLayout();
       this.tabSyncing.SuspendLayout();
@@ -100,7 +106,6 @@
       this.ctxtDownloadContext.SuspendLayout();
       this.ctxtUploadContext.SuspendLayout();
       this.ctxtExplorerContext.SuspendLayout();
-      this.tabRemote.SuspendLayout();
       this.SuspendLayout();
       // 
       // txtRawOut
@@ -140,48 +145,48 @@
       // menuStripFile
       // 
       this.menuStripFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.quitToolStripMenuItem,
-            this.quitKillTransfersToolStripMenuItem});
+            this.menuStripFile_Quit,
+            this.menuStripQuitKill});
       this.menuStripFile.Name = "menuStripFile";
       this.menuStripFile.Size = new System.Drawing.Size(39, 21);
       this.menuStripFile.Text = "File";
       // 
-      // quitToolStripMenuItem
+      // menuStripFile_Quit
       // 
-      this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-      this.quitToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-      this.quitToolStripMenuItem.Text = "Quit (Continue Transfers)";
-      this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+      this.menuStripFile_Quit.Name = "menuStripFile_Quit";
+      this.menuStripFile_Quit.Size = new System.Drawing.Size(217, 22);
+      this.menuStripFile_Quit.Text = "Quit (Continue Transfers)";
+      this.menuStripFile_Quit.Click += new System.EventHandler(this.menuStripFile_Quit_Click);
       // 
-      // quitKillTransfersToolStripMenuItem
+      // menuStripQuitKill
       // 
-      this.quitKillTransfersToolStripMenuItem.Name = "quitKillTransfersToolStripMenuItem";
-      this.quitKillTransfersToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-      this.quitKillTransfersToolStripMenuItem.Text = "Quit";
-      this.quitKillTransfersToolStripMenuItem.Click += new System.EventHandler(this.quitKillTransfersToolStripMenuItem_Click);
+      this.menuStripQuitKill.Name = "menuStripQuitKill";
+      this.menuStripQuitKill.Size = new System.Drawing.Size(217, 22);
+      this.menuStripQuitKill.Text = "Quit";
+      this.menuStripQuitKill.Click += new System.EventHandler(this.menuStripFile_QuitKill_Click);
       // 
       // menuStripView
       // 
       this.menuStripView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStripToggleConsole,
-            this.refreshToolStripMenuItem});
+            this.menuStripView_ToggleConsole,
+            this.menuStripView_Refresh});
       this.menuStripView.Name = "menuStripView";
       this.menuStripView.Size = new System.Drawing.Size(46, 21);
       this.menuStripView.Text = "View";
       // 
-      // menuStripToggleConsole
+      // menuStripView_ToggleConsole
       // 
-      this.menuStripToggleConsole.Name = "menuStripToggleConsole";
-      this.menuStripToggleConsole.Size = new System.Drawing.Size(162, 22);
-      this.menuStripToggleConsole.Text = "Toggle Console";
-      this.menuStripToggleConsole.Click += new System.EventHandler(this.menuStripToggleConsole_Click);
+      this.menuStripView_ToggleConsole.Name = "menuStripView_ToggleConsole";
+      this.menuStripView_ToggleConsole.Size = new System.Drawing.Size(162, 22);
+      this.menuStripView_ToggleConsole.Text = "Toggle Console";
+      this.menuStripView_ToggleConsole.Click += new System.EventHandler(this.menuStripView_ToggleConsole_Click);
       // 
-      // refreshToolStripMenuItem
+      // menuStripView_Refresh
       // 
-      this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-      this.refreshToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-      this.refreshToolStripMenuItem.Text = "Refresh";
-      this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+      this.menuStripView_Refresh.Name = "menuStripView_Refresh";
+      this.menuStripView_Refresh.Size = new System.Drawing.Size(162, 22);
+      this.menuStripView_Refresh.Text = "Refresh";
+      this.menuStripView_Refresh.Click += new System.EventHandler(this.menuStripView_Refresh_Click);
       // 
       // tabMainUI
       // 
@@ -197,6 +202,68 @@
       this.tabMainUI.SelectedIndex = 0;
       this.tabMainUI.Size = new System.Drawing.Size(567, 319);
       this.tabMainUI.TabIndex = 4;
+      // 
+      // tabRemote
+      // 
+      this.tabRemote.Controls.Add(this.lblLoading);
+      this.tabRemote.Controls.Add(this.lstExplorer);
+      this.tabRemote.Location = new System.Drawing.Point(4, 22);
+      this.tabRemote.Name = "tabRemote";
+      this.tabRemote.Padding = new System.Windows.Forms.Padding(3);
+      this.tabRemote.Size = new System.Drawing.Size(559, 293);
+      this.tabRemote.TabIndex = 0;
+      this.tabRemote.Text = "Remote";
+      this.tabRemote.UseVisualStyleBackColor = true;
+      // 
+      // lblLoading
+      // 
+      this.lblLoading.Location = new System.Drawing.Point(0, 0);
+      this.lblLoading.Name = "lblLoading";
+      this.lblLoading.Size = new System.Drawing.Size(559, 293);
+      this.lblLoading.TabIndex = 5;
+      this.lblLoading.Text = "Loading...";
+      this.lblLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.lblLoading.Visible = false;
+      // 
+      // lstExplorer
+      // 
+      this.lstExplorer.AllowDrop = true;
+      this.lstExplorer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.lstExplorer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colfileBytes,
+            this.colfileSize,
+            this.colModified,
+            this.colfilePath});
+      this.lstExplorer.FullRowSelect = true;
+      this.lstExplorer.Location = new System.Drawing.Point(0, 0);
+      this.lstExplorer.Name = "lstExplorer";
+      this.lstExplorer.Size = new System.Drawing.Size(559, 293);
+      this.lstExplorer.TabIndex = 0;
+      this.lstExplorer.UseCompatibleStateImageBehavior = false;
+      this.lstExplorer.View = System.Windows.Forms.View.Details;
+      this.lstExplorer.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstExplorer_DragDrop);
+      this.lstExplorer.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstExplorer_DragEnter);
+      this.lstExplorer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstExplorer_MouseClick);
+      this.lstExplorer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstExplorer_MouseDoubleClick);
+      // 
+      // colfileBytes
+      // 
+      this.colfileBytes.Text = "File Size (Bytes)";
+      this.colfileBytes.Width = 70;
+      // 
+      // colfileSize
+      // 
+      this.colfileSize.Text = "File Size";
+      // 
+      // colModified
+      // 
+      this.colModified.Text = "Modified";
+      // 
+      // colfilePath
+      // 
+      this.colfilePath.Text = "File Path";
       // 
       // tabDownloads
       // 
@@ -275,13 +342,7 @@
       this.tabSyncing.Controls.Add(this.btnSyncStart);
       this.tabSyncing.Controls.Add(this.txtSyncLog);
       this.tabSyncing.Controls.Add(this.btnSyncSave);
-      this.tabSyncing.Controls.Add(this.btnSyncDestinationSelect);
-      this.tabSyncing.Controls.Add(this.btnSyncSourceSelect);
       this.tabSyncing.Controls.Add(this.grpSyncOptions);
-      this.tabSyncing.Controls.Add(this.txtSyncDestination);
-      this.tabSyncing.Controls.Add(this.lblSyncDestination);
-      this.tabSyncing.Controls.Add(this.lblSyncSource);
-      this.tabSyncing.Controls.Add(this.txtSyncSource);
       this.tabSyncing.Location = new System.Drawing.Point(4, 22);
       this.tabSyncing.Name = "tabSyncing";
       this.tabSyncing.Padding = new System.Windows.Forms.Padding(3);
@@ -325,33 +386,17 @@
       this.btnSyncSave.UseVisualStyleBackColor = true;
       this.btnSyncSave.Click += new System.EventHandler(this.btnSyncSave_Click);
       // 
-      // btnSyncDestinationSelect
-      // 
-      this.btnSyncDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnSyncDestinationSelect.Location = new System.Drawing.Point(478, 60);
-      this.btnSyncDestinationSelect.Name = "btnSyncDestinationSelect";
-      this.btnSyncDestinationSelect.Size = new System.Drawing.Size(75, 23);
-      this.btnSyncDestinationSelect.TabIndex = 6;
-      this.btnSyncDestinationSelect.Text = "Use Current";
-      this.btnSyncDestinationSelect.UseVisualStyleBackColor = true;
-      this.btnSyncDestinationSelect.Click += new System.EventHandler(this.btnSyncDestinationSelect_Click);
-      // 
-      // btnSyncSourceSelect
-      // 
-      this.btnSyncSourceSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnSyncSourceSelect.Location = new System.Drawing.Point(478, 17);
-      this.btnSyncSourceSelect.Name = "btnSyncSourceSelect";
-      this.btnSyncSourceSelect.Size = new System.Drawing.Size(75, 23);
-      this.btnSyncSourceSelect.TabIndex = 5;
-      this.btnSyncSourceSelect.Text = "Browse";
-      this.btnSyncSourceSelect.UseVisualStyleBackColor = true;
-      this.btnSyncSourceSelect.Click += new System.EventHandler(this.btnSyncSourceSelect_Click);
-      // 
       // grpSyncOptions
       // 
       this.grpSyncOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.grpSyncOptions.Controls.Add(this.btnSyncDestinationSelect);
+      this.grpSyncOptions.Controls.Add(this.btnSyncSourceSelect);
+      this.grpSyncOptions.Controls.Add(this.txtSyncDestination);
+      this.grpSyncOptions.Controls.Add(this.lblSyncDestination);
+      this.grpSyncOptions.Controls.Add(this.lblSyncSource);
+      this.grpSyncOptions.Controls.Add(this.txtSyncSource);
       this.grpSyncOptions.Controls.Add(this.numSyncOptionsBandwidthLimit);
       this.grpSyncOptions.Controls.Add(this.lblSyncOptionsMaxSize);
       this.grpSyncOptions.Controls.Add(this.numSyncOptionsMaxSize);
@@ -365,16 +410,76 @@
       this.grpSyncOptions.Controls.Add(this.lblSyncOptionsSvC);
       this.grpSyncOptions.Controls.Add(this.lblSyncOptionsFrequency);
       this.grpSyncOptions.Controls.Add(this.numSyncOptionsFrequency);
-      this.grpSyncOptions.Location = new System.Drawing.Point(7, 89);
+      this.grpSyncOptions.Location = new System.Drawing.Point(7, 6);
       this.grpSyncOptions.Name = "grpSyncOptions";
-      this.grpSyncOptions.Size = new System.Drawing.Size(546, 81);
+      this.grpSyncOptions.Size = new System.Drawing.Size(546, 164);
       this.grpSyncOptions.TabIndex = 4;
       this.grpSyncOptions.TabStop = false;
       this.grpSyncOptions.Text = "Sync Options";
       // 
+      // btnSyncDestinationSelect
+      // 
+      this.btnSyncDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnSyncDestinationSelect.Location = new System.Drawing.Point(465, 73);
+      this.btnSyncDestinationSelect.Name = "btnSyncDestinationSelect";
+      this.btnSyncDestinationSelect.Size = new System.Drawing.Size(75, 23);
+      this.btnSyncDestinationSelect.TabIndex = 19;
+      this.btnSyncDestinationSelect.Text = "Use Current";
+      this.btnSyncDestinationSelect.UseVisualStyleBackColor = true;
+      this.btnSyncDestinationSelect.Click += new System.EventHandler(this.btnSyncDestinationSelect_Click);
+      // 
+      // btnSyncSourceSelect
+      // 
+      this.btnSyncSourceSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnSyncSourceSelect.Location = new System.Drawing.Point(465, 30);
+      this.btnSyncSourceSelect.Name = "btnSyncSourceSelect";
+      this.btnSyncSourceSelect.Size = new System.Drawing.Size(75, 23);
+      this.btnSyncSourceSelect.TabIndex = 18;
+      this.btnSyncSourceSelect.Text = "Browse";
+      this.btnSyncSourceSelect.UseVisualStyleBackColor = true;
+      this.btnSyncSourceSelect.Click += new System.EventHandler(this.btnSyncSourceSelect_Click);
+      // 
+      // txtSyncDestination
+      // 
+      this.txtSyncDestination.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.txtSyncDestination.Enabled = false;
+      this.txtSyncDestination.Location = new System.Drawing.Point(9, 75);
+      this.txtSyncDestination.Name = "txtSyncDestination";
+      this.txtSyncDestination.Size = new System.Drawing.Size(450, 20);
+      this.txtSyncDestination.TabIndex = 17;
+      // 
+      // lblSyncDestination
+      // 
+      this.lblSyncDestination.AutoSize = true;
+      this.lblSyncDestination.Location = new System.Drawing.Point(6, 59);
+      this.lblSyncDestination.Name = "lblSyncDestination";
+      this.lblSyncDestination.Size = new System.Drawing.Size(131, 13);
+      this.lblSyncDestination.TabIndex = 16;
+      this.lblSyncDestination.Text = "Sync destination directory:";
+      // 
+      // lblSyncSource
+      // 
+      this.lblSyncSource.AutoSize = true;
+      this.lblSyncSource.Location = new System.Drawing.Point(6, 16);
+      this.lblSyncSource.Name = "lblSyncSource";
+      this.lblSyncSource.Size = new System.Drawing.Size(112, 13);
+      this.lblSyncSource.TabIndex = 15;
+      this.lblSyncSource.Text = "Sync source directory:";
+      // 
+      // txtSyncSource
+      // 
+      this.txtSyncSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.txtSyncSource.Enabled = false;
+      this.txtSyncSource.Location = new System.Drawing.Point(9, 32);
+      this.txtSyncSource.Name = "txtSyncSource";
+      this.txtSyncSource.Size = new System.Drawing.Size(450, 20);
+      this.txtSyncSource.TabIndex = 14;
+      // 
       // numSyncOptionsBandwidthLimit
       // 
-      this.numSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(300, 13);
+      this.numSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(300, 98);
       this.numSyncOptionsBandwidthLimit.Name = "numSyncOptionsBandwidthLimit";
       this.numSyncOptionsBandwidthLimit.Size = new System.Drawing.Size(50, 20);
       this.numSyncOptionsBandwidthLimit.TabIndex = 13;
@@ -382,7 +487,7 @@
       // lblSyncOptionsMaxSize
       // 
       this.lblSyncOptionsMaxSize.AutoSize = true;
-      this.lblSyncOptionsMaxSize.Location = new System.Drawing.Point(175, 56);
+      this.lblSyncOptionsMaxSize.Location = new System.Drawing.Point(175, 141);
       this.lblSyncOptionsMaxSize.Name = "lblSyncOptionsMaxSize";
       this.lblSyncOptionsMaxSize.Size = new System.Drawing.Size(109, 13);
       this.lblSyncOptionsMaxSize.TabIndex = 12;
@@ -390,7 +495,7 @@
       // 
       // numSyncOptionsMaxSize
       // 
-      this.numSyncOptionsMaxSize.Location = new System.Drawing.Point(300, 56);
+      this.numSyncOptionsMaxSize.Location = new System.Drawing.Point(300, 141);
       this.numSyncOptionsMaxSize.Name = "numSyncOptionsMaxSize";
       this.numSyncOptionsMaxSize.Size = new System.Drawing.Size(50, 20);
       this.numSyncOptionsMaxSize.TabIndex = 11;
@@ -398,7 +503,7 @@
       // lblSyncOptionsMinSize
       // 
       this.lblSyncOptionsMinSize.AutoSize = true;
-      this.lblSyncOptionsMinSize.Location = new System.Drawing.Point(175, 36);
+      this.lblSyncOptionsMinSize.Location = new System.Drawing.Point(175, 121);
       this.lblSyncOptionsMinSize.Name = "lblSyncOptionsMinSize";
       this.lblSyncOptionsMinSize.Size = new System.Drawing.Size(112, 13);
       this.lblSyncOptionsMinSize.TabIndex = 10;
@@ -406,7 +511,7 @@
       // 
       // numSyncOptionsMinSize
       // 
-      this.numSyncOptionsMinSize.Location = new System.Drawing.Point(300, 34);
+      this.numSyncOptionsMinSize.Location = new System.Drawing.Point(300, 119);
       this.numSyncOptionsMinSize.Name = "numSyncOptionsMinSize";
       this.numSyncOptionsMinSize.Size = new System.Drawing.Size(50, 20);
       this.numSyncOptionsMinSize.TabIndex = 9;
@@ -414,7 +519,7 @@
       // lblSyncOptionsBandwidthLimit
       // 
       this.lblSyncOptionsBandwidthLimit.AutoSize = true;
-      this.lblSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(175, 16);
+      this.lblSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(175, 101);
       this.lblSyncOptionsBandwidthLimit.Name = "lblSyncOptionsBandwidthLimit";
       this.lblSyncOptionsBandwidthLimit.Size = new System.Drawing.Size(119, 13);
       this.lblSyncOptionsBandwidthLimit.TabIndex = 8;
@@ -427,7 +532,7 @@
       this.cmbSyncOptionsEnabled.Items.AddRange(new object[] {
             "True",
             "False"});
-      this.cmbSyncOptionsEnabled.Location = new System.Drawing.Point(119, 13);
+      this.cmbSyncOptionsEnabled.Location = new System.Drawing.Point(119, 98);
       this.cmbSyncOptionsEnabled.Name = "cmbSyncOptionsEnabled";
       this.cmbSyncOptionsEnabled.Size = new System.Drawing.Size(50, 21);
       this.cmbSyncOptionsEnabled.TabIndex = 6;
@@ -435,7 +540,7 @@
       // lblSyncOptionsEnabled
       // 
       this.lblSyncOptionsEnabled.AutoSize = true;
-      this.lblSyncOptionsEnabled.Location = new System.Drawing.Point(6, 16);
+      this.lblSyncOptionsEnabled.Location = new System.Drawing.Point(6, 101);
       this.lblSyncOptionsEnabled.Name = "lblSyncOptionsEnabled";
       this.lblSyncOptionsEnabled.Size = new System.Drawing.Size(101, 13);
       this.lblSyncOptionsEnabled.TabIndex = 5;
@@ -444,13 +549,13 @@
       // llblSyncOptionsHelp
       // 
       this.llblSyncOptionsHelp.AutoSize = true;
-      this.llblSyncOptionsHelp.Location = new System.Drawing.Point(423, 63);
+      this.llblSyncOptionsHelp.Location = new System.Drawing.Point(423, 148);
       this.llblSyncOptionsHelp.Name = "llblSyncOptionsHelp";
       this.llblSyncOptionsHelp.Size = new System.Drawing.Size(117, 13);
       this.llblSyncOptionsHelp.TabIndex = 4;
       this.llblSyncOptionsHelp.TabStop = true;
       this.llblSyncOptionsHelp.Text = "Help with these options";
-      this.llblSyncOptionsHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblSyncOptionsHelp_LinkClicked);
+      this.llblSyncOptionsHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblSyncOptionsHelp_LinkClicked);
       // 
       // cmbSyncOptionsSvC
       // 
@@ -459,7 +564,7 @@
       this.cmbSyncOptionsSvC.Items.AddRange(new object[] {
             "sync",
             "copy"});
-      this.cmbSyncOptionsSvC.Location = new System.Drawing.Point(119, 53);
+      this.cmbSyncOptionsSvC.Location = new System.Drawing.Point(119, 138);
       this.cmbSyncOptionsSvC.Name = "cmbSyncOptionsSvC";
       this.cmbSyncOptionsSvC.Size = new System.Drawing.Size(50, 21);
       this.cmbSyncOptionsSvC.TabIndex = 3;
@@ -467,7 +572,7 @@
       // lblSyncOptionsSvC
       // 
       this.lblSyncOptionsSvC.AutoSize = true;
-      this.lblSyncOptionsSvC.Location = new System.Drawing.Point(6, 56);
+      this.lblSyncOptionsSvC.Location = new System.Drawing.Point(6, 141);
       this.lblSyncOptionsSvC.Name = "lblSyncOptionsSvC";
       this.lblSyncOptionsSvC.Size = new System.Drawing.Size(76, 13);
       this.lblSyncOptionsSvC.TabIndex = 2;
@@ -476,7 +581,7 @@
       // lblSyncOptionsFrequency
       // 
       this.lblSyncOptionsFrequency.AutoSize = true;
-      this.lblSyncOptionsFrequency.Location = new System.Drawing.Point(6, 36);
+      this.lblSyncOptionsFrequency.Location = new System.Drawing.Point(6, 121);
       this.lblSyncOptionsFrequency.Name = "lblSyncOptionsFrequency";
       this.lblSyncOptionsFrequency.Size = new System.Drawing.Size(113, 13);
       this.lblSyncOptionsFrequency.TabIndex = 1;
@@ -484,48 +589,10 @@
       // 
       // numSyncOptionsFrequency
       // 
-      this.numSyncOptionsFrequency.Location = new System.Drawing.Point(119, 34);
+      this.numSyncOptionsFrequency.Location = new System.Drawing.Point(119, 119);
       this.numSyncOptionsFrequency.Name = "numSyncOptionsFrequency";
       this.numSyncOptionsFrequency.Size = new System.Drawing.Size(50, 20);
       this.numSyncOptionsFrequency.TabIndex = 0;
-      // 
-      // txtSyncDestination
-      // 
-      this.txtSyncDestination.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.txtSyncDestination.Enabled = false;
-      this.txtSyncDestination.Location = new System.Drawing.Point(6, 62);
-      this.txtSyncDestination.Name = "txtSyncDestination";
-      this.txtSyncDestination.Size = new System.Drawing.Size(466, 20);
-      this.txtSyncDestination.TabIndex = 3;
-      // 
-      // lblSyncDestination
-      // 
-      this.lblSyncDestination.AutoSize = true;
-      this.lblSyncDestination.Location = new System.Drawing.Point(3, 46);
-      this.lblSyncDestination.Name = "lblSyncDestination";
-      this.lblSyncDestination.Size = new System.Drawing.Size(131, 13);
-      this.lblSyncDestination.TabIndex = 2;
-      this.lblSyncDestination.Text = "Sync destination directory:";
-      // 
-      // lblSyncSource
-      // 
-      this.lblSyncSource.AutoSize = true;
-      this.lblSyncSource.Location = new System.Drawing.Point(3, 3);
-      this.lblSyncSource.Name = "lblSyncSource";
-      this.lblSyncSource.Size = new System.Drawing.Size(112, 13);
-      this.lblSyncSource.TabIndex = 1;
-      this.lblSyncSource.Text = "Sync source directory:";
-      // 
-      // txtSyncSource
-      // 
-      this.txtSyncSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.txtSyncSource.Enabled = false;
-      this.txtSyncSource.Location = new System.Drawing.Point(6, 19);
-      this.txtSyncSource.Name = "txtSyncSource";
-      this.txtSyncSource.Size = new System.Drawing.Size(466, 20);
-      this.txtSyncSource.TabIndex = 0;
       // 
       // ctxtDownloadContext
       // 
@@ -544,16 +611,16 @@
       // ctxtUploadContext
       // 
       this.ctxtUploadContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cancelToolStripMenuItem});
+            this.ctxtUploadContext_Cancel});
       this.ctxtUploadContext.Name = "ctxtUploadContext";
       this.ctxtUploadContext.Size = new System.Drawing.Size(115, 26);
       // 
-      // cancelToolStripMenuItem
+      // ctxtUploadContext_Cancel
       // 
-      this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
-      this.cancelToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-      this.cancelToolStripMenuItem.Text = "Cancel";
-      this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
+      this.ctxtUploadContext_Cancel.Name = "ctxtUploadContext_Cancel";
+      this.ctxtUploadContext_Cancel.Size = new System.Drawing.Size(114, 22);
+      this.ctxtUploadContext_Cancel.Text = "Cancel";
+      this.ctxtUploadContext_Cancel.Click += new System.EventHandler(this.ctxtUploadContext_Cancel_Click);
       // 
       // notifyIcon
       // 
@@ -564,92 +631,30 @@
       // ctxtExplorerContext
       // 
       this.ctxtExplorerContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newFolderToolStripMenuItem,
-            this.deleteFolderToolStripMenuItem});
+            this.ctxtExplorerContext_NewFolder,
+            this.ctxtExplorerContext_Delete});
       this.ctxtExplorerContext.Name = "ctxtExplorerContext";
       this.ctxtExplorerContext.Size = new System.Drawing.Size(193, 48);
       // 
-      // newFolderToolStripMenuItem
+      // ctxtExplorerContext_NewFolder
       // 
-      this.newFolderToolStripMenuItem.Name = "newFolderToolStripMenuItem";
-      this.newFolderToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-      this.newFolderToolStripMenuItem.Text = "New Folder";
-      this.newFolderToolStripMenuItem.Click += new System.EventHandler(this.newFolderToolStripMenuItem_Click);
+      this.ctxtExplorerContext_NewFolder.Name = "ctxtExplorerContext_NewFolder";
+      this.ctxtExplorerContext_NewFolder.Size = new System.Drawing.Size(192, 22);
+      this.ctxtExplorerContext_NewFolder.Text = "New Folder";
+      this.ctxtExplorerContext_NewFolder.Click += new System.EventHandler(this.ctxtExplorerContext_NewFolder_Click);
       // 
-      // deleteFolderToolStripMenuItem
+      // ctxtExplorerContext_Delete
       // 
-      this.deleteFolderToolStripMenuItem.Name = "deleteFolderToolStripMenuItem";
-      this.deleteFolderToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-      this.deleteFolderToolStripMenuItem.Text = "Delete Selected Item";
-      this.deleteFolderToolStripMenuItem.Click += new System.EventHandler(this.deleteFolderToolStripMenuItem_Click);
-      // 
-      // lstExplorer
-      // 
-      this.lstExplorer.AllowDrop = true;
-      this.lstExplorer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.lstExplorer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colfileBytes,
-            this.colfileSize,
-            this.colModified,
-            this.colfilePath});
-      this.lstExplorer.FullRowSelect = true;
-      this.lstExplorer.Location = new System.Drawing.Point(0, 0);
-      this.lstExplorer.Name = "lstExplorer";
-      this.lstExplorer.Size = new System.Drawing.Size(559, 293);
-      this.lstExplorer.TabIndex = 0;
-      this.lstExplorer.UseCompatibleStateImageBehavior = false;
-      this.lstExplorer.View = System.Windows.Forms.View.Details;
-      this.lstExplorer.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstExplorer_DragDrop);
-      this.lstExplorer.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstExplorer_DragEnter);
-      this.lstExplorer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstExplorer_MouseClick);
-      this.lstExplorer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstExplorer_MouseDoubleClick);
-      // 
-      // colfileBytes
-      // 
-      this.colfileBytes.Text = "File Size (Bytes)";
-      this.colfileBytes.Width = 70;
-      // 
-      // colfileSize
-      // 
-      this.colfileSize.Text = "File Size";
-      // 
-      // colModified
-      // 
-      this.colModified.Text = "Modified";
-      // 
-      // colfilePath
-      // 
-      this.colfilePath.Text = "File Path";
-      // 
-      // tabRemote
-      // 
-      this.tabRemote.Controls.Add(this.lstExplorer);
-      this.tabRemote.Location = new System.Drawing.Point(4, 22);
-      this.tabRemote.Name = "tabRemote";
-      this.tabRemote.Padding = new System.Windows.Forms.Padding(3);
-      this.tabRemote.Size = new System.Drawing.Size(559, 293);
-      this.tabRemote.TabIndex = 0;
-      this.tabRemote.Text = "Remote";
-      this.tabRemote.UseVisualStyleBackColor = true;
-      // 
-      // lblLoading
-      // 
-      this.lblLoading.Location = new System.Drawing.Point(12, 28);
-      this.lblLoading.Name = "lblLoading";
-      this.lblLoading.Size = new System.Drawing.Size(568, 319);
-      this.lblLoading.TabIndex = 5;
-      this.lblLoading.Text = "Loading...";
-      this.lblLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      this.lblLoading.Visible = false;
+      this.ctxtExplorerContext_Delete.Name = "ctxtExplorerContext_Delete";
+      this.ctxtExplorerContext_Delete.Size = new System.Drawing.Size(192, 22);
+      this.ctxtExplorerContext_Delete.Text = "Delete Selected Item";
+      this.ctxtExplorerContext_Delete.Click += new System.EventHandler(this.ctxtExplorerContext_Delete_Click);
       // 
       // rcloneExplorer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(592, 372);
-      this.Controls.Add(this.lblLoading);
       this.Controls.Add(this.tabMainUI);
       this.Controls.Add(this.lblFooter);
       this.Controls.Add(this.txtRawOut);
@@ -664,6 +669,7 @@
       this.menuStrip.ResumeLayout(false);
       this.menuStrip.PerformLayout();
       this.tabMainUI.ResumeLayout(false);
+      this.tabRemote.ResumeLayout(false);
       this.tabDownloads.ResumeLayout(false);
       this.tabUploads.ResumeLayout(false);
       this.tabSyncing.ResumeLayout(false);
@@ -677,7 +683,6 @@
       this.ctxtDownloadContext.ResumeLayout(false);
       this.ctxtUploadContext.ResumeLayout(false);
       this.ctxtExplorerContext.ResumeLayout(false);
-      this.tabRemote.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -689,7 +694,7 @@
     private System.Windows.Forms.MenuStrip menuStrip;
     private System.Windows.Forms.ToolStripMenuItem menuStripFile;
     private System.Windows.Forms.ToolStripMenuItem menuStripView;
-    private System.Windows.Forms.ToolStripMenuItem menuStripToggleConsole;
+    private System.Windows.Forms.ToolStripMenuItem menuStripView_ToggleConsole;
     private System.Windows.Forms.TabControl tabMainUI;
     private System.Windows.Forms.TabPage tabDownloads;
     private System.Windows.Forms.ListView lstDownloads;
@@ -697,23 +702,17 @@
     private System.Windows.Forms.ColumnHeader colDPath;
     private System.Windows.Forms.ContextMenuStrip ctxtDownloadContext;
     private System.Windows.Forms.ToolStripMenuItem ctxtDownloadContext_Cancel;
-    private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem quitKillTransfersToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem menuStripFile_Quit;
+    private System.Windows.Forms.ToolStripMenuItem menuStripQuitKill;
+    private System.Windows.Forms.ToolStripMenuItem menuStripView_Refresh;
     private System.Windows.Forms.TabPage tabUploads;
     private System.Windows.Forms.ListView lstUploads;
     private System.Windows.Forms.ColumnHeader colUProgress;
     private System.Windows.Forms.ColumnHeader colUPath;
     private System.Windows.Forms.ContextMenuStrip ctxtUploadContext;
-    private System.Windows.Forms.ToolStripMenuItem cancelToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ctxtUploadContext_Cancel;
     private System.Windows.Forms.TabPage tabSyncing;
-    private System.Windows.Forms.TextBox txtSyncDestination;
-    private System.Windows.Forms.Label lblSyncDestination;
-    private System.Windows.Forms.Label lblSyncSource;
-    private System.Windows.Forms.TextBox txtSyncSource;
     private System.Windows.Forms.GroupBox grpSyncOptions;
-    private System.Windows.Forms.Button btnSyncDestinationSelect;
-    private System.Windows.Forms.Button btnSyncSourceSelect;
     private System.Windows.Forms.Label lblSyncOptionsFrequency;
     private System.Windows.Forms.NumericUpDown numSyncOptionsFrequency;
     private System.Windows.Forms.LinkLabel llblSyncOptionsHelp;
@@ -732,8 +731,8 @@
     private System.Windows.Forms.TextBox txtSyncLog;
     private System.Windows.Forms.Button btnSyncStart;
     private System.Windows.Forms.ContextMenuStrip ctxtExplorerContext;
-    private System.Windows.Forms.ToolStripMenuItem newFolderToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem deleteFolderToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ctxtExplorerContext_NewFolder;
+    private System.Windows.Forms.ToolStripMenuItem ctxtExplorerContext_Delete;
     private System.Windows.Forms.TabPage tabRemote;
     private System.Windows.Forms.ListView lstExplorer;
     private System.Windows.Forms.ColumnHeader colfileBytes;
@@ -741,6 +740,12 @@
     private System.Windows.Forms.ColumnHeader colModified;
     private System.Windows.Forms.ColumnHeader colfilePath;
     private System.Windows.Forms.Label lblLoading;
+    private System.Windows.Forms.Button btnSyncDestinationSelect;
+    private System.Windows.Forms.Button btnSyncSourceSelect;
+    private System.Windows.Forms.TextBox txtSyncDestination;
+    private System.Windows.Forms.Label lblSyncDestination;
+    private System.Windows.Forms.Label lblSyncSource;
+    private System.Windows.Forms.TextBox txtSyncSource;
   }
 }
 

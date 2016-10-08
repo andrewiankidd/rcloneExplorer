@@ -6,7 +6,7 @@ using System.Text;
 //http://stackoverflow.com/questions/217902/reading-writing-an-ini-file
 namespace rcloneExplorer
 {
-  class IniFile   // revision 11
+  public class IniFile   // revision 11
   {
     string Path;
     string EXE = Assembly.GetExecutingAssembly().GetName().Name;

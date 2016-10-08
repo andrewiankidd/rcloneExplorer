@@ -84,8 +84,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="iniFile.cs" />
-    <Compile Include="Prompt.cs" />
+    <Compile Include="rcloneExplorer.Core.DownloadHandler.cs" />
+    <Compile Include="rcloneExplorer.Core.ExploreHandler.cs" />
+    <Compile Include="rcloneExplorer.Core.Initialization.cs" />
+    <Compile Include="rcloneExplorer.Core.MiscContainer.cs" />
+    <Compile Include="rcloneExplorer.Core.iniFile.cs" />
+    <Compile Include="rcloneExplorer.Core.PromptHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="rcloneExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="rcloneExplorer.Core.InternalExec.cs" />
+    <Compile Include="rcloneExplorer.Core.SyncHandler.cs" />
+    <Compile Include="rcloneExplorer.Core.TickHandler.cs" />
+    <Compile Include="rcloneExplorer.Core.UploadHandler.cs" />
     <Compile Include="rcloneSplash.cs">
       <SubType>Form</SubType>
     </Compile>
