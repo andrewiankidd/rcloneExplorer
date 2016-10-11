@@ -149,6 +149,10 @@ namespace rcloneExplorer
         }
       }
     }
+    private void lstExplorer_ColumnClick(object sender, ColumnClickEventArgs e)
+    {
+      exploreHandler.lstExplorer_ColumnClick(sender, e);
+    }
     private void lstExplorer_DragEnter(object sender, DragEventArgs e)
     {
       exploreHandler.lstExplorer_DragEnter(sender, e);
@@ -263,6 +267,5 @@ namespace rcloneExplorer
     {
       syncingHandler.btnSyncStart_Click(sender, e);
     }
-
   }
 }
