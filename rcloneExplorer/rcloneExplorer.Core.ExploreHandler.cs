@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -195,6 +196,22 @@ namespace rcloneExplorer
       lblLoading.Refresh();
       populatelstExplorer(internalExecHandler.Execute("lsl", iniSettings.Read("rcloneRemote") + ":" + rcloneExplorer.remoteCD + "/"));
       lblLoading.Visible = false;
+    }
+    public void streamMediaToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      ListView lstExplorer = rcloneExplorer.myform.Controls.Find("lstExplorer", true)[0] as ListView;
+      string storedFilesizeHuman = lstExplorer.SelectedItems[0].SubItems[1].Text;
+      string storedFilepath = rcloneExplorer.remoteCD + lstExplorer.SelectedItems[0].SubItems[3].Text;
+      if (storedFilesizeHuman != "<dir>" && storedFilesizeHuman != "<up>")
+      {
+        //we're on the honor system for filetypes
+        Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | ffplay -");
+      }
+      else
+      {
+        MessageBox.Show("ERR: Can't stream a directory.");
+      }
+        
     }
 
     public void ctxtExplorerContext_NewFolder_Click(object sender, EventArgs e)

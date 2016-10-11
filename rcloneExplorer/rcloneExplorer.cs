@@ -24,11 +24,12 @@ namespace rcloneExplorer
 
     public static Form myform = null;
 
-    //set local vars
+    //set global vars
     public static string[] files;
     public static string remoteCD = "";
     public static long totalFilesize = 0;
     public static bool loaded = false;
+    public static bool streamingEnabled = false;
     public static System.Windows.Forms.Timer transferTimer = new System.Windows.Forms.Timer();
 
     public rcloneExplorer()
@@ -143,6 +144,7 @@ namespace rcloneExplorer
       {
         if (lstExplorer.FocusedItem.Bounds.Contains(e.Location) == true)
         {
+          if (streamingEnabled) { streamMediaToolStripMenuItem.Enabled = true; }
           ctxtExplorerContext.Show(Cursor.Position);
         }
       }
@@ -154,6 +156,10 @@ namespace rcloneExplorer
     private void lstExplorer_MouseDoubleClick(object sender, MouseEventArgs e)
     {
       exploreHandler.lstExplorer_MouseDoubleClick(sender, e);
+    }
+    private void streamMediaToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      exploreHandler.streamMediaToolStripMenuItem_Click(sender, e);
     }
     private void ctxtExplorerContext_NewFolder_Click(object sender, EventArgs e)
     {
@@ -257,5 +263,6 @@ namespace rcloneExplorer
     {
       syncingHandler.btnSyncStart_Click(sender, e);
     }
+
   }
 }

@@ -62,6 +62,10 @@ namespace rcloneExplorer
         Process.Start("notepad.exe", "rcloneExplorer.ini");
         Environment.Exit(0);
       }
+      if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\ffplay.exe"))
+      {
+        rcloneExplorer.streamingEnabled = true;
+      }
     }
     public void initSyncSettings()
     {
