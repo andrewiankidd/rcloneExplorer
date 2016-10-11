@@ -17,6 +17,9 @@ Runs rclone commands and displays output based on the results
 ###Browse encrypted remotes transparently
 rcloneExplorer merely takes output from rclone, which does all the heavy lifting. If you have an encrypted remote set up in rclone and point rcloneExplorer to it, it will work just as well as with a non-encrypted remote. rcloneExplorer can only access rclone configured remotes.
 
+###Streaming
+Making use of ['rclone cat'](http://rclone.org/commands/rclone_cat/) and [ffplay](https://ffmpeg.org/ffplay.html), media files can be streamed directly from remote.
+
 ###Syncing
 rcloneExplorer provides a simple GUI to set up and schedule a regular sync option, to keep your files backed up and safe on a regular basis. [Currently a WIP]
 
