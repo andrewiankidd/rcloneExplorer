@@ -132,11 +132,11 @@ namespace rcloneExplorer
       else if (storedFilesizeHuman == "<up>")
       {
         //seperate directories in string, rebuild array without last two, join back to string
-        rcloneExplorer.remoteCD = String.Join(" ", rcloneExplorer.remoteCD.Split('/').Take(rcloneExplorer.remoteCD.Split('/').Count() - 2).ToArray());
+        rcloneExplorer.remoteCD = String.Join("/", rcloneExplorer.remoteCD.Split('/').Take(rcloneExplorer.remoteCD.Split('/').Count() - 2).ToArray()) + "/";
         //populate lstview with new directory contents
         lblLoading.Visible = true;
         lblLoading.Refresh();
-        populatelstExplorer(iniSettings.Read("rcloneRemote") + ":" + rcloneExplorer.remoteCD + "/");
+        populatelstExplorer(iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "/\"");
         lblLoading.Visible = false;
       }
       else
@@ -235,7 +235,7 @@ namespace rcloneExplorer
       if (storedFilesizeHuman != "<dir>" && storedFilesizeHuman != "<up>")
       {
         //we're on the honor system for filetypes
-        Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | ffplay -");
+        Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | ffplay -window_title " + storedFilepath + " -");
       }
       else
       {
