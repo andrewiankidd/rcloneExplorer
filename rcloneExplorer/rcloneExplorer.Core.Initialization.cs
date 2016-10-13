@@ -105,7 +105,7 @@ namespace rcloneExplorer
     {
       Label lblFooter = rcloneExplorer.myform.Controls.Find("lblFooter", true)[0] as Label;
       //populate the listview with results
-      exploreHandler.populatelstExplorer(internalExecHandler.Execute("lsl", iniSettings.Read("rcloneRemote") + ":"));
+      exploreHandler.populatelstExplorer(iniSettings.Read("rcloneRemote") + ":");
       //show total filesize in footer
       lblFooter.Text = "Total Filesize:" + miscContainer.BytesToString(rcloneExplorer.totalFilesize).ToString();
       //mark as loaded/ready (close splashscreen)

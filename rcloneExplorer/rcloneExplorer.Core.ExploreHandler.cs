@@ -76,16 +76,21 @@ namespace rcloneExplorer
     {
       ListView lstExplorer = rcloneExplorer.myform.Controls.Find("lstExplorer", true)[0] as ListView;
       // Call the sort method to manually sort.
+      //lstExplorer.Items[0].Remove();
       ItemComparer sorter = lstExplorer.ListViewItemSorter as ItemComparer;
+      //get clicked column num
+      int eColumn = e.Column;
+      //if clicked column is filesizehuman, sort by filesize bytes instead (dirty hack)
+      if (eColumn == 1) { eColumn = 0; }
       if (sorter == null)
       {
-        sorter = new ItemComparer(e.Column);
+        sorter = new ItemComparer(eColumn);
         sorter.Order = SortOrder.Ascending;
         lstExplorer.ListViewItemSorter = sorter;
       }
       // if clicked column is already the column that is being sorted
-      if (e.Column == sorter.Column)
-      {
+      if (eColumn == sorter.Column)
+      {      
         // Reverse the current sort direction
         if (sorter.Order == SortOrder.Ascending)
           sorter.Order = SortOrder.Descending;
@@ -95,11 +100,11 @@ namespace rcloneExplorer
       else
       {
         // Set the column number that is to be sorted; default to ascending.
-        sorter.Column = e.Column;
+        sorter.Column = eColumn;
         sorter.Order = SortOrder.Ascending;
       }
       lstExplorer.Sort();
-
+      //.Items.Insert(0,new ListViewItem(new string[] { "0", "<up>", "", ".." }));
     }
    
     public void lstExplorer_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -121,7 +126,7 @@ namespace rcloneExplorer
         //refresh
         lblLoading.Visible = true;
         lblLoading.Refresh();
-        populatelstExplorer(internalExecHandler.Execute("lsl", iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "\""));
+        populatelstExplorer(iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "\"");
         lblLoading.Visible = false;
       }
       else if (storedFilesizeHuman == "<up>")
@@ -131,7 +136,7 @@ namespace rcloneExplorer
         //populate lstview with new directory contents
         lblLoading.Visible = true;
         lblLoading.Refresh();
-        populatelstExplorer(internalExecHandler.Execute("lsl", iniSettings.Read("rcloneRemote") + ":" + rcloneExplorer.remoteCD + "/"));
+        populatelstExplorer(iniSettings.Read("rcloneRemote") + ":" + rcloneExplorer.remoteCD + "/");
         lblLoading.Visible = false;
       }
       else
@@ -159,7 +164,7 @@ namespace rcloneExplorer
       Form.ActiveForm.Text = "rcloneExplorer :" + rcloneExplorer.remoteCD;
     }
 
-    public void populatelstExplorer(string fileArray)
+    public void populatelstExplorer(string remotePath)
     {
       ListView lstExplorer = rcloneExplorer.myform.Controls.Find("lstExplorer", true)[0] as ListView;
       //clear existing
@@ -168,63 +173,58 @@ namespace rcloneExplorer
       rcloneExplorer.totalFilesize = 0;
       //add up [..]
       lstExplorer.Items.Add(new ListViewItem(new string[] { "0", "<up>", "", ".." }));
-      //breakdown output
-      rcloneExplorer.files = fileArray.Split('\n');
+      //get rclone output
+      rcloneExplorer.files = internalExecHandler.Execute("lsd", remotePath).Split('\n');
       //remove last value which is always null
       rcloneExplorer.files = rcloneExplorer.files.Take(rcloneExplorer.files.Count() - 1).ToArray();
-      //create array which will store any directories
-      List<string> fileDirList = new List<String>();
-
       //process to list view
       foreach (string item in rcloneExplorer.files)
       {
-        //split entry into filesize and path
+        //split entry into data
+        List<string> temp = item.TrimStart().Split(new string[] { " " }, 12, StringSplitOptions.None).ToList();
+        //organize stored/remote dir information
+        string fileBytes = "0";
+        string fileHuman = "<dir>";
+        string fileDate = temp[1];
+        string filetime = temp[2];
+        string filePath = temp[11];
+        //echo the dir
+        string[] temprow = new string[] { fileBytes, fileHuman, fileDate + " " + filetime, filePath };
+        //insert
+        lstExplorer.Items.Add(new ListViewItem(temprow));
+        
+      }
+      //get rclone output
+      rcloneExplorer.files = internalExecHandler.Execute("lsl", remotePath + " --max-depth 1").Split('\n');
+      //remove last value which is always null
+      rcloneExplorer.files = rcloneExplorer.files.Take(rcloneExplorer.files.Count() - 1).ToArray();
+      //process to list view
+      foreach (string item in rcloneExplorer.files)
+      {
+        //split entry into data
         List<string> temp = item.TrimStart().Split(new string[] { " " }, 4, StringSplitOptions.None).ToList();
-
-        //organize stored/remote information
+        //organize stored/remote dir information
         string fileBytes = temp[0];
         string fileHuman = miscContainer.BytesToString(Convert.ToInt64(temp[0]));
         string fileDate = temp[1];
         string filetime = temp[2].Remove(temp[2].Length - 10);
         string filePath = temp[3];
-
-
-        if (filePath.Contains("/"))
-        {
-          string thedir = filePath.Split('/').ToList()[0];
-          if (!fileDirList.Contains(thedir))
-          {
-            //note that this dir is saved
-            fileDirList.Add(thedir);
-            //create array
-            string[] temprow = new string[] { "0", "<dir>", fileDate + " " + filetime, thedir };
-            //insert
-            lstExplorer.Items.Add(new ListViewItem(temprow));
-          }
-          else
-          {
-            //this dir is already covered, do nothing
-          }
-        }
-        else
-        {
-          //this is a file not a dir, make array
-          string[] temprow = new string[] { fileBytes, fileHuman, fileDate + " " + filetime, filePath };
-          //insert
-          lstExplorer.Items.Add(new ListViewItem(temprow));
-        }
-
+        //echo the dir
+        string[] temprow = new string[] { fileBytes, fileHuman, fileDate + " " + filetime, filePath };
+        //insert
+        lstExplorer.Items.Add(new ListViewItem(temprow));
         //keep count of total filesize
         rcloneExplorer.totalFilesize += Convert.ToInt64(fileBytes);
-
       }
+
+      
     }
     public void refreshlstExplorer()
     {
       Label lblLoading = rcloneExplorer.myform.Controls.Find("lblLoading", true)[0] as Label;
       lblLoading.Visible = true;
       lblLoading.Refresh();
-      populatelstExplorer(internalExecHandler.Execute("lsl", iniSettings.Read("rcloneRemote") + ":" + rcloneExplorer.remoteCD + "/"));
+      populatelstExplorer(iniSettings.Read("rcloneRemote") + ":" + rcloneExplorer.remoteCD + "/");
       lblLoading.Visible = false;
     }
     public void streamMediaToolStripMenuItem_Click(object sender, EventArgs e)
