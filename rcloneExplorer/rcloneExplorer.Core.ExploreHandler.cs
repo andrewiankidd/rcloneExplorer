@@ -161,7 +161,7 @@ namespace rcloneExplorer
         }
       }
       //set window title
-      Form.ActiveForm.Text = "rcloneExplorer :" + rcloneExplorer.remoteCD;
+      rcloneExplorer.myform.Text = "rcloneExplorer :" + rcloneExplorer.remoteCD;
     }
 
     public void populatelstExplorer(string remotePath)
@@ -224,7 +224,7 @@ namespace rcloneExplorer
       Label lblLoading = rcloneExplorer.myform.Controls.Find("lblLoading", true)[0] as Label;
       lblLoading.Visible = true;
       lblLoading.Refresh();
-      populatelstExplorer(iniSettings.Read("rcloneRemote") + ":" + rcloneExplorer.remoteCD + "/");
+      populatelstExplorer(iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "/\"");
       lblLoading.Visible = false;
     }
     public void streamMediaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -265,10 +265,12 @@ namespace rcloneExplorer
       DialogResult promptdelete = MessageBox.Show("Delete " + storedFilepath + "?", "Confirm Delete", MessageBoxButtons.YesNo);
       if (promptdelete == DialogResult.Yes)
       {
+        Label lblLoading = rcloneExplorer.myform.Controls.Find("lblLoading", true)[0] as Label;      
         if (storedFilesizeHuman == "<dir>")
         {
           if (iniSettings.Read("refreshAutomatically") == "true")
           {
+            lblLoading.Visible = true;
             internalExecHandler.Execute("purge", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\"");
             refreshlstExplorer();
           }
@@ -285,6 +287,7 @@ namespace rcloneExplorer
         {
           if (iniSettings.Read("refreshAutomatically") == "true")
           {
+            lblLoading.Visible = true;
             internalExecHandler.Execute("delete", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\"");
             refreshlstExplorer();
           }
