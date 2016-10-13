@@ -267,17 +267,34 @@ namespace rcloneExplorer
       {
         if (storedFilesizeHuman == "<dir>")
         {
-          new Thread(() =>
+          if (iniSettings.Read("refreshAutomatically") == "true")
           {
             internalExecHandler.Execute("purge", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\"");
-          }).Start();
+            refreshlstExplorer();
+          }
+          else
+          {
+            new Thread(() =>
+            {
+              internalExecHandler.Execute("purge", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\"");
+            }).Start();
+          }
+
         }
         else
         {
-          new Thread(() =>
+          if (iniSettings.Read("refreshAutomatically") == "true")
           {
             internalExecHandler.Execute("delete", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\"");
-          }).Start();
+            refreshlstExplorer();
+          }
+          else
+          {
+            new Thread(() =>
+            {
+              internalExecHandler.Execute("delete", iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\"");
+            }).Start();
+          }
         }
       }
     }
