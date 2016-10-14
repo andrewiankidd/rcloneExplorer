@@ -136,7 +136,7 @@ namespace rcloneExplorer
         //populate lstview with new directory contents
         lblLoading.Visible = true;
         lblLoading.Refresh();
-        populatelstExplorer(iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "/\"");
+        populatelstExplorer(iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "\"");
         lblLoading.Visible = false;
       }
       else
