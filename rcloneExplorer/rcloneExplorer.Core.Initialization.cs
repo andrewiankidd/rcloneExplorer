@@ -107,7 +107,7 @@ namespace rcloneExplorer
       //populate the listview with results
       exploreHandler.populatelstExplorer(iniSettings.Read("rcloneRemote") + ":");
       //show total filesize in footer
-      lblFooter.Text = "Total Filesize:" + miscContainer.BytesToString(rcloneExplorer.totalFilesize).ToString();
+      //lblFooter.Text = "Total Filesize:" + miscContainer.BytesToString(rcloneExplorer.totalFilesize).ToString();
       //mark as loaded/ready (close splashscreen)
       rcloneExplorer.loaded = true;
       //create a timer which can monitor progress periodically
