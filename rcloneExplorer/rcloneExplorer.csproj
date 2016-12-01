@@ -104,11 +104,11 @@
     <Compile Include="rcloneExplorer.Core.SyncHandler.cs" />
     <Compile Include="rcloneExplorer.Core.TickHandler.cs" />
     <Compile Include="rcloneExplorer.Core.UploadHandler.cs" />
-    <Compile Include="rcloneSplash.cs">
+    <Compile Include="rcloneExplorer.Auxiliary.Splash.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="rcloneSplash.Designer.cs">
-      <DependentUpon>rcloneSplash.cs</DependentUpon>
+    <Compile Include="rcloneExplorer.Auxiliary.Splash.Designer.cs">
+      <DependentUpon>rcloneExplorer.Auxiliary.Splash.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="rcloneExplorer.resx">
       <DependentUpon>rcloneExplorer.cs</DependentUpon>
@@ -122,8 +122,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="rcloneSplash.resx">
-      <DependentUpon>rcloneSplash.cs</DependentUpon>
+    <EmbeddedResource Include="rcloneExplorer.Auxiliary.Splash.resx">
+      <DependentUpon>rcloneExplorer.Auxiliary.Splash.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
