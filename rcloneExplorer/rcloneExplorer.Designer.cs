@@ -93,6 +93,8 @@
       this.streamMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxtExplorerContext_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxtExplorerContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
+      this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuStripView_Config = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip.SuspendLayout();
       this.tabMainUI.SuspendLayout();
       this.tabRemote.SuspendLayout();
@@ -113,12 +115,11 @@
       // 
       this.txtRawOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.txtRawOut.Location = new System.Drawing.Point(16, 353);
-      this.txtRawOut.Margin = new System.Windows.Forms.Padding(4);
+      this.txtRawOut.Location = new System.Drawing.Point(12, 287);
       this.txtRawOut.Multiline = true;
       this.txtRawOut.Name = "txtRawOut";
       this.txtRawOut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.txtRawOut.Size = new System.Drawing.Size(756, 0);
+      this.txtRawOut.Size = new System.Drawing.Size(568, 1);
       this.txtRawOut.TabIndex = 1;
       // 
       // lblFooter
@@ -128,10 +129,9 @@
       this.lblFooter.AutoSize = true;
       this.lblFooter.BackColor = System.Drawing.SystemColors.Control;
       this.lblFooter.Cursor = System.Windows.Forms.Cursors.Default;
-      this.lblFooter.Location = new System.Drawing.Point(12, 431);
-      this.lblFooter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblFooter.Location = new System.Drawing.Point(9, 350);
       this.lblFooter.Name = "lblFooter";
-      this.lblFooter.Size = new System.Drawing.Size(0, 17);
+      this.lblFooter.Size = new System.Drawing.Size(0, 13);
       this.lblFooter.TabIndex = 2;
       // 
       // menuStrip
@@ -139,11 +139,11 @@
       this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
       this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuStripFile,
-            this.menuStripView});
+            this.menuStripView,
+            this.settingsToolStripMenuItem});
       this.menuStrip.Location = new System.Drawing.Point(0, 0);
       this.menuStrip.Name = "menuStrip";
-      this.menuStrip.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-      this.menuStrip.Size = new System.Drawing.Size(789, 28);
+      this.menuStrip.Size = new System.Drawing.Size(592, 24);
       this.menuStrip.TabIndex = 3;
       this.menuStrip.Text = "menuStrip";
       // 
@@ -153,20 +153,20 @@
             this.menuStripFile_Quit,
             this.menuStripQuitKill});
       this.menuStripFile.Name = "menuStripFile";
-      this.menuStripFile.Size = new System.Drawing.Size(44, 24);
+      this.menuStripFile.Size = new System.Drawing.Size(37, 20);
       this.menuStripFile.Text = "File";
       // 
       // menuStripFile_Quit
       // 
       this.menuStripFile_Quit.Name = "menuStripFile_Quit";
-      this.menuStripFile_Quit.Size = new System.Drawing.Size(247, 26);
+      this.menuStripFile_Quit.Size = new System.Drawing.Size(207, 22);
       this.menuStripFile_Quit.Text = "Quit (Continue Transfers)";
       this.menuStripFile_Quit.Click += new System.EventHandler(this.menuStripFile_Quit_Click);
       // 
       // menuStripQuitKill
       // 
       this.menuStripQuitKill.Name = "menuStripQuitKill";
-      this.menuStripQuitKill.Size = new System.Drawing.Size(247, 26);
+      this.menuStripQuitKill.Size = new System.Drawing.Size(207, 22);
       this.menuStripQuitKill.Text = "Quit";
       this.menuStripQuitKill.Click += new System.EventHandler(this.menuStripFile_QuitKill_Click);
       // 
@@ -176,20 +176,20 @@
             this.menuStripView_ToggleConsole,
             this.menuStripView_Refresh});
       this.menuStripView.Name = "menuStripView";
-      this.menuStripView.Size = new System.Drawing.Size(53, 24);
+      this.menuStripView.Size = new System.Drawing.Size(44, 20);
       this.menuStripView.Text = "View";
       // 
       // menuStripView_ToggleConsole
       // 
       this.menuStripView_ToggleConsole.Name = "menuStripView_ToggleConsole";
-      this.menuStripView_ToggleConsole.Size = new System.Drawing.Size(187, 26);
+      this.menuStripView_ToggleConsole.Size = new System.Drawing.Size(156, 22);
       this.menuStripView_ToggleConsole.Text = "Toggle Console";
       this.menuStripView_ToggleConsole.Click += new System.EventHandler(this.menuStripView_ToggleConsole_Click);
       // 
       // menuStripView_Refresh
       // 
       this.menuStripView_Refresh.Name = "menuStripView_Refresh";
-      this.menuStripView_Refresh.Size = new System.Drawing.Size(187, 26);
+      this.menuStripView_Refresh.Size = new System.Drawing.Size(156, 22);
       this.menuStripView_Refresh.Text = "Refresh";
       this.menuStripView_Refresh.Click += new System.EventHandler(this.menuStripView_Refresh_Click);
       // 
@@ -202,22 +202,20 @@
       this.tabMainUI.Controls.Add(this.tabDownloads);
       this.tabMainUI.Controls.Add(this.tabUploads);
       this.tabMainUI.Controls.Add(this.tabSyncing);
-      this.tabMainUI.Location = new System.Drawing.Point(17, 34);
-      this.tabMainUI.Margin = new System.Windows.Forms.Padding(4);
+      this.tabMainUI.Location = new System.Drawing.Point(13, 28);
       this.tabMainUI.Name = "tabMainUI";
       this.tabMainUI.SelectedIndex = 0;
-      this.tabMainUI.Size = new System.Drawing.Size(756, 393);
+      this.tabMainUI.Size = new System.Drawing.Size(567, 319);
       this.tabMainUI.TabIndex = 4;
       // 
       // tabRemote
       // 
       this.tabRemote.Controls.Add(this.lblLoading);
       this.tabRemote.Controls.Add(this.lstExplorer);
-      this.tabRemote.Location = new System.Drawing.Point(4, 25);
-      this.tabRemote.Margin = new System.Windows.Forms.Padding(4);
+      this.tabRemote.Location = new System.Drawing.Point(4, 22);
       this.tabRemote.Name = "tabRemote";
-      this.tabRemote.Padding = new System.Windows.Forms.Padding(4);
-      this.tabRemote.Size = new System.Drawing.Size(748, 364);
+      this.tabRemote.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.tabRemote.Size = new System.Drawing.Size(559, 293);
       this.tabRemote.TabIndex = 0;
       this.tabRemote.Text = "Remote";
       this.tabRemote.UseVisualStyleBackColor = true;
@@ -225,9 +223,8 @@
       // lblLoading
       // 
       this.lblLoading.Location = new System.Drawing.Point(0, 0);
-      this.lblLoading.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.lblLoading.Name = "lblLoading";
-      this.lblLoading.Size = new System.Drawing.Size(745, 361);
+      this.lblLoading.Size = new System.Drawing.Size(559, 293);
       this.lblLoading.TabIndex = 5;
       this.lblLoading.Text = "Loading...";
       this.lblLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -246,9 +243,8 @@
             this.colfilePath});
       this.lstExplorer.FullRowSelect = true;
       this.lstExplorer.Location = new System.Drawing.Point(0, 0);
-      this.lstExplorer.Margin = new System.Windows.Forms.Padding(4);
       this.lstExplorer.Name = "lstExplorer";
-      this.lstExplorer.Size = new System.Drawing.Size(744, 360);
+      this.lstExplorer.Size = new System.Drawing.Size(559, 293);
       this.lstExplorer.TabIndex = 0;
       this.lstExplorer.UseCompatibleStateImageBehavior = false;
       this.lstExplorer.View = System.Windows.Forms.View.Details;
@@ -278,11 +274,10 @@
       // tabDownloads
       // 
       this.tabDownloads.Controls.Add(this.lstDownloads);
-      this.tabDownloads.Location = new System.Drawing.Point(4, 25);
-      this.tabDownloads.Margin = new System.Windows.Forms.Padding(4);
+      this.tabDownloads.Location = new System.Drawing.Point(4, 22);
       this.tabDownloads.Name = "tabDownloads";
-      this.tabDownloads.Padding = new System.Windows.Forms.Padding(4);
-      this.tabDownloads.Size = new System.Drawing.Size(748, 364);
+      this.tabDownloads.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.tabDownloads.Size = new System.Drawing.Size(559, 293);
       this.tabDownloads.TabIndex = 1;
       this.tabDownloads.Text = "Downloads";
       this.tabDownloads.UseVisualStyleBackColor = true;
@@ -297,9 +292,8 @@
             this.colDPath});
       this.lstDownloads.FullRowSelect = true;
       this.lstDownloads.Location = new System.Drawing.Point(0, 0);
-      this.lstDownloads.Margin = new System.Windows.Forms.Padding(4);
       this.lstDownloads.Name = "lstDownloads";
-      this.lstDownloads.Size = new System.Drawing.Size(744, 379);
+      this.lstDownloads.Size = new System.Drawing.Size(559, 309);
       this.lstDownloads.TabIndex = 0;
       this.lstDownloads.UseCompatibleStateImageBehavior = false;
       this.lstDownloads.View = System.Windows.Forms.View.Details;
@@ -316,11 +310,10 @@
       // tabUploads
       // 
       this.tabUploads.Controls.Add(this.lstUploads);
-      this.tabUploads.Location = new System.Drawing.Point(4, 25);
-      this.tabUploads.Margin = new System.Windows.Forms.Padding(4);
+      this.tabUploads.Location = new System.Drawing.Point(4, 22);
       this.tabUploads.Name = "tabUploads";
-      this.tabUploads.Padding = new System.Windows.Forms.Padding(4);
-      this.tabUploads.Size = new System.Drawing.Size(748, 364);
+      this.tabUploads.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.tabUploads.Size = new System.Drawing.Size(559, 293);
       this.tabUploads.TabIndex = 2;
       this.tabUploads.Text = "Uploads";
       this.tabUploads.UseVisualStyleBackColor = true;
@@ -335,9 +328,8 @@
             this.colUPath});
       this.lstUploads.FullRowSelect = true;
       this.lstUploads.Location = new System.Drawing.Point(0, 0);
-      this.lstUploads.Margin = new System.Windows.Forms.Padding(4);
       this.lstUploads.Name = "lstUploads";
-      this.lstUploads.Size = new System.Drawing.Size(744, 365);
+      this.lstUploads.Size = new System.Drawing.Size(559, 297);
       this.lstUploads.TabIndex = 1;
       this.lstUploads.UseCompatibleStateImageBehavior = false;
       this.lstUploads.View = System.Windows.Forms.View.Details;
@@ -357,11 +349,10 @@
       this.tabSyncing.Controls.Add(this.txtSyncLog);
       this.tabSyncing.Controls.Add(this.btnSyncSave);
       this.tabSyncing.Controls.Add(this.grpSyncOptions);
-      this.tabSyncing.Location = new System.Drawing.Point(4, 25);
-      this.tabSyncing.Margin = new System.Windows.Forms.Padding(4);
+      this.tabSyncing.Location = new System.Drawing.Point(4, 22);
       this.tabSyncing.Name = "tabSyncing";
-      this.tabSyncing.Padding = new System.Windows.Forms.Padding(4);
-      this.tabSyncing.Size = new System.Drawing.Size(748, 364);
+      this.tabSyncing.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.tabSyncing.Size = new System.Drawing.Size(559, 293);
       this.tabSyncing.TabIndex = 3;
       this.tabSyncing.Text = "Syncing";
       this.tabSyncing.UseVisualStyleBackColor = true;
@@ -369,10 +360,9 @@
       // btnSyncStart
       // 
       this.btnSyncStart.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-      this.btnSyncStart.Location = new System.Drawing.Point(8, 325);
-      this.btnSyncStart.Margin = new System.Windows.Forms.Padding(4);
+      this.btnSyncStart.Location = new System.Drawing.Point(6, 264);
       this.btnSyncStart.Name = "btnSyncStart";
-      this.btnSyncStart.Size = new System.Drawing.Size(729, 28);
+      this.btnSyncStart.Size = new System.Drawing.Size(547, 23);
       this.btnSyncStart.TabIndex = 9;
       this.btnSyncStart.Text = "Start Sync";
       this.btnSyncStart.UseVisualStyleBackColor = true;
@@ -383,22 +373,20 @@
       this.txtSyncLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.txtSyncLog.Location = new System.Drawing.Point(9, 217);
-      this.txtSyncLog.Margin = new System.Windows.Forms.Padding(4);
+      this.txtSyncLog.Location = new System.Drawing.Point(7, 176);
       this.txtSyncLog.Multiline = true;
       this.txtSyncLog.Name = "txtSyncLog";
       this.txtSyncLog.ReadOnly = true;
       this.txtSyncLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-      this.txtSyncLog.Size = new System.Drawing.Size(727, 74);
+      this.txtSyncLog.Size = new System.Drawing.Size(546, 61);
       this.txtSyncLog.TabIndex = 8;
       // 
       // btnSyncSave
       // 
       this.btnSyncSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-      this.btnSyncSave.Location = new System.Drawing.Point(8, 299);
-      this.btnSyncSave.Margin = new System.Windows.Forms.Padding(4);
+      this.btnSyncSave.Location = new System.Drawing.Point(6, 243);
       this.btnSyncSave.Name = "btnSyncSave";
-      this.btnSyncSave.Size = new System.Drawing.Size(729, 28);
+      this.btnSyncSave.Size = new System.Drawing.Size(547, 23);
       this.btnSyncSave.TabIndex = 7;
       this.btnSyncSave.Text = "Save Settings";
       this.btnSyncSave.UseVisualStyleBackColor = true;
@@ -428,11 +416,9 @@
       this.grpSyncOptions.Controls.Add(this.lblSyncOptionsSvC);
       this.grpSyncOptions.Controls.Add(this.lblSyncOptionsFrequency);
       this.grpSyncOptions.Controls.Add(this.numSyncOptionsFrequency);
-      this.grpSyncOptions.Location = new System.Drawing.Point(9, 7);
-      this.grpSyncOptions.Margin = new System.Windows.Forms.Padding(4);
+      this.grpSyncOptions.Location = new System.Drawing.Point(7, 6);
       this.grpSyncOptions.Name = "grpSyncOptions";
-      this.grpSyncOptions.Padding = new System.Windows.Forms.Padding(4);
-      this.grpSyncOptions.Size = new System.Drawing.Size(728, 202);
+      this.grpSyncOptions.Size = new System.Drawing.Size(546, 164);
       this.grpSyncOptions.TabIndex = 4;
       this.grpSyncOptions.TabStop = false;
       this.grpSyncOptions.Text = "Sync Options";
@@ -440,10 +426,9 @@
       // btnSyncDestinationSelect
       // 
       this.btnSyncDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnSyncDestinationSelect.Location = new System.Drawing.Point(620, 90);
-      this.btnSyncDestinationSelect.Margin = new System.Windows.Forms.Padding(4);
+      this.btnSyncDestinationSelect.Location = new System.Drawing.Point(465, 73);
       this.btnSyncDestinationSelect.Name = "btnSyncDestinationSelect";
-      this.btnSyncDestinationSelect.Size = new System.Drawing.Size(100, 28);
+      this.btnSyncDestinationSelect.Size = new System.Drawing.Size(75, 23);
       this.btnSyncDestinationSelect.TabIndex = 19;
       this.btnSyncDestinationSelect.Text = "Use Current";
       this.btnSyncDestinationSelect.UseVisualStyleBackColor = true;
@@ -452,10 +437,9 @@
       // btnSyncSourceSelect
       // 
       this.btnSyncSourceSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnSyncSourceSelect.Location = new System.Drawing.Point(620, 37);
-      this.btnSyncSourceSelect.Margin = new System.Windows.Forms.Padding(4);
+      this.btnSyncSourceSelect.Location = new System.Drawing.Point(465, 30);
       this.btnSyncSourceSelect.Name = "btnSyncSourceSelect";
-      this.btnSyncSourceSelect.Size = new System.Drawing.Size(100, 28);
+      this.btnSyncSourceSelect.Size = new System.Drawing.Size(75, 23);
       this.btnSyncSourceSelect.TabIndex = 18;
       this.btnSyncSourceSelect.Text = "Browse";
       this.btnSyncSourceSelect.UseVisualStyleBackColor = true;
@@ -466,29 +450,26 @@
       this.txtSyncDestination.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.txtSyncDestination.Enabled = false;
-      this.txtSyncDestination.Location = new System.Drawing.Point(12, 92);
-      this.txtSyncDestination.Margin = new System.Windows.Forms.Padding(4);
+      this.txtSyncDestination.Location = new System.Drawing.Point(9, 75);
       this.txtSyncDestination.Name = "txtSyncDestination";
-      this.txtSyncDestination.Size = new System.Drawing.Size(599, 22);
+      this.txtSyncDestination.Size = new System.Drawing.Size(450, 20);
       this.txtSyncDestination.TabIndex = 17;
       // 
       // lblSyncDestination
       // 
       this.lblSyncDestination.AutoSize = true;
-      this.lblSyncDestination.Location = new System.Drawing.Point(8, 73);
-      this.lblSyncDestination.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblSyncDestination.Location = new System.Drawing.Point(6, 59);
       this.lblSyncDestination.Name = "lblSyncDestination";
-      this.lblSyncDestination.Size = new System.Drawing.Size(175, 17);
+      this.lblSyncDestination.Size = new System.Drawing.Size(131, 13);
       this.lblSyncDestination.TabIndex = 16;
       this.lblSyncDestination.Text = "Sync destination directory:";
       // 
       // lblSyncSource
       // 
       this.lblSyncSource.AutoSize = true;
-      this.lblSyncSource.Location = new System.Drawing.Point(8, 20);
-      this.lblSyncSource.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblSyncSource.Location = new System.Drawing.Point(6, 16);
       this.lblSyncSource.Name = "lblSyncSource";
-      this.lblSyncSource.Size = new System.Drawing.Size(149, 17);
+      this.lblSyncSource.Size = new System.Drawing.Size(112, 13);
       this.lblSyncSource.TabIndex = 15;
       this.lblSyncSource.Text = "Sync source directory:";
       // 
@@ -497,63 +478,56 @@
       this.txtSyncSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.txtSyncSource.Enabled = false;
-      this.txtSyncSource.Location = new System.Drawing.Point(12, 39);
-      this.txtSyncSource.Margin = new System.Windows.Forms.Padding(4);
+      this.txtSyncSource.Location = new System.Drawing.Point(9, 32);
       this.txtSyncSource.Name = "txtSyncSource";
-      this.txtSyncSource.Size = new System.Drawing.Size(599, 22);
+      this.txtSyncSource.Size = new System.Drawing.Size(450, 20);
       this.txtSyncSource.TabIndex = 14;
       // 
       // numSyncOptionsBandwidthLimit
       // 
-      this.numSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(400, 121);
-      this.numSyncOptionsBandwidthLimit.Margin = new System.Windows.Forms.Padding(4);
+      this.numSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(300, 98);
       this.numSyncOptionsBandwidthLimit.Name = "numSyncOptionsBandwidthLimit";
-      this.numSyncOptionsBandwidthLimit.Size = new System.Drawing.Size(67, 22);
+      this.numSyncOptionsBandwidthLimit.Size = new System.Drawing.Size(50, 20);
       this.numSyncOptionsBandwidthLimit.TabIndex = 13;
       // 
       // lblSyncOptionsMaxSize
       // 
       this.lblSyncOptionsMaxSize.AutoSize = true;
-      this.lblSyncOptionsMaxSize.Location = new System.Drawing.Point(233, 174);
-      this.lblSyncOptionsMaxSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblSyncOptionsMaxSize.Location = new System.Drawing.Point(175, 141);
       this.lblSyncOptionsMaxSize.Name = "lblSyncOptionsMaxSize";
-      this.lblSyncOptionsMaxSize.Size = new System.Drawing.Size(146, 17);
+      this.lblSyncOptionsMaxSize.Size = new System.Drawing.Size(109, 13);
       this.lblSyncOptionsMaxSize.TabIndex = 12;
       this.lblSyncOptionsMaxSize.Text = "Ignore files over (kb): ";
       // 
       // numSyncOptionsMaxSize
       // 
-      this.numSyncOptionsMaxSize.Location = new System.Drawing.Point(400, 174);
-      this.numSyncOptionsMaxSize.Margin = new System.Windows.Forms.Padding(4);
+      this.numSyncOptionsMaxSize.Location = new System.Drawing.Point(300, 141);
       this.numSyncOptionsMaxSize.Name = "numSyncOptionsMaxSize";
-      this.numSyncOptionsMaxSize.Size = new System.Drawing.Size(67, 22);
+      this.numSyncOptionsMaxSize.Size = new System.Drawing.Size(50, 20);
       this.numSyncOptionsMaxSize.TabIndex = 11;
       // 
       // lblSyncOptionsMinSize
       // 
       this.lblSyncOptionsMinSize.AutoSize = true;
-      this.lblSyncOptionsMinSize.Location = new System.Drawing.Point(233, 149);
-      this.lblSyncOptionsMinSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblSyncOptionsMinSize.Location = new System.Drawing.Point(175, 121);
       this.lblSyncOptionsMinSize.Name = "lblSyncOptionsMinSize";
-      this.lblSyncOptionsMinSize.Size = new System.Drawing.Size(151, 17);
+      this.lblSyncOptionsMinSize.Size = new System.Drawing.Size(112, 13);
       this.lblSyncOptionsMinSize.TabIndex = 10;
       this.lblSyncOptionsMinSize.Text = "Ignore files under (kb):";
       // 
       // numSyncOptionsMinSize
       // 
-      this.numSyncOptionsMinSize.Location = new System.Drawing.Point(400, 146);
-      this.numSyncOptionsMinSize.Margin = new System.Windows.Forms.Padding(4);
+      this.numSyncOptionsMinSize.Location = new System.Drawing.Point(300, 119);
       this.numSyncOptionsMinSize.Name = "numSyncOptionsMinSize";
-      this.numSyncOptionsMinSize.Size = new System.Drawing.Size(67, 22);
+      this.numSyncOptionsMinSize.Size = new System.Drawing.Size(50, 20);
       this.numSyncOptionsMinSize.TabIndex = 9;
       // 
       // lblSyncOptionsBandwidthLimit
       // 
       this.lblSyncOptionsBandwidthLimit.AutoSize = true;
-      this.lblSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(233, 124);
-      this.lblSyncOptionsBandwidthLimit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(175, 101);
       this.lblSyncOptionsBandwidthLimit.Name = "lblSyncOptionsBandwidthLimit";
-      this.lblSyncOptionsBandwidthLimit.Size = new System.Drawing.Size(158, 17);
+      this.lblSyncOptionsBandwidthLimit.Size = new System.Drawing.Size(119, 13);
       this.lblSyncOptionsBandwidthLimit.TabIndex = 8;
       this.lblSyncOptionsBandwidthLimit.Text = "Bandwidth Limit (kbps): ";
       // 
@@ -564,29 +538,26 @@
       this.cmbSyncOptionsEnabled.Items.AddRange(new object[] {
             "True",
             "False"});
-      this.cmbSyncOptionsEnabled.Location = new System.Drawing.Point(159, 121);
-      this.cmbSyncOptionsEnabled.Margin = new System.Windows.Forms.Padding(4);
+      this.cmbSyncOptionsEnabled.Location = new System.Drawing.Point(119, 98);
       this.cmbSyncOptionsEnabled.Name = "cmbSyncOptionsEnabled";
-      this.cmbSyncOptionsEnabled.Size = new System.Drawing.Size(65, 24);
+      this.cmbSyncOptionsEnabled.Size = new System.Drawing.Size(50, 21);
       this.cmbSyncOptionsEnabled.TabIndex = 6;
       // 
       // lblSyncOptionsEnabled
       // 
       this.lblSyncOptionsEnabled.AutoSize = true;
-      this.lblSyncOptionsEnabled.Location = new System.Drawing.Point(8, 124);
-      this.lblSyncOptionsEnabled.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblSyncOptionsEnabled.Location = new System.Drawing.Point(6, 101);
       this.lblSyncOptionsEnabled.Name = "lblSyncOptionsEnabled";
-      this.lblSyncOptionsEnabled.Size = new System.Drawing.Size(132, 17);
+      this.lblSyncOptionsEnabled.Size = new System.Drawing.Size(101, 13);
       this.lblSyncOptionsEnabled.TabIndex = 5;
       this.lblSyncOptionsEnabled.Text = "Auto Sync Enabled:";
       // 
       // llblSyncOptionsHelp
       // 
       this.llblSyncOptionsHelp.AutoSize = true;
-      this.llblSyncOptionsHelp.Location = new System.Drawing.Point(564, 182);
-      this.llblSyncOptionsHelp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.llblSyncOptionsHelp.Location = new System.Drawing.Point(423, 148);
       this.llblSyncOptionsHelp.Name = "llblSyncOptionsHelp";
-      this.llblSyncOptionsHelp.Size = new System.Drawing.Size(154, 17);
+      this.llblSyncOptionsHelp.Size = new System.Drawing.Size(117, 13);
       this.llblSyncOptionsHelp.TabIndex = 4;
       this.llblSyncOptionsHelp.TabStop = true;
       this.llblSyncOptionsHelp.Text = "Help with these options";
@@ -599,38 +570,34 @@
       this.cmbSyncOptionsSvC.Items.AddRange(new object[] {
             "sync",
             "copy"});
-      this.cmbSyncOptionsSvC.Location = new System.Drawing.Point(159, 170);
-      this.cmbSyncOptionsSvC.Margin = new System.Windows.Forms.Padding(4);
+      this.cmbSyncOptionsSvC.Location = new System.Drawing.Point(119, 138);
       this.cmbSyncOptionsSvC.Name = "cmbSyncOptionsSvC";
-      this.cmbSyncOptionsSvC.Size = new System.Drawing.Size(65, 24);
+      this.cmbSyncOptionsSvC.Size = new System.Drawing.Size(50, 21);
       this.cmbSyncOptionsSvC.TabIndex = 3;
       // 
       // lblSyncOptionsSvC
       // 
       this.lblSyncOptionsSvC.AutoSize = true;
-      this.lblSyncOptionsSvC.Location = new System.Drawing.Point(8, 174);
-      this.lblSyncOptionsSvC.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblSyncOptionsSvC.Location = new System.Drawing.Point(6, 141);
       this.lblSyncOptionsSvC.Name = "lblSyncOptionsSvC";
-      this.lblSyncOptionsSvC.Size = new System.Drawing.Size(100, 17);
+      this.lblSyncOptionsSvC.Size = new System.Drawing.Size(76, 13);
       this.lblSyncOptionsSvC.TabIndex = 2;
       this.lblSyncOptionsSvC.Text = "Sync or Copy: ";
       // 
       // lblSyncOptionsFrequency
       // 
       this.lblSyncOptionsFrequency.AutoSize = true;
-      this.lblSyncOptionsFrequency.Location = new System.Drawing.Point(8, 149);
-      this.lblSyncOptionsFrequency.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.lblSyncOptionsFrequency.Location = new System.Drawing.Point(6, 121);
       this.lblSyncOptionsFrequency.Name = "lblSyncOptionsFrequency";
-      this.lblSyncOptionsFrequency.Size = new System.Drawing.Size(152, 17);
+      this.lblSyncOptionsFrequency.Size = new System.Drawing.Size(113, 13);
       this.lblSyncOptionsFrequency.TabIndex = 1;
       this.lblSyncOptionsFrequency.Text = "Sync Frequency (hrs): ";
       // 
       // numSyncOptionsFrequency
       // 
-      this.numSyncOptionsFrequency.Location = new System.Drawing.Point(159, 146);
-      this.numSyncOptionsFrequency.Margin = new System.Windows.Forms.Padding(4);
+      this.numSyncOptionsFrequency.Location = new System.Drawing.Point(119, 119);
       this.numSyncOptionsFrequency.Name = "numSyncOptionsFrequency";
-      this.numSyncOptionsFrequency.Size = new System.Drawing.Size(67, 22);
+      this.numSyncOptionsFrequency.Size = new System.Drawing.Size(50, 20);
       this.numSyncOptionsFrequency.TabIndex = 0;
       // 
       // ctxtDownloadContext
@@ -639,12 +606,12 @@
       this.ctxtDownloadContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctxtDownloadContext_Cancel});
       this.ctxtDownloadContext.Name = "ctxtDownloadContext";
-      this.ctxtDownloadContext.Size = new System.Drawing.Size(129, 30);
+      this.ctxtDownloadContext.Size = new System.Drawing.Size(111, 26);
       // 
       // ctxtDownloadContext_Cancel
       // 
       this.ctxtDownloadContext_Cancel.Name = "ctxtDownloadContext_Cancel";
-      this.ctxtDownloadContext_Cancel.Size = new System.Drawing.Size(128, 26);
+      this.ctxtDownloadContext_Cancel.Size = new System.Drawing.Size(110, 22);
       this.ctxtDownloadContext_Cancel.Text = "Cancel";
       this.ctxtDownloadContext_Cancel.Click += new System.EventHandler(this.ctxtDownloadContext_Cancel_Click);
       // 
@@ -654,12 +621,12 @@
       this.ctxtUploadContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctxtUploadContext_Cancel});
       this.ctxtUploadContext.Name = "ctxtUploadContext";
-      this.ctxtUploadContext.Size = new System.Drawing.Size(129, 30);
+      this.ctxtUploadContext.Size = new System.Drawing.Size(111, 26);
       // 
       // ctxtUploadContext_Cancel
       // 
       this.ctxtUploadContext_Cancel.Name = "ctxtUploadContext_Cancel";
-      this.ctxtUploadContext_Cancel.Size = new System.Drawing.Size(128, 26);
+      this.ctxtUploadContext_Cancel.Size = new System.Drawing.Size(110, 22);
       this.ctxtUploadContext_Cancel.Text = "Cancel";
       this.ctxtUploadContext_Cancel.Click += new System.EventHandler(this.ctxtUploadContext_Cancel_Click);
       // 
@@ -677,43 +644,57 @@
             this.ctxtExplorerContext_NewFolder,
             this.ctxtExplorerContext_Delete});
       this.ctxtExplorerContext.Name = "ctxtExplorerContext";
-      this.ctxtExplorerContext.Size = new System.Drawing.Size(224, 82);
+      this.ctxtExplorerContext.Size = new System.Drawing.Size(182, 70);
       // 
       // streamMediaToolStripMenuItem
       // 
       this.streamMediaToolStripMenuItem.Enabled = false;
       this.streamMediaToolStripMenuItem.Name = "streamMediaToolStripMenuItem";
-      this.streamMediaToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+      this.streamMediaToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
       this.streamMediaToolStripMenuItem.Text = "Stream Media";
       this.streamMediaToolStripMenuItem.Click += new System.EventHandler(this.streamMediaToolStripMenuItem_Click);
       // 
       // ctxtExplorerContext_NewFolder
       // 
       this.ctxtExplorerContext_NewFolder.Name = "ctxtExplorerContext_NewFolder";
-      this.ctxtExplorerContext_NewFolder.Size = new System.Drawing.Size(223, 26);
+      this.ctxtExplorerContext_NewFolder.Size = new System.Drawing.Size(181, 22);
       this.ctxtExplorerContext_NewFolder.Text = "New Folder";
       this.ctxtExplorerContext_NewFolder.Click += new System.EventHandler(this.ctxtExplorerContext_NewFolder_Click);
       // 
       // ctxtExplorerContext_Delete
       // 
       this.ctxtExplorerContext_Delete.Name = "ctxtExplorerContext_Delete";
-      this.ctxtExplorerContext_Delete.Size = new System.Drawing.Size(223, 26);
+      this.ctxtExplorerContext_Delete.Size = new System.Drawing.Size(181, 22);
       this.ctxtExplorerContext_Delete.Text = "Delete Selected Item";
       this.ctxtExplorerContext_Delete.Click += new System.EventHandler(this.ctxtExplorerContext_Delete_Click);
       // 
+      // settingsToolStripMenuItem
+      // 
+      this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStripView_Config});
+      this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+      this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+      this.settingsToolStripMenuItem.Text = "Settings";
+      // 
+      // menuStripView_Config
+      // 
+      this.menuStripView_Config.Name = "menuStripView_Config";
+      this.menuStripView_Config.Size = new System.Drawing.Size(152, 22);
+      this.menuStripView_Config.Text = "Config (Alpha)";
+      this.menuStripView_Config.Click += new System.EventHandler(this.menuStripView_Config_Click);
+      // 
       // rcloneExplorer
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(789, 458);
+      this.ClientSize = new System.Drawing.Size(592, 372);
       this.Controls.Add(this.tabMainUI);
       this.Controls.Add(this.lblFooter);
       this.Controls.Add(this.txtRawOut);
       this.Controls.Add(this.menuStrip);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip;
-      this.Margin = new System.Windows.Forms.Padding(4);
-      this.MinimumSize = new System.Drawing.Size(794, 481);
+      this.MinimumSize = new System.Drawing.Size(600, 398);
       this.Name = "rcloneExplorer";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "rcloneExplorer";
@@ -799,6 +780,8 @@
     private System.Windows.Forms.Label lblSyncSource;
     private System.Windows.Forms.TextBox txtSyncSource;
     private System.Windows.Forms.ToolStripMenuItem streamMediaToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem menuStripView_Config;
   }
 }
 

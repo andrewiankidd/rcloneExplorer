@@ -84,6 +84,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="rcloneExplorer.Auxiliary.SetupWiz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="rcloneExplorer.Auxiliary.SetupWiz.Designer.cs">
+      <DependentUpon>rcloneExplorer.Auxiliary.SetupWiz.cs</DependentUpon>
+    </Compile>
     <Compile Include="rcloneExplorer.Core.DownloadHandler.cs" />
     <Compile Include="rcloneExplorer.Core.ExploreHandler.cs" />
     <Compile Include="rcloneExplorer.Core.Initialization.cs" />
@@ -110,6 +116,9 @@
     <Compile Include="rcloneExplorer.Auxiliary.Splash.Designer.cs">
       <DependentUpon>rcloneExplorer.Auxiliary.Splash.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="rcloneExplorer.Auxiliary.SetupWiz.resx">
+      <DependentUpon>rcloneExplorer.Auxiliary.SetupWiz.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="rcloneExplorer.resx">
       <DependentUpon>rcloneExplorer.cs</DependentUpon>
     </EmbeddedResource>

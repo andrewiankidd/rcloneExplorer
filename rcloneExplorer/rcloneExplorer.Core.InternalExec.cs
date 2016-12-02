@@ -22,7 +22,7 @@ namespace rcloneExplorer
       syncingHandler = rcloneExplorer.syncingHandler;
     }
 
-    public string Execute(string command, string arguments, string operation = null)
+    public string Execute(string command, string arguments, string operation = null, string prepend = null)
     {
 
       string rcloneLogs = "";
@@ -39,12 +39,12 @@ namespace rcloneExplorer
       //set up cmd to call rclone
       Process process = new Process();
       process.StartInfo.FileName = "cmd.exe";
-      process.StartInfo.Arguments = "/c rclone.exe " + command + " " + arguments + rcloneLogs;
-      process.StartInfo.CreateNoWindow = true;
+      process.StartInfo.Arguments = "/c " + prepend + "rclone.exe " + command + " " + arguments + rcloneLogs;
+      //process.StartInfo.CreateNoWindow = true;
       process.StartInfo.UseShellExecute = false;
       process.StartInfo.RedirectStandardError = true;
       process.StartInfo.RedirectStandardOutput = true;
-      process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+      //process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
       process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
       process.Start();
 
@@ -60,6 +60,10 @@ namespace rcloneExplorer
           downloadsHandler.downloadPID.Add(new string[] { process.Id.ToString(), arguments });
         }
         else if (operation == "sync")
+        {
+          syncingHandler.syncingPID = process.Id;
+        }
+        else if (operation == "config")
         {
           syncingHandler.syncingPID = process.Id;
         }

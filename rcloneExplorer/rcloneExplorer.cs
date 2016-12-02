@@ -267,5 +267,17 @@ namespace rcloneExplorer
     {
       syncingHandler.btnSyncStart_Click(sender, e);
     }
+
+    private void menuStripView_Config_Click(object sender, EventArgs e)
+    {
+      //start the wizard in a background thread so the main form can work away
+      Form fc = Application.OpenForms["rcloneExplorerSetupWiz"];
+
+      if (fc == null)
+      {
+        var SetupWiz = new rcloneExplorerSetupWiz();
+        SetupWiz.Show();
+      }
+    }
   }
 }
