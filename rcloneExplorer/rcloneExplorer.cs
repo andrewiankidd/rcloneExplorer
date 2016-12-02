@@ -107,6 +107,18 @@ namespace rcloneExplorer
       exploreHandler.refreshlstExplorer();
     }
 
+    private void menuStripView_Config_Click(object sender, EventArgs e)
+    {
+      //look for existing wizard forms
+      Form fc = Application.OpenForms["rcloneExplorerSetupWiz"];
+      //if there are none, open one
+      if (fc == null)
+      {
+        var SetupWiz = new rcloneExplorerSetupWiz();
+        SetupWiz.Show();
+      }
+    }
+
     private void rcloneExplorer_Resize(object sender, EventArgs e)
     {
       if (FormWindowState.Minimized == this.WindowState)
@@ -266,18 +278,6 @@ namespace rcloneExplorer
     private void btnSyncStart_Click(object sender, EventArgs e)
     {
       syncingHandler.btnSyncStart_Click(sender, e);
-    }
-
-    private void menuStripView_Config_Click(object sender, EventArgs e)
-    {
-      //start the wizard in a background thread so the main form can work away
-      Form fc = Application.OpenForms["rcloneExplorerSetupWiz"];
-
-      if (fc == null)
-      {
-        var SetupWiz = new rcloneExplorerSetupWiz();
-        SetupWiz.Show();
-      }
     }
   }
 }

@@ -40,11 +40,11 @@ namespace rcloneExplorer
       Process process = new Process();
       process.StartInfo.FileName = "cmd.exe";
       process.StartInfo.Arguments = "/c " + prepend + "rclone.exe " + command + " " + arguments + rcloneLogs;
-      //process.StartInfo.CreateNoWindow = true;
+      process.StartInfo.CreateNoWindow = true;
       process.StartInfo.UseShellExecute = false;
       process.StartInfo.RedirectStandardError = true;
       process.StartInfo.RedirectStandardOutput = true;
-      //process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+      process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
       process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
       process.Start();
 
@@ -65,7 +65,7 @@ namespace rcloneExplorer
         }
         else if (operation == "config")
         {
-          syncingHandler.syncingPID = process.Id;
+          //this space will be used to pipe commands from wizard to interactive config shell
         }
 
       }
