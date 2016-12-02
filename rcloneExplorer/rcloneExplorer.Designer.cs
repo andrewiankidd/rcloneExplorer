@@ -45,7 +45,7 @@
       this.menuStripView_ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStripView_Refresh = new System.Windows.Forms.ToolStripMenuItem();
       this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.menuStripView_Config = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuStripView_RcloneConfig = new System.Windows.Forms.ToolStripMenuItem();
       this.tabMainUI = new System.Windows.Forms.TabControl();
       this.tabRemote = new System.Windows.Forms.TabPage();
       this.lblLoading = new System.Windows.Forms.Label();
@@ -196,17 +196,17 @@
       // settingsToolStripMenuItem
       // 
       this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStripView_Config});
+            this.menuStripView_RcloneConfig});
       this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
       this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
       this.settingsToolStripMenuItem.Text = "Settings";
       // 
-      // menuStripView_Config
+      // menuStripView_RcloneConfig
       // 
-      this.menuStripView_Config.Name = "menuStripView_Config";
-      this.menuStripView_Config.Size = new System.Drawing.Size(152, 22);
-      this.menuStripView_Config.Text = "Config (Alpha)";
-      this.menuStripView_Config.Click += new System.EventHandler(this.menuStripView_Config_Click);
+      this.menuStripView_RcloneConfig.Name = "menuStripView_RcloneConfig";
+      this.menuStripView_RcloneConfig.Size = new System.Drawing.Size(191, 22);
+      this.menuStripView_RcloneConfig.Text = "Rclone Config (Alpha)";
+      this.menuStripView_RcloneConfig.Click += new System.EventHandler(this.menuStripView_RcloneConfig_Click);
       // 
       // tabMainUI
       // 
@@ -292,7 +292,7 @@
       this.tabDownloads.Location = new System.Drawing.Point(4, 22);
       this.tabDownloads.Name = "tabDownloads";
       this.tabDownloads.Padding = new System.Windows.Forms.Padding(3);
-      this.tabDownloads.Size = new System.Drawing.Size(559, 293);
+      this.tabDownloads.Size = new System.Drawing.Size(551, 332);
       this.tabDownloads.TabIndex = 1;
       this.tabDownloads.Text = "Downloads";
       this.tabDownloads.UseVisualStyleBackColor = true;
@@ -328,7 +328,7 @@
       this.tabUploads.Location = new System.Drawing.Point(4, 22);
       this.tabUploads.Name = "tabUploads";
       this.tabUploads.Padding = new System.Windows.Forms.Padding(3);
-      this.tabUploads.Size = new System.Drawing.Size(559, 293);
+      this.tabUploads.Size = new System.Drawing.Size(551, 332);
       this.tabUploads.TabIndex = 2;
       this.tabUploads.Text = "Uploads";
       this.tabUploads.UseVisualStyleBackColor = true;
@@ -367,7 +367,7 @@
       this.tabSyncing.Location = new System.Drawing.Point(4, 22);
       this.tabSyncing.Name = "tabSyncing";
       this.tabSyncing.Padding = new System.Windows.Forms.Padding(3);
-      this.tabSyncing.Size = new System.Drawing.Size(559, 293);
+      this.tabSyncing.Size = new System.Drawing.Size(551, 332);
       this.tabSyncing.TabIndex = 3;
       this.tabSyncing.Text = "Syncing";
       this.tabSyncing.UseVisualStyleBackColor = true;
@@ -781,7 +781,7 @@
     private System.Windows.Forms.TextBox txtSyncSource;
     private System.Windows.Forms.ToolStripMenuItem streamMediaToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem menuStripView_Config;
+    private System.Windows.Forms.ToolStripMenuItem menuStripView_RcloneConfig;
   }
 }
 

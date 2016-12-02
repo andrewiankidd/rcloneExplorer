@@ -107,7 +107,7 @@ namespace rcloneExplorer
       exploreHandler.refreshlstExplorer();
     }
 
-    private void menuStripView_Config_Click(object sender, EventArgs e)
+    private void menuStripView_RcloneConfig_Click(object sender, EventArgs e)
     {
       //look for existing wizard forms
       Form fc = Application.OpenForms["rcloneExplorerSetupWiz"];

@@ -12,17 +12,20 @@ namespace rcloneExplorer
     //http://stackoverflow.com/a/5427121
     public static string ShowDialog(string text, string caption)
     {
+      if (string.IsNullOrEmpty(caption)) { caption = text; text = ""; }
       Form prompt = new Form()
       {
-        Width = 500,
-        Height = 150,
+        MaximumSize = new System.Drawing.Size(450, 110),
+        MinimumSize = new System.Drawing.Size(450, 110),
+        StartPosition = FormStartPosition.CenterScreen,    
         FormBorderStyle = FormBorderStyle.FixedDialog,
-        Text = caption,
-        StartPosition = FormStartPosition.CenterScreen
+        MaximizeBox = false, MinimizeBox = false,
+        TopMost = true,
+        Text = caption
       };
-      Label textLabel = new Label() { Left = 50, Top = 20, Text = text };
-      TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
-      Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70, DialogResult = DialogResult.OK };
+      Label textLabel = new Label() { Left = 8, Top = 10, Text = text };
+      TextBox textBox = new TextBox() { Left = 10, Top = 25, Width = 415 };
+      Button confirmation = new Button() { Text = "OK", Left = 376, Width = 50, Top = 45, DialogResult = DialogResult.OK };
       confirmation.Click += (sender, e) => { prompt.Close(); };
       prompt.Controls.Add(textBox);
       prompt.Controls.Add(confirmation);

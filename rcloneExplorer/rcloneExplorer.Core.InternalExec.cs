@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace rcloneExplorer
@@ -13,13 +13,15 @@ namespace rcloneExplorer
     IniFile iniSettings;
     rcloneExplorerDownloadHandler downloadsHandler;
     rcloneExplorerUploadHandler uploadsHandler;
-    rcloneExplorerSyncHandler syncingHandler;
+    rcloneExplorerMiscContainer miscContainer;
+    rcloneExplorerSyncHandler syncingHandler;   
 
     public void init()
     {
       iniSettings = rcloneExplorer.iniSettings;
       downloadsHandler = rcloneExplorer.downloadsHandler;
       uploadsHandler = rcloneExplorer.uploadsHandler;
+      miscContainer = rcloneExplorer.miscContainer;
       syncingHandler = rcloneExplorer.syncingHandler;
     }
 
@@ -55,39 +57,77 @@ namespace rcloneExplorer
       {
         if (operation == "up")
         {
+          //log the process in the uploading list
           uploadsHandler.uploadingPID.Add(new string[] { process.Id.ToString(), arguments });
         }
         else if (operation == "down")
         {
+          //log the process in the downloading list
           downloadsHandler.downloadPID.Add(new string[] { process.Id.ToString(), arguments });
         }
         else if (operation == "sync")
         {
+          //log the process in the syncing list
           syncingHandler.syncingPID = process.Id;
         }
         else if (operation == "config")
         {
+          //iterate through the commands needed to set the remote up (its different per remote)
           foreach (string rcmd in rcmdlist)
           {
+            //the remote setup has asked to show a message
             if (rcmd.Contains("MSG: "))
             {
               MessageBox.Show(rcmd);
             }
+            //the remote setup has hasked to open a url
+            else if (rcmd.Contains("OPN|"))
+            {
+              //grab the predefined regex
+              string regexp = rcmd.Split('|')[1];
+              String url = "";
+              
+              //iterate through stdout until find the matching url
+              string stdoutline = process.StandardOutput.ReadLine();
+              while (!Regex.Match(stdoutline, regexp).Success)
+              {
+                stdoutline = process.StandardOutput.ReadLine();
+                url = Regex.Match(stdoutline, regexp).Value;
+              }
+              //open the url
+              Process.Start(url);
+            }
+            //the remote setup has asked for some information
+            else if (rcmd.Contains("REQ:"))
+            {
+              string requiredinput = PromptGenerator.ShowDialog(rcmd, "");
+              process.StandardInput.WriteLine(requiredinput);
+              // this doesnt seem to iterate so just stdin now https://i.imgur.com/x0ml8.png
+              System.Threading.Thread.Sleep(100);
+              process.StandardInput.WriteLine("y"); System.Threading.Thread.Sleep(100);
+              process.StandardInput.WriteLine("q"); System.Threading.Thread.Sleep(100);
+            }
+            //the remote setup just wants to send some text
             else {
               process.StandardInput.WriteLine(rcmd);            
             }
+            //sleep between operations
             System.Threading.Thread.Sleep(100);
           }
         }
+
       }
 
       // Synchronously read the standard output of the spawned process. 
       output = process.StandardOutput.ReadToEnd();
-      if (output == null) { output = process.StandardError.ReadToEnd(); }
+      if (output == null) { output = process.StandardError.ReadToEnd(); }   
 
       //close process when it's finished  
       process.WaitForExit();
       process.Close();
+
+      //debugging
+      if (rcmdlist != null && rcmdlist[1].Contains("debug")) { MessageBox.Show(output); }
 
       //return output
       return output;
