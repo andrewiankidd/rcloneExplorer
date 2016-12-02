@@ -29,6 +29,7 @@ namespace rcloneExplorer
 
     private void loadConfigs()
     {
+      lstConfigs.Items.Clear();
       //get the output of config command, and echo q to quit it so the process doesnt hang
       string[] output = internalExecHandler.Execute("config", "", null, "echo q |").Split('\n');
       bool currentlyOnRemoteList = false;
@@ -66,16 +67,70 @@ namespace rcloneExplorer
       }
     }
 
+    private void openSelectedRemote()
+    {
+      if (!String.IsNullOrEmpty(lstConfigs.SelectedItems[0].Text))
+      {
+        //write newly selected config to ini
+        iniSettings.Write("rcloneRemote", lstConfigs.SelectedItems[0].Text.ToString());
+        //set current path to root
+        rcloneExplorer.remoteCD = "";
+        //refresh the explorer lst
+        exploreHandler.refreshlstExplorer();
+        //close config screen
+        this.Close();
+      }
+    }
+
     private void lstConfigs_MouseDoubleClick(object sender, MouseEventArgs e)
     {
-      //write newly selected config to ini
-      iniSettings.Write("rcloneRemote", lstConfigs.SelectedItems[0].Text.ToString());
-      //set current path to root
-      rcloneExplorer.remoteCD = "";
-      //refresh the explorer lst
-      exploreHandler.refreshlstExplorer();
-      //close config screen
-      this.Close();
+      openSelectedRemote();
+    }
+
+    private void btnOpenSelectedRemote_Click(object sender, EventArgs e)
+    {
+      openSelectedRemote();
+    }
+
+    private void btnAddNewRemote_Click(object sender, EventArgs e)
+    {
+      cmbProviderList.Items.AddRange(providers);
+      cmbProviderList.Visible = true;
+      cmbProviderList.DroppedDown = true;
+    }
+
+    private void btnDeleteRemote_Click(object sender, EventArgs e)
+    {
+      if (!String.IsNullOrEmpty(lstConfigs.SelectedItems[0].Text))
+      {
+        MessageBox.Show("Not yet implemented");
+      }
+    }
+
+    private void btnEditRemote_Click(object sender, EventArgs e)
+    {
+      if (!String.IsNullOrEmpty(lstConfigs.SelectedItems[0].Text))
+      {
+        MessageBox.Show("Not yet implemented");
+      }
+    }
+
+    private void cmbProviderList_TextChanged(object sender, EventArgs e)
+    {
+      string nRemoteName = "";
+      string nRemoteProvider = cmbProviderList.Text;
+      if (nRemoteProvider != "drive") { MessageBox.Show("currently this is hardcoded to google drive"); }
+      cmbProviderList.Visible = false;
+      while (String.IsNullOrEmpty(nRemoteName))
+      {
+        nRemoteName = PromptGenerator.ShowDialog("Remote Name:", "");
+      }
+      MessageBox.Show("Making a new '" + nRemoteProvider + "' config, called '" + nRemoteName + "'");
+      //build command list
+      string[] rcmdlist = { "n", nRemoteName, "7", "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q"};
+
+      internalExecHandler.Execute("config", "", "config", null, rcmdlist);
+      loadConfigs();
     }
   }
 }

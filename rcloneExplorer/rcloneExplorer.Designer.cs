@@ -44,6 +44,8 @@
       this.menuStripView = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStripView_ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStripView_Refresh = new System.Windows.Forms.ToolStripMenuItem();
+      this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuStripView_Config = new System.Windows.Forms.ToolStripMenuItem();
       this.tabMainUI = new System.Windows.Forms.TabControl();
       this.tabRemote = new System.Windows.Forms.TabPage();
       this.lblLoading = new System.Windows.Forms.Label();
@@ -93,8 +95,6 @@
       this.streamMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxtExplorerContext_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxtExplorerContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
-      this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.menuStripView_Config = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip.SuspendLayout();
       this.tabMainUI.SuspendLayout();
       this.tabRemote.SuspendLayout();
@@ -115,11 +115,11 @@
       // 
       this.txtRawOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.txtRawOut.Location = new System.Drawing.Point(12, 287);
+      this.txtRawOut.Location = new System.Drawing.Point(12, 326);
       this.txtRawOut.Multiline = true;
       this.txtRawOut.Name = "txtRawOut";
       this.txtRawOut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.txtRawOut.Size = new System.Drawing.Size(568, 1);
+      this.txtRawOut.Size = new System.Drawing.Size(560, 1);
       this.txtRawOut.TabIndex = 1;
       // 
       // lblFooter
@@ -129,7 +129,7 @@
       this.lblFooter.AutoSize = true;
       this.lblFooter.BackColor = System.Drawing.SystemColors.Control;
       this.lblFooter.Cursor = System.Windows.Forms.Cursors.Default;
-      this.lblFooter.Location = new System.Drawing.Point(9, 350);
+      this.lblFooter.Location = new System.Drawing.Point(9, 389);
       this.lblFooter.Name = "lblFooter";
       this.lblFooter.Size = new System.Drawing.Size(0, 13);
       this.lblFooter.TabIndex = 2;
@@ -143,7 +143,7 @@
             this.settingsToolStripMenuItem});
       this.menuStrip.Location = new System.Drawing.Point(0, 0);
       this.menuStrip.Name = "menuStrip";
-      this.menuStrip.Size = new System.Drawing.Size(592, 24);
+      this.menuStrip.Size = new System.Drawing.Size(584, 24);
       this.menuStrip.TabIndex = 3;
       this.menuStrip.Text = "menuStrip";
       // 
@@ -193,6 +193,21 @@
       this.menuStripView_Refresh.Text = "Refresh";
       this.menuStripView_Refresh.Click += new System.EventHandler(this.menuStripView_Refresh_Click);
       // 
+      // settingsToolStripMenuItem
+      // 
+      this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStripView_Config});
+      this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+      this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+      this.settingsToolStripMenuItem.Text = "Settings";
+      // 
+      // menuStripView_Config
+      // 
+      this.menuStripView_Config.Name = "menuStripView_Config";
+      this.menuStripView_Config.Size = new System.Drawing.Size(152, 22);
+      this.menuStripView_Config.Text = "Config (Alpha)";
+      this.menuStripView_Config.Click += new System.EventHandler(this.menuStripView_Config_Click);
+      // 
       // tabMainUI
       // 
       this.tabMainUI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -205,7 +220,7 @@
       this.tabMainUI.Location = new System.Drawing.Point(13, 28);
       this.tabMainUI.Name = "tabMainUI";
       this.tabMainUI.SelectedIndex = 0;
-      this.tabMainUI.Size = new System.Drawing.Size(567, 319);
+      this.tabMainUI.Size = new System.Drawing.Size(559, 358);
       this.tabMainUI.TabIndex = 4;
       // 
       // tabRemote
@@ -214,8 +229,8 @@
       this.tabRemote.Controls.Add(this.lstExplorer);
       this.tabRemote.Location = new System.Drawing.Point(4, 22);
       this.tabRemote.Name = "tabRemote";
-      this.tabRemote.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-      this.tabRemote.Size = new System.Drawing.Size(559, 293);
+      this.tabRemote.Padding = new System.Windows.Forms.Padding(3);
+      this.tabRemote.Size = new System.Drawing.Size(551, 332);
       this.tabRemote.TabIndex = 0;
       this.tabRemote.Text = "Remote";
       this.tabRemote.UseVisualStyleBackColor = true;
@@ -244,7 +259,7 @@
       this.lstExplorer.FullRowSelect = true;
       this.lstExplorer.Location = new System.Drawing.Point(0, 0);
       this.lstExplorer.Name = "lstExplorer";
-      this.lstExplorer.Size = new System.Drawing.Size(559, 293);
+      this.lstExplorer.Size = new System.Drawing.Size(551, 332);
       this.lstExplorer.TabIndex = 0;
       this.lstExplorer.UseCompatibleStateImageBehavior = false;
       this.lstExplorer.View = System.Windows.Forms.View.Details;
@@ -276,7 +291,7 @@
       this.tabDownloads.Controls.Add(this.lstDownloads);
       this.tabDownloads.Location = new System.Drawing.Point(4, 22);
       this.tabDownloads.Name = "tabDownloads";
-      this.tabDownloads.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.tabDownloads.Padding = new System.Windows.Forms.Padding(3);
       this.tabDownloads.Size = new System.Drawing.Size(559, 293);
       this.tabDownloads.TabIndex = 1;
       this.tabDownloads.Text = "Downloads";
@@ -312,7 +327,7 @@
       this.tabUploads.Controls.Add(this.lstUploads);
       this.tabUploads.Location = new System.Drawing.Point(4, 22);
       this.tabUploads.Name = "tabUploads";
-      this.tabUploads.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.tabUploads.Padding = new System.Windows.Forms.Padding(3);
       this.tabUploads.Size = new System.Drawing.Size(559, 293);
       this.tabUploads.TabIndex = 2;
       this.tabUploads.Text = "Uploads";
@@ -351,7 +366,7 @@
       this.tabSyncing.Controls.Add(this.grpSyncOptions);
       this.tabSyncing.Location = new System.Drawing.Point(4, 22);
       this.tabSyncing.Name = "tabSyncing";
-      this.tabSyncing.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.tabSyncing.Padding = new System.Windows.Forms.Padding(3);
       this.tabSyncing.Size = new System.Drawing.Size(559, 293);
       this.tabSyncing.TabIndex = 3;
       this.tabSyncing.Text = "Syncing";
@@ -668,26 +683,11 @@
       this.ctxtExplorerContext_Delete.Text = "Delete Selected Item";
       this.ctxtExplorerContext_Delete.Click += new System.EventHandler(this.ctxtExplorerContext_Delete_Click);
       // 
-      // settingsToolStripMenuItem
-      // 
-      this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStripView_Config});
-      this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-      this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-      this.settingsToolStripMenuItem.Text = "Settings";
-      // 
-      // menuStripView_Config
-      // 
-      this.menuStripView_Config.Name = "menuStripView_Config";
-      this.menuStripView_Config.Size = new System.Drawing.Size(152, 22);
-      this.menuStripView_Config.Text = "Config (Alpha)";
-      this.menuStripView_Config.Click += new System.EventHandler(this.menuStripView_Config_Click);
-      // 
       // rcloneExplorer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(592, 372);
+      this.ClientSize = new System.Drawing.Size(584, 411);
       this.Controls.Add(this.tabMainUI);
       this.Controls.Add(this.lblFooter);
       this.Controls.Add(this.txtRawOut);

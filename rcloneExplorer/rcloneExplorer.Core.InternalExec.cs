@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace rcloneExplorer
 {
@@ -22,9 +23,9 @@ namespace rcloneExplorer
       syncingHandler = rcloneExplorer.syncingHandler;
     }
 
-    public string Execute(string command, string arguments, string operation = null, string prepend = null)
+    public string Execute(string command, string arguments, string operation = null, string prepend = null, string[] rcmdlist = null)
     {
-
+      string output = "";
       string rcloneLogs = "";
       //check for verbose logging
       if (operation == "sync")
@@ -44,6 +45,7 @@ namespace rcloneExplorer
       process.StartInfo.UseShellExecute = false;
       process.StartInfo.RedirectStandardError = true;
       process.StartInfo.RedirectStandardOutput = true;
+      process.StartInfo.RedirectStandardInput = true;
       process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
       process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
       process.Start();
@@ -65,16 +67,25 @@ namespace rcloneExplorer
         }
         else if (operation == "config")
         {
-          //this space will be used to pipe commands from wizard to interactive config shell
+          foreach (string rcmd in rcmdlist)
+          {
+            if (rcmd.Contains("MSG: "))
+            {
+              MessageBox.Show(rcmd);
+            }
+            else {
+              process.StandardInput.WriteLine(rcmd);            
+            }
+            System.Threading.Thread.Sleep(100);
+          }
         }
-
       }
 
       // Synchronously read the standard output of the spawned process. 
-      string output = process.StandardOutput.ReadToEnd();
+      output = process.StandardOutput.ReadToEnd();
       if (output == null) { output = process.StandardError.ReadToEnd(); }
 
-      //close process when it's finished
+      //close process when it's finished  
       process.WaitForExit();
       process.Close();
 
