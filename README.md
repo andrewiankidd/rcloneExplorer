@@ -1,39 +1,43 @@
-#rcloneExplorer ![](http://i.imgur.com/T4We4ZK.png) 
+#rcloneExplorer <img align="right" width="64px" src="http://i.imgur.com/T4We4ZK.png">
+<hr>
 
-Crappy rclone GUI for Windows
-Runs rclone commands and displays output based on the results
+<img align="right" width="50%" src="https://i.imgur.com/8V4ZQm2.png">
+>rcloneExplorer works by taking output from rclone, which does all the heavy lifting. Remotes which have been set up via rclones config proces should be fully usable in rcloneExplorer.
+rcloneExplorer can only access rclone configured remotes.
 
-##Screenshot:
-<p align="center">
-  <img src="https://i.imgur.com/ebJq30W.gif"/>
-</p>
-
-##Usage
-1. Have a working rclone config on machine
-2. have rclone.exe in working directory
-3. run rcloneExplorer.exe
+<br/><br/>
+<br/><br/>
 
 ##Features
-###Browse encrypted remotes transparently
-rcloneExplorer merely takes output from rclone, which does all the heavy lifting. If you have an encrypted remote set up in rclone and point rcloneExplorer to it, it will work just as well as with a non-encrypted remote. rcloneExplorer can only access rclone configured remotes.
+<hr>
 
-###Streaming
-Making use of ['rclone cat'](http://rclone.org/commands/rclone_cat/) and [ffplay](https://ffmpeg.org/ffplay.html), media files can be streamed directly from remote.
+####Streaming
+<img align="left" style="margin-right:20px;" width="50%" src="https://i.imgur.com/S1p4FHQ.jpg">
+>Making use of ['rclone cat'](http://rclone.org/commands/rclone_cat/) and [ffplay](https://ffmpeg.org/ffplay.html), media files can be streamed directly from remote
 
-###Syncing
-rcloneExplorer provides a simple GUI to set up and schedule a regular sync option, to keep your files backed up and safe on a regular basis. [Currently a WIP]
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 
-###Downloading Files
-You can download files from the remote directly to your machine, with a simple click-and-save GUI.
+####Syncing
+<img align="right" width="50%" src="https://i.imgur.com/B0ov7IZ.png">
+>rcloneExplorer provides a simple GUI to set up and schedule a regular sync option, to keep your files backed up and safe on a regular basis. [Currently a WIP]
 
-###Uploading Files
-To quickly upload some files to your remote, drag and drop them onto the remote folder and the upload will start automatically. If you're uploading to an encrypted remote, the file will be encrypted on the fly courtesy of rclone.
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 
-###Cancelling Transfers
-You can cancel uploads and downloads just as easily as starting them, just right click and cancel. Any partial files downloaded will be deleted automatically.
+####File Transfers
+<img align="left" width="50%" src="https://i.imgur.com/H48vT3K.png">
+>You can easily upload & download files to and from configured remotes, with a nice easy to use GUI and transparent on-the-fly encryption/decryption as needed.
 
-###Quit (continue transfers)
-simply closes the GUI application, all background processes will still run
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 
-###Quit
-quits the GUI application, and also kills any rclone transfers in process. NOTE: this method does not delete partly transferred files.
+####GUI for Config Management
+<img align="right" width="50%" src="https://i.imgur.com/xaCKsQU.png">
+><p>A lot of people seem intimidated by the rclone CLI, especially during the initial configuration. In an attempt to remedy this rcloneExplorer now has an easy to use configuration 'wizard' which can be used to manage remotes and encryption settings</p>
