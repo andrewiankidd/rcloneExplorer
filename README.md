@@ -7,11 +7,12 @@ rcloneExplorer can only access rclone configured remotes.
 
 <br/><br/>
 <br/><br/>
+<br/><br/>
 
 ##Features
 <hr>
 
-####Streaming
+###Streaming
 <img align="left" style="margin-right:20px;" width="50%" src="https://i.imgur.com/S1p4FHQ.jpg">
 >Making use of ['rclone cat'](http://rclone.org/commands/rclone_cat/) and [ffplay](https://ffmpeg.org/ffplay.html), media files can be streamed directly from remote
 
@@ -19,8 +20,9 @@ rcloneExplorer can only access rclone configured remotes.
 <br/><br/>
 <br/><br/>
 <br/><br/>
+<br/><br/>
 
-####Syncing
+###Syncing
 <img align="right" width="50%" src="https://i.imgur.com/B0ov7IZ.png">
 >rcloneExplorer provides a simple GUI to set up and schedule a regular sync option, to keep your files backed up and safe on a regular basis. [Currently a WIP]
 
@@ -28,8 +30,9 @@ rcloneExplorer can only access rclone configured remotes.
 <br/><br/>
 <br/><br/>
 <br/><br/>
+<br/><br/>
 
-####File Transfers
+###File Transfers
 <img align="left" width="50%" src="https://i.imgur.com/H48vT3K.png">
 >You can easily upload & download files to and from configured remotes, with a nice easy to use GUI and transparent on-the-fly encryption/decryption as needed.
 
@@ -37,7 +40,8 @@ rcloneExplorer can only access rclone configured remotes.
 <br/><br/>
 <br/><br/>
 <br/><br/>
+<br/><br/>
 
-####GUI for Config Management
+###GUI for Config Management
 <img align="right" width="50%" src="https://i.imgur.com/xaCKsQU.png">
 ><p>A lot of people seem intimidated by the rclone CLI, especially during the initial configuration. In an attempt to remedy this rcloneExplorer now has an easy to use configuration 'wizard' which can be used to manage remotes and encryption settings</p>
