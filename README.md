@@ -1,7 +1,7 @@
 #rcloneExplorer <img align="right" width="64px" src="http://i.imgur.com/T4We4ZK.png">
 <hr>
 
-<img align="right" width="50%" src="https://i.imgur.com/8V4ZQm2.png">
+<img align="right" width="50%" src="https://i.imgur.com/vtOep1f.png">
 >rcloneExplorer works by taking output from rclone, which does all the heavy lifting. Remotes which have been set up via rclones config proces should be fully usable in rcloneExplorer.
 rcloneExplorer can only access rclone configured remotes.
 
@@ -23,7 +23,7 @@ rcloneExplorer can only access rclone configured remotes.
 <br/><br/>
 
 ###Syncing
-<img align="right" width="50%" src="https://i.imgur.com/B0ov7IZ.png">
+<img align="right" width="50%" src="https://i.imgur.com/F7qcBPd.png">
 >rcloneExplorer provides a simple GUI to set up and schedule a regular sync option, to keep your files backed up and safe on a regular basis. [Currently a WIP]
 
 <br/><br/>
@@ -33,7 +33,7 @@ rcloneExplorer can only access rclone configured remotes.
 <br/><br/>
 
 ###File Transfers
-<img align="left" width="50%" src="https://i.imgur.com/H48vT3K.png">
+<img align="left" width="50%" src="https://i.imgur.com/KodgC3I.png">
 >You can easily upload & download files to and from configured remotes, with a nice easy to use GUI and transparent on-the-fly encryption/decryption as needed.
 
 <br/><br/>
@@ -43,5 +43,5 @@ rcloneExplorer can only access rclone configured remotes.
 <br/><br/>
 
 ###GUI for Config Management
-<img align="right" width="50%" src="https://i.imgur.com/xaCKsQU.png">
+<img align="right" width="50%" src="https://i.imgur.com/1BpaGTM.png">
 ><p>A lot of people seem intimidated by the rclone CLI, especially during the initial configuration. In an attempt to remedy this rcloneExplorer now has an easy to use configuration 'wizard' which can be used to manage remotes and encryption settings</p>

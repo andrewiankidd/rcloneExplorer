@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,7 +15,7 @@ namespace rcloneExplorer
   public partial class rcloneExplorerSetupWiz : Form
   {
     rcloneExplorerInternalExec internalExecHandler;
-    rcloneExplorerExploreHandler exploreHandler;
+    rcloneExplorerExploreHandler exploreHandler; 
     IniFile iniSettings;
     string[] providers = { "crypt", "amazon cloud drive", "s3", "b2", "dropbox", "google cloud storage", "drive", "hubic", "onedrive", "swift", "yandex" };
 
@@ -69,19 +70,19 @@ namespace rcloneExplorer
 
     private void openSelectedRemote()
     {
-      if (lstConfigs.SelectedItems.Count>0)
-      { 
-        if (!String.IsNullOrEmpty(lstConfigs.SelectedItems[0].Text))
-        {
-          //write newly selected config to ini
-          iniSettings.Write("rcloneRemote", lstConfigs.SelectedItems[0].Text.ToString());
+      if (lstConfigs.SelectedItems.Count > 0 && !String.IsNullOrEmpty(lstConfigs.SelectedItems[0].Text))
+      {
+        //write newly selected config to ini
+        iniSettings.Write("rcloneRemote", lstConfigs.SelectedItems[0].Text.ToString());
+        //not doing first time setup so clear the CD and refresh view   
+        if (!rcloneExplorer.initialSetup) {
           //set current path to root
           rcloneExplorer.remoteCD = "";
           //refresh the explorer lst
           exploreHandler.refreshlstExplorer();
-          //close config screen
-          this.Close();
-        }
+          }
+        //close config screen
+        this.Close();
       }
     }
 
@@ -145,7 +146,7 @@ namespace rcloneExplorer
       //if user doesnt enter a valid remote name, keep asking
       while (String.IsNullOrEmpty(nRemoteName.Trim()))
       {
-        nRemoteName = PromptGenerator.ShowDialog("Remote Name:", "");
+        nRemoteName = PromptGenerator.ShowDialog("Remote Name:", "Please enter an alphanumeric name for the remote");
       }
 
       //build command list
