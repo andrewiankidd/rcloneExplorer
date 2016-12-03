@@ -29,6 +29,7 @@ namespace rcloneExplorer
     public static string remoteCD = "";
     public static long totalFilesize = 0;
     public static bool loaded = false;
+    public static bool initialSetup = false;
     public static bool streamingEnabled = false;
     public static System.Windows.Forms.Timer transferTimer = new System.Windows.Forms.Timer();
 
@@ -45,6 +46,12 @@ namespace rcloneExplorer
       tickHandler.init();
       //init rclone settings
       InitializationHandler.initRcloneSettings();
+      //wait for initial setup to complete if need be
+      if (initialSetup) {
+        var SetupWiz = new rcloneExplorerSetupWiz();
+        var waitforcomplete = SetupWiz.ShowDialog();
+        initialSetup = false;
+      }
       //start the splashscreen in a background thread so the main form can work away
       new Thread(() =>
       {

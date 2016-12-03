@@ -32,10 +32,8 @@ namespace rcloneExplorer
         //config found, checking for settings 
         if (string.IsNullOrEmpty(iniSettings.Read("rcloneRemote")))
         {
-          MessageBox.Show("ERR: Incorrect config\r\n\r\nPlease add an rclone remote Name to the config ini");
-          Process.Start("cmd.exe", "/c rclone config");
-          Process.Start("notepad.exe", "rcloneExplorer.ini");
-          Environment.Exit(0);
+          MessageBox.Show("ERR: Incorrect config\r\n\r\nLoading config, this may take a minute...");
+          rcloneExplorer.initialSetup = true;
         }
         else
         {
@@ -57,10 +55,8 @@ namespace rcloneExplorer
         iniSettings.Write("rcloneSyncBandwidthLimit", "0");
         iniSettings.Write("rcloneSyncMinFileSize", "0");
         iniSettings.Write("rcloneSyncMaxFileSize", "0");
-        MessageBox.Show("No ini file found!\r\n\r\nPlease add an rclone remote Name to the config ini");
-        Process.Start("cmd.exe", "/c rclone config");
-        Process.Start("notepad.exe", "rcloneExplorer.ini");
-        Environment.Exit(0);
+        MessageBox.Show("ERR: No ini file found!\r\n\r\nLoading config, this may take a minute...");
+        rcloneExplorer.initialSetup = true;
       }
       if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\ffplay.exe"))
       {
