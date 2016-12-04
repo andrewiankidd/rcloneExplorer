@@ -184,6 +184,7 @@
       this.menuStripView_ToggleConsole.Name = "menuStripView_ToggleConsole";
       this.menuStripView_ToggleConsole.Size = new System.Drawing.Size(156, 22);
       this.menuStripView_ToggleConsole.Text = "Toggle Console";
+      this.menuStripView_ToggleConsole.Visible = false;
       this.menuStripView_ToggleConsole.Click += new System.EventHandler(this.menuStripView_ToggleConsole_Click);
       // 
       // menuStripView_Refresh
@@ -239,7 +240,7 @@
       // 
       this.lblLoading.Location = new System.Drawing.Point(0, 0);
       this.lblLoading.Name = "lblLoading";
-      this.lblLoading.Size = new System.Drawing.Size(559, 293);
+      this.lblLoading.Size = new System.Drawing.Size(551, 332);
       this.lblLoading.TabIndex = 5;
       this.lblLoading.Text = "Loading...";
       this.lblLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -308,7 +309,7 @@
       this.lstDownloads.FullRowSelect = true;
       this.lstDownloads.Location = new System.Drawing.Point(0, 0);
       this.lstDownloads.Name = "lstDownloads";
-      this.lstDownloads.Size = new System.Drawing.Size(559, 309);
+      this.lstDownloads.Size = new System.Drawing.Size(555, 332);
       this.lstDownloads.TabIndex = 0;
       this.lstDownloads.UseCompatibleStateImageBehavior = false;
       this.lstDownloads.View = System.Windows.Forms.View.Details;
@@ -344,7 +345,7 @@
       this.lstUploads.FullRowSelect = true;
       this.lstUploads.Location = new System.Drawing.Point(0, 0);
       this.lstUploads.Name = "lstUploads";
-      this.lstUploads.Size = new System.Drawing.Size(559, 297);
+      this.lstUploads.Size = new System.Drawing.Size(555, 332);
       this.lstUploads.TabIndex = 1;
       this.lstUploads.UseCompatibleStateImageBehavior = false;
       this.lstUploads.View = System.Windows.Forms.View.Details;
@@ -375,9 +376,9 @@
       // btnSyncStart
       // 
       this.btnSyncStart.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-      this.btnSyncStart.Location = new System.Drawing.Point(6, 264);
+      this.btnSyncStart.Location = new System.Drawing.Point(6, 303);
       this.btnSyncStart.Name = "btnSyncStart";
-      this.btnSyncStart.Size = new System.Drawing.Size(547, 23);
+      this.btnSyncStart.Size = new System.Drawing.Size(539, 23);
       this.btnSyncStart.TabIndex = 9;
       this.btnSyncStart.Text = "Start Sync";
       this.btnSyncStart.UseVisualStyleBackColor = true;
@@ -393,15 +394,15 @@
       this.txtSyncLog.Name = "txtSyncLog";
       this.txtSyncLog.ReadOnly = true;
       this.txtSyncLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-      this.txtSyncLog.Size = new System.Drawing.Size(546, 61);
+      this.txtSyncLog.Size = new System.Drawing.Size(538, 101);
       this.txtSyncLog.TabIndex = 8;
       // 
       // btnSyncSave
       // 
       this.btnSyncSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-      this.btnSyncSave.Location = new System.Drawing.Point(6, 243);
+      this.btnSyncSave.Location = new System.Drawing.Point(6, 282);
       this.btnSyncSave.Name = "btnSyncSave";
-      this.btnSyncSave.Size = new System.Drawing.Size(547, 23);
+      this.btnSyncSave.Size = new System.Drawing.Size(539, 23);
       this.btnSyncSave.TabIndex = 7;
       this.btnSyncSave.Text = "Save Settings";
       this.btnSyncSave.UseVisualStyleBackColor = true;
@@ -433,7 +434,7 @@
       this.grpSyncOptions.Controls.Add(this.numSyncOptionsFrequency);
       this.grpSyncOptions.Location = new System.Drawing.Point(7, 6);
       this.grpSyncOptions.Name = "grpSyncOptions";
-      this.grpSyncOptions.Size = new System.Drawing.Size(546, 164);
+      this.grpSyncOptions.Size = new System.Drawing.Size(538, 164);
       this.grpSyncOptions.TabIndex = 4;
       this.grpSyncOptions.TabStop = false;
       this.grpSyncOptions.Text = "Sync Options";
@@ -441,7 +442,7 @@
       // btnSyncDestinationSelect
       // 
       this.btnSyncDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnSyncDestinationSelect.Location = new System.Drawing.Point(465, 73);
+      this.btnSyncDestinationSelect.Location = new System.Drawing.Point(457, 73);
       this.btnSyncDestinationSelect.Name = "btnSyncDestinationSelect";
       this.btnSyncDestinationSelect.Size = new System.Drawing.Size(75, 23);
       this.btnSyncDestinationSelect.TabIndex = 19;
@@ -452,7 +453,7 @@
       // btnSyncSourceSelect
       // 
       this.btnSyncSourceSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnSyncSourceSelect.Location = new System.Drawing.Point(465, 30);
+      this.btnSyncSourceSelect.Location = new System.Drawing.Point(457, 30);
       this.btnSyncSourceSelect.Name = "btnSyncSourceSelect";
       this.btnSyncSourceSelect.Size = new System.Drawing.Size(75, 23);
       this.btnSyncSourceSelect.TabIndex = 18;
@@ -467,7 +468,7 @@
       this.txtSyncDestination.Enabled = false;
       this.txtSyncDestination.Location = new System.Drawing.Point(9, 75);
       this.txtSyncDestination.Name = "txtSyncDestination";
-      this.txtSyncDestination.Size = new System.Drawing.Size(450, 20);
+      this.txtSyncDestination.Size = new System.Drawing.Size(442, 20);
       this.txtSyncDestination.TabIndex = 17;
       // 
       // lblSyncDestination
@@ -495,7 +496,7 @@
       this.txtSyncSource.Enabled = false;
       this.txtSyncSource.Location = new System.Drawing.Point(9, 32);
       this.txtSyncSource.Name = "txtSyncSource";
-      this.txtSyncSource.Size = new System.Drawing.Size(450, 20);
+      this.txtSyncSource.Size = new System.Drawing.Size(442, 20);
       this.txtSyncSource.TabIndex = 14;
       // 
       // numSyncOptionsBandwidthLimit
