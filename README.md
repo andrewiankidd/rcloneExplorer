@@ -1,6 +1,10 @@
 #rcloneExplorer <img align="right" width="64px" src="http://i.imgur.com/T4We4ZK.png">
 <hr>
+[Download rclone here](https://github.com/ncw/rclone/releases)    
+[Download rcloneExplorer here](https://github.com/andrewiankidd/rcloneExplorer/releases)
+<br/><br/>
 
+##About
 <img align="right" width="50%" src="https://i.imgur.com/vtOep1f.png">
 >rcloneExplorer works by taking output from rclone, which does all the heavy lifting. Remotes which have been set up via rclones config proces should be fully usable in rcloneExplorer.
 rcloneExplorer can only access rclone configured remotes.
