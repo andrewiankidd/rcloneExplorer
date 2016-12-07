@@ -1,7 +1,8 @@
 #rcloneExplorer <img align="right" width="64px" src="http://i.imgur.com/T4We4ZK.png">
 <hr>
 [Download rclone here](https://github.com/ncw/rclone/releases)    
-[Download rcloneExplorer here](https://github.com/andrewiankidd/rcloneExplorer/releases)
+[Download rcloneExplorer here](https://github.com/andrewiankidd/rcloneExplorer/releases)    
+[Visit the Wiki!](https://github.com/andrewiankidd/rcloneExplorer/wiki)
 <br/><br/>
 
 ##About
