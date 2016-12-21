@@ -42,6 +42,7 @@ namespace rcloneExplorer
       //set up cmd to call rclone
       Process process = new Process();
       process.StartInfo.FileName = "cmd.exe";
+      process.StartInfo.EnvironmentVariables["RCLONE_CONFIG_PASS"] = iniSettings.Read("rcloneConfigPass");
       process.StartInfo.Arguments = "/c " + prepend + "rclone.exe " + command + " " + arguments + rcloneLogs;
       process.StartInfo.CreateNoWindow = true;
       process.StartInfo.UseShellExecute = false;
@@ -55,7 +56,18 @@ namespace rcloneExplorer
       //log process ID for uploads, downloads and sync operations
       if (!String.IsNullOrEmpty(operation))
       {
-        if (operation == "up")
+        if (operation == "passcheck")
+        {
+            //check if config has password
+            string pcout = "";
+            while (!process.StandardOutput.EndOfStream)
+            { pcout = process.StandardOutput.ReadLine(); }
+            if (pcout.Contains("password:"))
+            {
+                rcloneExplorer.configEncrypted = true;
+            }
+        }
+        else if (operation == "up")
         {
           //log the process in the uploading list
           uploadsHandler.uploadingPID.Add(new string[] { process.Id.ToString(), arguments });

@@ -32,7 +32,7 @@ namespace rcloneExplorer
         //config found, checking for settings 
         if (string.IsNullOrEmpty(iniSettings.Read("rcloneRemote")))
         {
-          MessageBox.Show("ERR: Incorrect config\r\n\r\nLoading config, this may take a minute...");
+          MessageBox.Show("ERR: No default remote selected! Please choose a remote.\r\n\r\nLoading config, this may take a minute...");
           rcloneExplorer.initialSetup = true;
         }
         else
@@ -55,7 +55,14 @@ namespace rcloneExplorer
         iniSettings.Write("rcloneSyncBandwidthLimit", "0");
         iniSettings.Write("rcloneSyncMinFileSize", "0");
         iniSettings.Write("rcloneSyncMaxFileSize", "0");
-        MessageBox.Show("ERR: No ini file found!\r\n\r\nLoading config, this may take a minute...");
+        string configpass = "";
+        internalExecHandler.Execute("version", "", "passcheck");
+        if (rcloneExplorer.configEncrypted)
+        { 
+            configpass = PromptGenerator.ShowDialog("config password:", "Encrypted config check");
+        }
+        iniSettings.Write("rcloneConfigPass", configpass);
+        MessageBox.Show("ERR: No ini file found!\r\n\r\nLoading config screen, this may take a minute...");
         rcloneExplorer.initialSetup = true;
       }
       if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\ffplay.exe"))

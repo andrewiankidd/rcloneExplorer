@@ -30,6 +30,7 @@ namespace rcloneExplorer
     public static long totalFilesize = 0;
     public static bool loaded = false;
     public static bool initialSetup = false;
+    public static bool configEncrypted = false;
     public static bool streamingEnabled = false;
     public static System.Windows.Forms.Timer transferTimer = new System.Windows.Forms.Timer();
 

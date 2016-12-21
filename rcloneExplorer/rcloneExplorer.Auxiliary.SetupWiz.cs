@@ -190,5 +190,12 @@ namespace rcloneExplorer
       loadConfigs();
     }
 
+    private void rcloneExplorerSetupWiz_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        if (rcloneExplorer.initialSetup)
+        {
+            Environment.Exit(0);
+        }
+    }
   }
 }
