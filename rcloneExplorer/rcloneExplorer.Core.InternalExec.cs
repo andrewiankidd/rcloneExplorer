@@ -15,6 +15,8 @@ namespace rcloneExplorer
     rcloneExplorerUploadHandler uploadsHandler;
     rcloneExplorerMiscContainer miscContainer;
     rcloneExplorerSyncHandler syncingHandler;   
+    static string output = "";
+    static string errOutput = "";
 
     public void init()
     {
@@ -27,7 +29,7 @@ namespace rcloneExplorer
 
     public string Execute(string command, string arguments, string operation = null, string prepend = null, string[] rcmdlist = null)
     {
-      string output = "";
+      output = null; errOutput = null;
       string rcloneLogs = "";
       //check for verbose logging
       if (operation == "sync")
@@ -51,7 +53,11 @@ namespace rcloneExplorer
       process.StartInfo.RedirectStandardInput = true;
       process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
       process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+      process.OutputDataReceived += (sender, args) => proc_OutputDataReceived(sender, args);
+      process.ErrorDataReceived += (sender, args) => proc_ErrorDataReceived(sender, args);
       process.Start();
+      process.BeginOutputReadLine();
+      process.BeginErrorReadLine();
 
       //log process ID for uploads, downloads and sync operations
       if (!String.IsNullOrEmpty(operation))
@@ -70,7 +76,15 @@ namespace rcloneExplorer
         else if (operation == "up")
         {
           //log the process in the uploading list
-          uploadsHandler.uploadingPID.Add(new string[] { process.Id.ToString(), arguments });
+          uploadsHandler.uploadingPID.Add(new string[] { process.Id.ToString(), "0%" });
+          
+          int id = uploadsHandler.uploadingPID.Count - 1;
+          string percentage = "0%";
+          while (!process.HasExited)
+          {
+            if (errOutput != null) {  string newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value; if (newpercentage!="") { percentage = newpercentage; }}
+            uploadsHandler.uploadingPID[id] = new string[] { process.Id.ToString(), percentage };
+          }
         }
         else if (operation == "down")
         {
@@ -129,21 +143,31 @@ namespace rcloneExplorer
         }
 
       }
-
-      // Synchronously read the standard output of the spawned process. 
-      output = process.StandardOutput.ReadToEnd();
-      if (output == null) { output = process.StandardError.ReadToEnd(); }   
-
-      //close process when it's finished  
-      process.WaitForExit();
-      process.Close();
-
-      //debugging
-      if (rcmdlist != null && rcmdlist[1].Contains("debug")) { MessageBox.Show(output); }
-
+      else { process.WaitForExit(); } 
+      
       //return output
-      return output;
+      if (String.IsNullOrEmpty(output)) { output = ""; }
+      return output.Replace("\r", "");
+    }
+    //process stdout
+    static void proc_OutputDataReceived(object sender, DataReceivedEventArgs e)
+    {
+        if (e.Data != null)
+        {
+            output += e.Data.ToString() + Environment.NewLine;
+            Console.Write(e.Data.ToString());
+        }
+    }
+    //process stderr
+    static void proc_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+    {
+        if (e.Data != null)
+        {
+            errOutput += e.Data.ToString() + Environment.NewLine;
+            Console.Write(e.Data.ToString());
+        }
     }
 
   }
+    
 }

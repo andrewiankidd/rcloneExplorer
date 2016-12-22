@@ -64,7 +64,7 @@ namespace rcloneExplorer
           tabDownloads.Text = "Downloads (" + lstDownloads.Items.Count + ")";
         }
       }
-      if (uploadsHandler.uploading.Count > 0)
+      if (uploadsHandler.uploading.Count > 0 && uploadsHandler.uploadingPID.Count == uploadsHandler.uploading.Count)
       {
         for (var i = 0; i < uploadsHandler.uploading.Count; i++)
         {
@@ -79,8 +79,7 @@ namespace rcloneExplorer
             if (miscContainer.ProcessExists(PID))
             {
               //upload still in progress
-              lstUploads.Items[i].SubItems[0].Text += ".";
-              if (lstUploads.Items[i].SubItems[0].Text == "Uploading...") { lstUploads.Items[i].SubItems[0].Text = "Uploading"; }
+              lstUploads.Items[i].SubItems[0].Text = uploadsHandler.uploadingPID[i][1];
             }
             else
             {
