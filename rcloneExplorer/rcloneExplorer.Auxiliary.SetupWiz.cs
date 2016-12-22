@@ -74,13 +74,18 @@ namespace rcloneExplorer
       {
         //write newly selected config to ini
         iniSettings.Write("rcloneRemote", lstConfigs.SelectedItems[0].Text.ToString());
-        //not doing first time setup so clear the CD and refresh view   
+        //not doing first time setup so the main form DOES EXIST, can clear the CD and refresh view   
         if (!rcloneExplorer.initialSetup) {
           //set current path to root
           rcloneExplorer.remoteCD = "";
           //refresh the explorer lst
           exploreHandler.refreshlstExplorer();
-          }
+        }
+        else //finished with first time setup
+        {
+          //end init setup
+          rcloneExplorer.initialSetup = false;
+        }
         //close config screen
         this.Close();
       }
