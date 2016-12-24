@@ -200,11 +200,9 @@ namespace rcloneExplorer
       //process to list view
       foreach (string item in rcloneExplorer.files)
       {
-        //split entry into data
-        List<string> temp = item.TrimStart().Split(new string[] { " " }, 4, StringSplitOptions.None).ToList();
-        //organize stored/remote dir information
-        string fileBytes = temp[0];
-        string fileHuman = miscContainer.BytesToString(Convert.ToInt64(temp[0]));
+        //organize stored/remote file information
+        string fileBytes = Regex.Match(item, @"([0-9])+").Value;
+        string fileHuman = miscContainer.BytesToString(Convert.ToInt64(fileBytes));
         string fileDate = Regex.Match(item, @"[0-9]{4}-[0-9]{2}-[0-9]{2}").Value;
         string fileTime = Regex.Match(item, @"[0-9]{2}:[0-9]{2}:[0-9]{2}").Value;
         string debugging= Regex.Match(item, @"([ \t]+)?[0-9]+ [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]+)?[ \t]").Value;
