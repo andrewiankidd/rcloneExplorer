@@ -101,17 +101,24 @@ namespace rcloneExplorer
         else if (operation == "down")
         {
           //log the process in the downloading list
-          downloadsHandler.downloadPID.Add(new string[] { process.Id.ToString(), arguments });
+          downloadsHandler.downloadPID.Add(new string[] { process.Id.ToString(), "0%", "0" });
 
           int id = downloadsHandler.downloadPID.Count - 1;
+          string percentage = "0%";
           string speed = "0";
           while (!process.HasExited)
           {
             if (errOutput != null)
             {
+                string newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
                 speed = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value.Replace("cur: ", "");
+                if (newpercentage!="") { percentage = newpercentage; }
             }
-            downloadsHandler.downloadPID[id] = new string[] { process.Id.ToString(), arguments, speed };
+            downloadsHandler.downloadPID[id] = new string[] { process.Id.ToString(), percentage, speed };
+          }
+          if (process.HasExited)
+          {
+             downloadsHandler.downloadPID[id] = new string[] { process.Id.ToString(), "100%" };
           }
         }
         else if (operation == "sync")

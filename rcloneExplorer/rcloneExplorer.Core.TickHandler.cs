@@ -37,27 +37,21 @@ namespace rcloneExplorer
         for (var i = 0; i < downloadsHandler.downloading.Count; i++)
         {
           {
-            if (lstDownloads.Items[i].SubItems[0].Text != "100%")
+            //check downloadPId proces.exists to see if uploadis complete yet
+            int PID = Convert.ToInt32(downloadsHandler.downloadPID[i][0]);
+            if (miscContainer.ProcessExists(PID))
             {
-              string[] entry = downloadsHandler.downloading[i];
-              //store the filename of the saved file
-              string savedFilename = entry[1];
-              //set default filesize for saved file
-              long savedFilesizeBytes = 0;
-              //check the filesize of the saved file so far
-              if (System.IO.File.Exists(savedFilename))
-              {
-                //get file size
-                savedFilesizeBytes = new System.IO.FileInfo(savedFilename).Length;
-              }
-              //store the filesize of the stored file in bytes for comparison
-              long storedFilesizeBytes = Convert.ToInt64(entry[0]);
-              //calc percentage
-              long percentage = (long)((float)savedFilesizeBytes / storedFilesizeBytes * 100);
-              //update percentage
-              lstDownloads.Items[i].SubItems[0].Text = percentage.ToString() + "%";
-              //update speed
+              //upload still in progress
+              lstDownloads.Items[i].SubItems[0].Text = downloadsHandler.downloadPID[i][1];
               lstDownloads.Items[i].SubItems[2].Text = downloadsHandler.downloadPID[i][2];
+            }
+            else
+            {
+              if (lstDownloads.Items[i].SubItems[0].Text != "Done!")
+              {
+                //download complete
+                lstDownloads.Items[i].SubItems[0].Text = "Done!";
+              }
             }
           }
         }
@@ -86,11 +80,7 @@ namespace rcloneExplorer
             }
             else
             {
-              if (lstUploads.Items[i].SubItems[0].Text == "Done!")
-              {
-                //do nothing
-              }
-              else
+              if (lstUploads.Items[i].SubItems[0].Text != "Done!")
               {
                 //upload complete (guessing! probs best to validate this)
                 lstUploads.Items[i].SubItems[0].Text = "Done!";

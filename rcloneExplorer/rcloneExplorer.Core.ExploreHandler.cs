@@ -149,7 +149,7 @@ namespace rcloneExplorer
         if (savefile.ShowDialog() == DialogResult.OK)
         {
           //store the path selected via the dialog and filename taken from the selected entry
-          string[] storedvsaved = new string[] { storedFilesizeBytes.ToString(), savefile.SelectedPath + "\\" + storedFilename, "" };
+          string[] storedvsaved = new string[] { "0%", savefile.SelectedPath + "\\" + storedFilename, "0 Bytes/s" };
           //store the info into the download history list
           downloadsHandler.downloading.Add(storedvsaved);
           //then add to list view
