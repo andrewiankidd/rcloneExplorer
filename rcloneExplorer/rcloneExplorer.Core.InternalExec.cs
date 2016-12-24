@@ -45,7 +45,7 @@ namespace rcloneExplorer
       Process process = new Process();
       process.StartInfo.FileName = "cmd.exe";
       process.StartInfo.EnvironmentVariables["RCLONE_CONFIG_PASS"] = iniSettings.Read("rcloneConfigPass");
-      process.StartInfo.Arguments = "/c " + prepend + "rclone.exe " + command + " " + arguments + rcloneLogs;
+      process.StartInfo.Arguments = "/c " + prepend + "rclone.exe " + command + " " + arguments + rcloneLogs + " --stats 5s";
       process.StartInfo.CreateNoWindow = true;
       process.StartInfo.UseShellExecute = false;
       process.StartInfo.RedirectStandardError = true;
@@ -78,20 +78,41 @@ namespace rcloneExplorer
         else if (operation == "up")
         {
           //log the process in the uploading list
-          uploadsHandler.uploadingPID.Add(new string[] { process.Id.ToString(), "0%" });
+          uploadsHandler.uploadingPID.Add(new string[] { process.Id.ToString(), "0%", "" });
           
           int id = uploadsHandler.uploadingPID.Count - 1;
           string percentage = "0%";
+          string speed = "0";
           while (!process.HasExited)
           {
-            if (errOutput != null) {  string newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value; if (newpercentage!="") { percentage = newpercentage; }}
-            uploadsHandler.uploadingPID[id] = new string[] { process.Id.ToString(), percentage };
+            if (errOutput != null)
+            {
+                string newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
+                speed = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value.Replace("cur: ", "");
+                if (newpercentage!="") { percentage = newpercentage; }
+            }
+            uploadsHandler.uploadingPID[id] = new string[] { process.Id.ToString(), percentage, speed };
+          }
+          if (process.HasExited)
+          {
+             uploadsHandler.uploadingPID[id] = new string[] { process.Id.ToString(), "100%" };
           }
         }
         else if (operation == "down")
         {
           //log the process in the downloading list
           downloadsHandler.downloadPID.Add(new string[] { process.Id.ToString(), arguments });
+
+          int id = downloadsHandler.downloadPID.Count - 1;
+          string speed = "0";
+          while (!process.HasExited)
+          {
+            if (errOutput != null)
+            {
+                speed = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value.Replace("cur: ", "");
+            }
+            downloadsHandler.downloadPID[id] = new string[] { process.Id.ToString(), arguments, speed };
+          }
         }
         else if (operation == "sync")
         {

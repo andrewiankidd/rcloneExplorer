@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -60,7 +61,7 @@ namespace rcloneExplorer
         }
 
         //store the path selected via the dialog and filename taken from the selected entry
-        string[] temp = new string[] { "Uploading", file };
+        string[] temp = new string[] { "Uploading", file, "" };
         //store the info into the download history list
         uploadsHandler.uploading.Add(temp);
         //add tolistview
@@ -148,7 +149,7 @@ namespace rcloneExplorer
         if (savefile.ShowDialog() == DialogResult.OK)
         {
           //store the path selected via the dialog and filename taken from the selected entry
-          string[] storedvsaved = new string[] { storedFilesizeBytes.ToString(), savefile.SelectedPath + "\\" + storedFilename };
+          string[] storedvsaved = new string[] { storedFilesizeBytes.ToString(), savefile.SelectedPath + "\\" + storedFilename, "" };
           //store the info into the download history list
           downloadsHandler.downloading.Add(storedvsaved);
           //then add to list view
@@ -174,22 +175,20 @@ namespace rcloneExplorer
       //add up [..]
       lstExplorer.Items.Add(new ListViewItem(new string[] { "0", "<up>", "", ".." }));
       //get rclone output
-      rcloneExplorer.files = internalExecHandler.Execute("lsd", remotePath).Split('\n');
+      rcloneExplorer.files = internalExecHandler.Execute("lsd", remotePath).Split('\n'); //TODO Regex.Matches soerentsch regex, matches>array
       //remove last value which is always null
       rcloneExplorer.files = rcloneExplorer.files.Take(rcloneExplorer.files.Count() - 1).ToArray();
       //process to list view
       foreach (string item in rcloneExplorer.files)
       {
-        //split entry into data
-        List<string> temp = item.TrimStart().Split(new string[] { " " }, 12, StringSplitOptions.None).ToList();
         //organize stored/remote dir information
         string fileBytes = "0";
         string fileHuman = "<dir>";
-        string fileDate = temp[1];
-        string filetime = temp[2];
-        string filePath = temp[11];
+        string fileDate = Regex.Match(item, @"[0-9]{4}-[0-9]{2}-[0-9]{2}").Value;
+        string fileTime = Regex.Match(item, @"[0-9]{2}:[0-9]{2}:[0-9]{2}").Value;
+        string filePath = item.Replace(Regex.Match(item, @"([ \t]+)?(-)?[0-9]+ [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]+)?[ \t]+(-)?([0-9]+([ ]{1}))?").Value, "");
         //echo the dir
-        string[] temprow = new string[] { fileBytes, fileHuman, fileDate + " " + filetime, filePath };
+        string[] temprow = new string[] { fileBytes, fileHuman, fileDate + " " + fileTime, filePath };
         //insert
         lstExplorer.Items.Add(new ListViewItem(temprow));
         
@@ -206,11 +205,12 @@ namespace rcloneExplorer
         //organize stored/remote dir information
         string fileBytes = temp[0];
         string fileHuman = miscContainer.BytesToString(Convert.ToInt64(temp[0]));
-        string fileDate = temp[1];
-        string filetime = temp[2].Remove(temp[2].Length - 10);
-        string filePath = temp[3];
+        string fileDate = Regex.Match(item, @"[0-9]{4}-[0-9]{2}-[0-9]{2}").Value;
+        string fileTime = Regex.Match(item, @"[0-9]{2}:[0-9]{2}:[0-9]{2}").Value;
+        string debugging= Regex.Match(item, @"([ \t]+)?[0-9]+ [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]+)?[ \t]").Value;
+        string filePath = item.Replace(Regex.Match(item, @"([ \t]+)?(-)?[0-9]+ [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]+)?[ \t]+(-)?([0-9]+([ ]{1}))?").Value, "");
         //echo the dir
-        string[] temprow = new string[] { fileBytes, fileHuman, fileDate + " " + filetime, filePath };
+        string[] temprow = new string[] { fileBytes, fileHuman, fileDate + " " + fileTime, filePath };
         //insert
         lstExplorer.Items.Add(new ListViewItem(temprow));
         //keep count of total filesize

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Management;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace rcloneExplorer
 {

@@ -56,6 +56,8 @@ namespace rcloneExplorer
               long percentage = (long)((float)savedFilesizeBytes / storedFilesizeBytes * 100);
               //update percentage
               lstDownloads.Items[i].SubItems[0].Text = percentage.ToString() + "%";
+              //update speed
+              lstDownloads.Items[i].SubItems[2].Text = downloadsHandler.downloadPID[i][2];
             }
           }
         }
@@ -80,6 +82,7 @@ namespace rcloneExplorer
             {
               //upload still in progress
               lstUploads.Items[i].SubItems[0].Text = uploadsHandler.uploadingPID[i][1];
+              lstUploads.Items[i].SubItems[2].Text = uploadsHandler.uploadingPID[i][2];
             }
             else
             {
