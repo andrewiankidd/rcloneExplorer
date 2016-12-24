@@ -49,7 +49,9 @@ namespace rcloneExplorer
       process.StartInfo.CreateNoWindow = true;
       process.StartInfo.UseShellExecute = false;
       process.StartInfo.RedirectStandardError = true;
+      process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
       process.StartInfo.RedirectStandardOutput = true;
+      process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
       process.StartInfo.RedirectStandardInput = true;
       process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
       process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
