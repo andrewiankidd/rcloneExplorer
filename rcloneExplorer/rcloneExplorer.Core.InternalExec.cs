@@ -130,13 +130,22 @@ namespace rcloneExplorer
         }
         else if (operation == "config")
         {
+
           //iterate through the commands needed to set the remote up (its different per remote)
+          while (String.IsNullOrEmpty(output))
+          {
+            Thread.Sleep(100);
+          }
+          
           foreach (string rcmd in rcmdlist)
           {
             //the remote setup has asked to show a message
             if (rcmd.Contains("MSG: "))
             {
-              MessageBox.Show(rcmd);
+              while (!output.Contains("Got code"))
+              {
+                MessageBox.Show(rcmd);
+              }
             }
             //the remote setup has hasked to open a url
             else if (rcmd.Contains("OPN|"))
@@ -144,26 +153,22 @@ namespace rcloneExplorer
               //grab the predefined regex
               string regexp = rcmd.Split('|')[1];
               String url = "";
-              
-              //iterate through stdout until find the matching url
-              string stdoutline = process.StandardOutput.ReadLine();
-              while (!Regex.Match(stdoutline, regexp).Success)
+              while (String.IsNullOrEmpty(url))
               {
-                stdoutline = process.StandardOutput.ReadLine();
-                url = Regex.Match(stdoutline, regexp).Value;
-              }
+                url = Regex.Match(output, regexp).Value;
+              }     
               //open the url
               Process.Start(url);
             }
             //the remote setup has asked for some information
             else if (rcmd.Contains("REQ:"))
             {
-              string requiredinput = PromptGenerator.ShowDialog(rcmd, "");
+              string requiredinput = "";
+              while (String.IsNullOrEmpty(requiredinput))
+              {
+                requiredinput = PromptGenerator.ShowDialog(rcmd, "");
+              }
               process.StandardInput.WriteLine(requiredinput);
-              // this doesnt seem to iterate so just stdin now https://i.imgur.com/x0ml8.png
-              System.Threading.Thread.Sleep(100);
-              process.StandardInput.WriteLine("y"); System.Threading.Thread.Sleep(100);
-              process.StandardInput.WriteLine("q"); System.Threading.Thread.Sleep(100);
             }
             //the remote setup just wants to send some text
             else {
@@ -173,7 +178,6 @@ namespace rcloneExplorer
             System.Threading.Thread.Sleep(100);
           }
         }
-
       }
       else { process.WaitForExit(); } 
       
