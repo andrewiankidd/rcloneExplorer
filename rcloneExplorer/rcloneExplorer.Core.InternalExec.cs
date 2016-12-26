@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace rcloneExplorer
@@ -67,10 +68,8 @@ namespace rcloneExplorer
         if (operation == "passcheck")
         {
             //check if config has password
-            string pcout = "";
-            while (!process.StandardOutput.EndOfStream)
-            { pcout = process.StandardOutput.ReadLine(); }
-            if (pcout.Contains("password:"))
+            process.WaitForExit();
+            if (output.Contains("password:"))
             {
                 rcloneExplorer.configEncrypted = true;
             }
@@ -185,7 +184,7 @@ namespace rcloneExplorer
         if (e.Data != null)
         {
             output += e.Data.ToString() + Environment.NewLine;
-            Console.Write(e.Data.ToString());
+            Console.Write(Thread.CurrentThread.ManagedThreadId + ": OUT: " + e.Data.ToString());
         }
     }
     //process stderr
@@ -194,7 +193,7 @@ namespace rcloneExplorer
         if (e.Data != null)
         {
             errOutput += e.Data.ToString() + Environment.NewLine;
-            Console.Write(e.Data.ToString());
+            Console.Write(Thread.CurrentThread.ManagedThreadId + ": OUT: " + e.Data.ToString());
         }
     }
 

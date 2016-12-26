@@ -56,7 +56,7 @@ namespace rcloneExplorer
         iniSettings.Write("rcloneSyncMinFileSize", "0");
         iniSettings.Write("rcloneSyncMaxFileSize", "0");
         string configpass = "";
-        internalExecHandler.Execute("version", "", "passcheck");
+        string results = internalExecHandler.Execute("version", "", "passcheck");
         if (rcloneExplorer.configEncrypted)
         { 
             configpass = PromptGenerator.ShowDialog("config password:", "Encrypted config check");

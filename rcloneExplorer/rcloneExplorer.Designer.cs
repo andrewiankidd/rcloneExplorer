@@ -58,10 +58,12 @@
             this.lstDownloads = new System.Windows.Forms.ListView();
             this.colDProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabUploads = new System.Windows.Forms.TabPage();
             this.lstUploads = new System.Windows.Forms.ListView();
             this.colUProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colUPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colUSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabSyncing = new System.Windows.Forms.TabPage();
             this.btnSyncStart = new System.Windows.Forms.Button();
             this.txtSyncLog = new System.Windows.Forms.TextBox();
@@ -95,8 +97,6 @@
             this.streamMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtExplorerContext_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtExplorerContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.colUSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip.SuspendLayout();
             this.tabMainUI.SuspendLayout();
             this.tabRemote.SuspendLayout();
@@ -117,11 +117,11 @@
             // 
             this.txtRawOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRawOut.Location = new System.Drawing.Point(12, 326);
+            this.txtRawOut.Location = new System.Drawing.Point(12, 376);
             this.txtRawOut.Multiline = true;
             this.txtRawOut.Name = "txtRawOut";
             this.txtRawOut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtRawOut.Size = new System.Drawing.Size(560, 1);
+            this.txtRawOut.Size = new System.Drawing.Size(560, 0);
             this.txtRawOut.TabIndex = 1;
             // 
             // lblFooter
@@ -186,7 +186,6 @@
             this.menuStripView_ToggleConsole.Name = "menuStripView_ToggleConsole";
             this.menuStripView_ToggleConsole.Size = new System.Drawing.Size(156, 22);
             this.menuStripView_ToggleConsole.Text = "Toggle Console";
-            this.menuStripView_ToggleConsole.Visible = false;
             this.menuStripView_ToggleConsole.Click += new System.EventHandler(this.menuStripView_ToggleConsole_Click);
             // 
             // menuStripView_Refresh
@@ -326,6 +325,10 @@
             // 
             this.colDPath.Text = "Path";
             // 
+            // colDSpeed
+            // 
+            this.colDSpeed.Text = "Speed";
+            // 
             // tabUploads
             // 
             this.tabUploads.Controls.Add(this.lstUploads);
@@ -362,6 +365,10 @@
             // colUPath
             // 
             this.colUPath.Text = "Path";
+            // 
+            // colUSpeed
+            // 
+            this.colUSpeed.Text = "Speed";
             // 
             // tabSyncing
             // 
@@ -687,14 +694,6 @@
             this.ctxtExplorerContext_Delete.Size = new System.Drawing.Size(181, 22);
             this.ctxtExplorerContext_Delete.Text = "Delete Selected Item";
             this.ctxtExplorerContext_Delete.Click += new System.EventHandler(this.ctxtExplorerContext_Delete_Click);
-            // 
-            // colUSpeed
-            // 
-            this.colUSpeed.Text = "Speed";
-            // 
-            // colDSpeed
-            // 
-            this.colDSpeed.Text = "Speed";
             // 
             // rcloneExplorer
             // 
