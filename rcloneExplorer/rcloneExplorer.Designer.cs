@@ -117,7 +117,7 @@
             // 
             this.txtRawOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRawOut.Location = new System.Drawing.Point(12, 376);
+            this.txtRawOut.Location = new System.Drawing.Point(12, 326);
             this.txtRawOut.Multiline = true;
             this.txtRawOut.Name = "txtRawOut";
             this.txtRawOut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;

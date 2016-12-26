@@ -31,6 +31,7 @@ namespace rcloneExplorer
       TabPage tabDownloads = rcloneExplorer.myform.Controls.Find("tabDownloads", true)[0] as TabPage;
       TabPage tabUploads = rcloneExplorer.myform.Controls.Find("tabUploads", true)[0] as TabPage;
       TextBox txtSyncLog = rcloneExplorer.myform.Controls.Find("txtSyncLog", true)[0] as TextBox;
+      TextBox txtRawOut = rcloneExplorer.myform.Controls.Find("txtRawOut", true)[0] as TextBox;
 
       if (downloadsHandler.downloading.Count > 0)
       {
@@ -108,6 +109,11 @@ namespace rcloneExplorer
             txtSyncLog.AppendText(tmp.Replace("\n", Environment.NewLine));
           }
         }
+      }
+      if (txtRawOut.Height>0)
+      {
+        txtRawOut.AppendText(rcloneExplorer.rawOutputBuffer);
+        rcloneExplorer.rawOutputBuffer="";
       }
     }
   }

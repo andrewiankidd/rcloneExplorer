@@ -45,7 +45,7 @@ namespace rcloneExplorer
             //get directory name so it can be sent to rclone process
             string dirName = new DirectoryInfo(file).Name;
             //copy local path to rclone folder + directory name
-            internalExecHandler.Execute("copy", "\"" + file + "\" " + iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "\\" + dirName + "\"", "up");
+            internalExecHandler.Execute("copy", "\"" + file + "\" " + iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + dirName + "\"", "up");
           }).Start();
         }
         else

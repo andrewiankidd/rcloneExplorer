@@ -62,6 +62,9 @@ namespace rcloneExplorer
       process.BeginOutputReadLine();
       process.BeginErrorReadLine();
 
+      //log command
+      rcloneExplorer.rawOutputBuffer += "Thread: " + Thread.CurrentThread.ManagedThreadId + ": STDIN: " + process.StartInfo.FileName + " " + process.StartInfo.Arguments + Environment.NewLine;
+
       //log process ID for uploads, downloads and sync operations
       if (!String.IsNullOrEmpty(operation))
       {
@@ -184,7 +187,7 @@ namespace rcloneExplorer
         if (e.Data != null)
         {
             output += e.Data.ToString() + Environment.NewLine;
-            Console.Write(Thread.CurrentThread.ManagedThreadId + ": OUT: " + e.Data.ToString());
+            rcloneExplorer.rawOutputBuffer += "Thread: " + Thread.CurrentThread.ManagedThreadId + ": STDOUT: " + output;
         }
     }
     //process stderr
@@ -193,7 +196,7 @@ namespace rcloneExplorer
         if (e.Data != null)
         {
             errOutput += e.Data.ToString() + Environment.NewLine;
-            Console.Write(Thread.CurrentThread.ManagedThreadId + ": OUT: " + e.Data.ToString());
+            rcloneExplorer.rawOutputBuffer += "Thread: " + Thread.CurrentThread.ManagedThreadId + ": STDERR: " + errOutput;
         }
     }
 
