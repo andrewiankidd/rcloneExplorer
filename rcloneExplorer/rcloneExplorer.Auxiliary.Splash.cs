@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace rcloneExplorer
@@ -8,7 +10,6 @@ namespace rcloneExplorer
   {
     private Timer splashTimer;
     FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
 
     public rcloneSplash()
     {

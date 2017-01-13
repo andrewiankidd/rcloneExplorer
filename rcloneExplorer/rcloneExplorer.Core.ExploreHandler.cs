@@ -233,7 +233,9 @@ namespace rcloneExplorer
       if (storedFilesizeHuman != "<dir>" && storedFilesizeHuman != "<up>")
       {
         //we're on the honor system for filetypes
-        Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | ffplay -window_title " + "\"" + storedFilepath + "\"" + " -");
+        string ext = Path.GetExtension(storedFilepath);
+        string cmd = iniSettings.Read(ext, "FTA");
+        Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | " + cmd);
       }
       else
       {

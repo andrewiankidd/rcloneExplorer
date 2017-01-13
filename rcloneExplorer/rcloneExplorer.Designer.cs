@@ -97,6 +97,7 @@
             this.streamMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtExplorerContext_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtExplorerContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tabMainUI.SuspendLayout();
             this.tabRemote.SuspendLayout();
@@ -198,7 +199,8 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStripView_RcloneConfig});
+            this.menuStripView_RcloneConfig,
+            this.settingsToolStripMenuItem1});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -695,6 +697,13 @@
             this.ctxtExplorerContext_Delete.Text = "Delete Selected Item";
             this.ctxtExplorerContext_Delete.Click += new System.EventHandler(this.ctxtExplorerContext_Delete_Click);
             // 
+            // settingsToolStripMenuItem1
+            // 
+            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(191, 22);
+            this.settingsToolStripMenuItem1.Text = "Settings";
+            this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
+            // 
             // rcloneExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -796,6 +805,7 @@
     private System.Windows.Forms.ToolStripMenuItem menuStripView_RcloneConfig;
         private System.Windows.Forms.ColumnHeader colUSpeed;
         private System.Windows.Forms.ColumnHeader colDSpeed;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
     }
 }
 

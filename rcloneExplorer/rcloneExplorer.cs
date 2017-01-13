@@ -129,6 +129,17 @@ namespace rcloneExplorer
       }
     }
 
+    private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
+    {
+        Form fc = Application.OpenForms["rcloneExplorerSettings"];
+        //if there are none, open one
+        if (fc == null)
+        {
+            var SetupWiz = new rcloneExplorerSettings();
+            SetupWiz.Show();
+        }
+    }
+
     private void rcloneExplorer_Resize(object sender, EventArgs e)
     {
       if (FormWindowState.Minimized == this.WindowState)
@@ -289,5 +300,6 @@ namespace rcloneExplorer
     {
       syncingHandler.btnSyncStart_Click(sender, e);
     }
-  }
+
+    }
 }

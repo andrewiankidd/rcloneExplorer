@@ -116,6 +116,15 @@
     <Compile Include="rcloneExplorer.Auxiliary.Splash.Designer.cs">
       <DependentUpon>rcloneExplorer.Auxiliary.Splash.cs</DependentUpon>
     </Compile>
+    <Compile Include="rcloneExplorer.Auxiliary.Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="rcloneExplorer.Auxiliary.Settings.Designer.cs">
+      <DependentUpon>rcloneExplorer.Auxiliary.Settings.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="rcloneExplorer.Auxiliary.Settings.resx">
+      <DependentUpon>rcloneExplorer.Auxiliary.Settings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="rcloneExplorer.Auxiliary.SetupWiz.resx">
       <DependentUpon>rcloneExplorer.Auxiliary.SetupWiz.cs</DependentUpon>
     </EmbeddedResource>

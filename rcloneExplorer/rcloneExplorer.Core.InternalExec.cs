@@ -89,8 +89,16 @@ namespace rcloneExplorer
           {
             if (errOutput != null)
             {
-                string newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
-                speed = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value.Replace("cur: ", "");
+                string newpercentage = "";
+                try
+                {
+                    newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
+                    speed = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value.Replace("cur: ", "");
+                }
+                catch(NullReferenceException e)
+                {
+                    //
+                }
                 if (newpercentage!="") { percentage = newpercentage; }
             }
             uploadsHandler.uploadingPID[id] = new string[] { process.Id.ToString(), percentage, speed };

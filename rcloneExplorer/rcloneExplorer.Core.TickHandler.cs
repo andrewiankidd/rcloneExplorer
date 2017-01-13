@@ -112,9 +112,9 @@ namespace rcloneExplorer
       }
       if (txtRawOut.Height>0)
       {
-        txtRawOut.AppendText(rcloneExplorer.rawOutputBuffer);
-        rcloneExplorer.rawOutputBuffer="";
+        txtRawOut.AppendText(rcloneExplorer.rawOutputBuffer);        
       }
+      rcloneExplorer.rawOutputBuffer="";
     }
   }
 }
