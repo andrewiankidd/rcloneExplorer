@@ -34,6 +34,7 @@ namespace rcloneExplorer
     public static bool initialSetup = false;
     public static bool configEncrypted = false;
     public static bool streamingEnabled = false;
+    public static bool consoleEnabled = false;
     public static System.Windows.Forms.Timer transferTimer = new System.Windows.Forms.Timer();
 
     public rcloneExplorer()
@@ -76,14 +77,16 @@ namespace rcloneExplorer
     private void menuStripView_ToggleConsole_Click(object sender, EventArgs e)
     {
       //if collapsed then expand
-      if (txtRawOut.Height == 0)
+      if (!consoleEnabled)
       {
+        consoleEnabled=true;
         txtRawOut.Height = 60;
         tabMainUI.Height -= 60;
       }
       else
       //if expanded then collapse
       {
+        consoleEnabled=false;
         txtRawOut.Height = 0;
         tabMainUI.Height += 60;
       }

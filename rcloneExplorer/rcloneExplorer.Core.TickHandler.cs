@@ -117,12 +117,13 @@ namespace rcloneExplorer
                     }
                 }
             }
-            if (txtRawOut.Height > 0)
+            if (rcloneExplorer.consoleEnabled)
             {
                 txtRawOut.AppendText(rcloneExplorer.rawOutputBuffer);
+                rcloneExplorer.rawOutputBuffer = "";
             }            
         }
-        rcloneExplorer.rawOutputBuffer = "";
+        
     }
   }
 }
