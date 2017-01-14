@@ -85,6 +85,12 @@ namespace rcloneExplorer
           int id = uploadsHandler.uploading.Count - 1;
           string percentage = uploadsHandler.uploading[id][2];
           string speed = uploadsHandler.uploading[id][3];
+          //list should be {PID, Name, Percent, Speed}
+          uploadsHandler.uploading[id][0] = process.Id.ToString();
+          uploadsHandler.uploading[id][1] = "";
+          uploadsHandler.uploading[id][2] = percentage;
+          uploadsHandler.uploading[id][3] = speed;                   
+          //monitor process output
           while (!process.HasExited)
           {
             if (errOutput != null)
@@ -92,7 +98,11 @@ namespace rcloneExplorer
                 try
                 {
                     percentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
-                    speed = Regex.Match(errOutput, @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;                
+                    speed = Regex.Match(errOutput, @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
+                    if (!string.IsNullOrEmpty(percentage))
+                    { uploadsHandler.uploading[id][2] = percentage; }
+                    if (!string.IsNullOrEmpty(speed))
+                    { uploadsHandler.uploading[id][3] = speed; }  
                 }
                 catch(NullReferenceException e)
                 {
@@ -104,12 +114,6 @@ namespace rcloneExplorer
                 }
                 errOutput = null;
             }
-            
-            //upload list should be {PID, Name, Percent, Speed}
-            uploadsHandler.uploading[id][0] = process.Id.ToString();
-            uploadsHandler.uploading[id][1] = "";
-            uploadsHandler.uploading[id][2] = percentage;
-            uploadsHandler.uploading[id][3] = speed;
           }
           if (process.HasExited)
           {
@@ -123,6 +127,11 @@ namespace rcloneExplorer
           int id = downloadsHandler.downloading.Count - 1;
           string percentage = downloadsHandler.downloading[id][2];
           string speed = downloadsHandler.downloading[id][3];
+          //list should be {PID, Name, Percent, Speed}
+          downloadsHandler.downloading[id][0] = process.Id.ToString();
+          downloadsHandler.downloading[id][1] = "";
+          downloadsHandler.downloading[id][2] = percentage;
+          downloadsHandler.downloading[id][3] = speed;
           while (!process.HasExited)
           {
               if (errOutput != null)
@@ -131,6 +140,10 @@ namespace rcloneExplorer
                   {
                       percentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
                       speed = Regex.Match(errOutput, @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
+                      if (!string.IsNullOrEmpty(percentage))
+                      { downloadsHandler.downloading[id][2] = percentage; }
+                      if (!string.IsNullOrEmpty(speed))
+                      { downloadsHandler.downloading[id][3] = speed; }  
                   }
                   catch (NullReferenceException e)
                   {
@@ -142,11 +155,7 @@ namespace rcloneExplorer
                   }
                   errOutput = null;
               }
-              //upload list should be {PID, Name, Percent, Speed}
-              downloadsHandler.downloading[id][0] = process.Id.ToString();
-              downloadsHandler.downloading[id][1] = "";
-              downloadsHandler.downloading[id][2] = percentage;
-              downloadsHandler.downloading[id][3] = speed;
+              
           }
           if (process.HasExited)
           {

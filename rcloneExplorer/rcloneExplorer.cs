@@ -29,7 +29,7 @@ namespace rcloneExplorer
     public static string[] files;
     public static string remoteCD = "";
     public static long totalFilesize = 0;
-    public static string rawOutputBuffer;
+    public static string rawOutputBuffer = "";
     public static bool loaded = false;
     public static bool initialSetup = false;
     public static bool configEncrypted = false;
