@@ -9,14 +9,12 @@ namespace rcloneExplorer
 {
   public class rcloneExplorerUploadHandler
   {
-    IniFile iniSettings;
     rcloneExplorerMiscContainer miscContainer;
 
     public List<String[]> uploading = new List<String[]>();
 
     public void init()
     {
-      iniSettings = rcloneExplorer.iniSettings;
       miscContainer = rcloneExplorer.miscContainer;
     }
     public void ctxtUploadContext_Cancel_Click(object sender, EventArgs e)

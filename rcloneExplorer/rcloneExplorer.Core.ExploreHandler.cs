@@ -53,7 +53,7 @@ namespace rcloneExplorer
           //its a file
           MessageBox.Show("Uploading file: " + file);
           //store the path selected via the dialog and filename taken from the selected entry
-          string[] newuploadentry = new string[] { "", file, "0%", "0bytes/s" };
+          string[] newuploadentry = new string[] { "", file, "0%", "0 Bytes/s" };
           //store the info into the download history list
           uploadsHandler.uploading.Add(newuploadentry);
           //add tolistview
@@ -148,7 +148,7 @@ namespace rcloneExplorer
         if (savefile.ShowDialog() == DialogResult.OK)
         {
           //store the path selected via the dialog and filename taken from the selected entry
-          string[] storedvsaved = new string[] { "0%", savefile.SelectedPath + "\\" + storedFilename, "0 Bytes/s" };
+          string[] storedvsaved = new string[] { "", savefile.SelectedPath + "\\" + storedFilename, "0%", "0 Bytes/s" };
           //store the info into the download history list
           downloadsHandler.downloading.Add(storedvsaved);
           //then add to list view

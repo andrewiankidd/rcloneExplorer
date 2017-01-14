@@ -12,7 +12,6 @@ namespace rcloneExplorer
     rcloneExplorerMiscContainer miscContainer;
     //vars
     public List<String[]> downloading = new List<String[]>();
-    public List<String[]> downloadPID = new List<String[]>();
 
     public void init()
     {
@@ -22,20 +21,15 @@ namespace rcloneExplorer
     public void ctxtDownloadContext_Cancel_Click(object sender, EventArgs e)
     {
       ListView lstDownloads = rcloneExplorer.myform.Controls.Find("lstDownloads", true)[0] as ListView;
-      //find PID for current transfer (list item order should match with downloadPID list... :( )
-      int PID = Convert.ToInt32(downloadPID[lstDownloads.SelectedItems[0].Index][0]);
-      //find filename for current transfer (easy enough to pick it from the list since it's selected)
+      //find PID for current transfer
+      string PID = lstDownloads.SelectedItems[0].SubItems[0].Text;
+      //get filename
       string FN = lstDownloads.SelectedItems[0].SubItems[1].Text;
       //get progress of file (cant cancel 100%)
-      string FP = lstDownloads.SelectedItems[0].SubItems[0].Text;
+      string FP = lstDownloads.SelectedItems[0].SubItems[2].Text;
 
       //if the file process is 100%, it's done
-      if (FP == "100%")
-      {
-        MessageBox.Show("ERR: Can't cancel a transferred file!");
-      }
-      //if it's not 100%, it might still be ongoing, so check the process is no longer active
-      else if (!miscContainer.ProcessExists(PID))
+      if (FP == "Done!" || FP == "100%" || !miscContainer.ProcessExists(Convert.ToInt32(PID)))
       {
         MessageBox.Show("ERR: Transfer already completed");
       }
@@ -43,14 +37,14 @@ namespace rcloneExplorer
       else
       {
         //kill PID
-        miscContainer.KillProcessAndChildren(PID);
+        miscContainer.KillProcessAndChildren(Convert.ToInt32(PID));
         //if the file exists, delete it
         if (System.IO.File.Exists(FN))
         {
           System.IO.File.Delete(FN);
         }
         //mark list entry as cancelled
-        lstDownloads.SelectedItems[0].SubItems[1].Text = "Cancelled:" + lstDownloads.SelectedItems[0].SubItems[1].Text;
+        lstDownloads.SelectedItems[0].SubItems[0].Text = "Cancelled";
       }
     }
 

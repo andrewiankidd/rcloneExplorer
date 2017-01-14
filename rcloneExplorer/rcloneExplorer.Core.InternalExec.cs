@@ -127,27 +127,43 @@ namespace rcloneExplorer
         else if (operation == "down")
         {
           if (lstDownloads == null)
-          { lstDownloads = rcloneExplorer.myform.Controls.Find("lstDownloads", true)[0] as ListView; }
-          
-          //log the process in the downloading list
-          downloadsHandler.downloadPID.Add(new string[] { process.Id.ToString(), "0%", "0" });
-
-          int id = downloadsHandler.downloadPID.Count - 1;
+          {
+            lstDownloads = rcloneExplorer.myform.Controls.Find("lstDownloads", true)[0] as ListView;
+          }
+          int id = downloadsHandler.downloading.Count - 1;
           string percentage = "0%";
           string speed = "0";
           while (!process.HasExited)
           {
-            if (errOutput != null)
-            {
-                string newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
-                speed = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value.Replace("cur: ", "");
-                if (newpercentage!="") { percentage = newpercentage; }
-            }
-            downloadsHandler.downloadPID[id] = new string[] { process.Id.ToString(), percentage, speed };
+              if (errOutput != null)
+              {
+                  string newpercentage = "";
+                  try
+                  {
+                      newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
+                      string regexmatch = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
+                      if (!string.IsNullOrEmpty(regexmatch))
+                      { speed = regexmatch.Replace("cur: ", ""); }
+                  }
+                  catch (NullReferenceException e)
+                  {
+                      //
+                  }
+                  catch (ArgumentNullException e)
+                  {
+                      //
+                  }
+                  if (newpercentage != "") { percentage = newpercentage; }
+              }
+              //upload list should be {PID, Name, Percent, Speed}
+              downloadsHandler.downloading[id][0] = process.Id.ToString();
+              downloadsHandler.downloading[id][1] = "";
+              downloadsHandler.downloading[id][2] = percentage;
+              downloadsHandler.downloading[id][3] = speed;
           }
           if (process.HasExited)
           {
-             downloadsHandler.downloadPID[id] = new string[] { process.Id.ToString(), "100%" };
+             downloadsHandler.downloading[id][2] = "100%";
           }
         }
         else if (operation == "sync")

@@ -98,7 +98,7 @@ namespace rcloneExplorer
     private void menuStripFile_QuitKill_Click(object sender, EventArgs e)
     {
       //go through every rclone download process on record
-      foreach (string[] entry in downloadsHandler.downloadPID)
+      foreach (string[] entry in downloadsHandler.downloading)
       {
         //get process ID
         int PID = Convert.ToInt32(entry[0]);

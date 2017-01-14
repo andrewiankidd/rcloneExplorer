@@ -62,8 +62,9 @@
             this.colDSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabUploads = new System.Windows.Forms.TabPage();
             this.lstUploads = new System.Windows.Forms.ListView();
-            this.colUProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colUPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colUProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colUSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabSyncing = new System.Windows.Forms.TabPage();
             this.btnSyncStart = new System.Windows.Forms.Button();
@@ -98,7 +99,7 @@
             this.streamMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtExplorerContext_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtExplorerContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.colPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip.SuspendLayout();
             this.tabMainUI.SuspendLayout();
             this.tabRemote.SuspendLayout();
@@ -120,7 +121,7 @@
             this.txtRawOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRawOut.Location = new System.Drawing.Point(16, 401);
-            this.txtRawOut.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtRawOut.Margin = new System.Windows.Forms.Padding(4);
             this.txtRawOut.Multiline = true;
             this.txtRawOut.Name = "txtRawOut";
             this.txtRawOut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -233,7 +234,7 @@
             this.tabMainUI.Controls.Add(this.tabUploads);
             this.tabMainUI.Controls.Add(this.tabSyncing);
             this.tabMainUI.Location = new System.Drawing.Point(17, 34);
-            this.tabMainUI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabMainUI.Margin = new System.Windows.Forms.Padding(4);
             this.tabMainUI.Name = "tabMainUI";
             this.tabMainUI.SelectedIndex = 0;
             this.tabMainUI.Size = new System.Drawing.Size(745, 441);
@@ -244,9 +245,9 @@
             this.tabRemote.Controls.Add(this.lblLoading);
             this.tabRemote.Controls.Add(this.lstExplorer);
             this.tabRemote.Location = new System.Drawing.Point(4, 25);
-            this.tabRemote.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabRemote.Margin = new System.Windows.Forms.Padding(4);
             this.tabRemote.Name = "tabRemote";
-            this.tabRemote.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabRemote.Padding = new System.Windows.Forms.Padding(4);
             this.tabRemote.Size = new System.Drawing.Size(737, 412);
             this.tabRemote.TabIndex = 0;
             this.tabRemote.Text = "Remote";
@@ -276,7 +277,7 @@
             this.colfilePath});
             this.lstExplorer.FullRowSelect = true;
             this.lstExplorer.Location = new System.Drawing.Point(0, 0);
-            this.lstExplorer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstExplorer.Margin = new System.Windows.Forms.Padding(4);
             this.lstExplorer.Name = "lstExplorer";
             this.lstExplorer.Size = new System.Drawing.Size(733, 408);
             this.lstExplorer.TabIndex = 0;
@@ -309,9 +310,9 @@
             // 
             this.tabDownloads.Controls.Add(this.lstDownloads);
             this.tabDownloads.Location = new System.Drawing.Point(4, 25);
-            this.tabDownloads.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabDownloads.Margin = new System.Windows.Forms.Padding(4);
             this.tabDownloads.Name = "tabDownloads";
-            this.tabDownloads.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabDownloads.Padding = new System.Windows.Forms.Padding(4);
             this.tabDownloads.Size = new System.Drawing.Size(737, 412);
             this.tabDownloads.TabIndex = 1;
             this.tabDownloads.Text = "Downloads";
@@ -323,12 +324,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstDownloads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colDProgress,
+            this.colDPID,
             this.colDPath,
+            this.colDProgress,
             this.colDSpeed});
             this.lstDownloads.FullRowSelect = true;
             this.lstDownloads.Location = new System.Drawing.Point(0, 0);
-            this.lstDownloads.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstDownloads.Margin = new System.Windows.Forms.Padding(4);
             this.lstDownloads.Name = "lstDownloads";
             this.lstDownloads.Size = new System.Drawing.Size(739, 408);
             this.lstDownloads.TabIndex = 0;
@@ -352,9 +354,9 @@
             // 
             this.tabUploads.Controls.Add(this.lstUploads);
             this.tabUploads.Location = new System.Drawing.Point(4, 25);
-            this.tabUploads.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabUploads.Margin = new System.Windows.Forms.Padding(4);
             this.tabUploads.Name = "tabUploads";
-            this.tabUploads.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabUploads.Padding = new System.Windows.Forms.Padding(4);
             this.tabUploads.Size = new System.Drawing.Size(737, 412);
             this.tabUploads.TabIndex = 2;
             this.tabUploads.Text = "Uploads";
@@ -372,7 +374,7 @@
             this.colUSpeed});
             this.lstUploads.FullRowSelect = true;
             this.lstUploads.Location = new System.Drawing.Point(0, 0);
-            this.lstUploads.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstUploads.Margin = new System.Windows.Forms.Padding(4);
             this.lstUploads.Name = "lstUploads";
             this.lstUploads.Size = new System.Drawing.Size(739, 408);
             this.lstUploads.TabIndex = 1;
@@ -380,13 +382,17 @@
             this.lstUploads.View = System.Windows.Forms.View.Details;
             this.lstUploads.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstUploads_MouseClick);
             // 
-            // colUProgress
+            // colPID
             // 
-            this.colUProgress.Text = "Progress";
+            this.colPID.Text = "PID";
             // 
             // colUPath
             // 
             this.colUPath.Text = "Path";
+            // 
+            // colUProgress
+            // 
+            this.colUProgress.Text = "Progress";
             // 
             // colUSpeed
             // 
@@ -399,9 +405,9 @@
             this.tabSyncing.Controls.Add(this.btnSyncSave);
             this.tabSyncing.Controls.Add(this.grpSyncOptions);
             this.tabSyncing.Location = new System.Drawing.Point(4, 25);
-            this.tabSyncing.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabSyncing.Margin = new System.Windows.Forms.Padding(4);
             this.tabSyncing.Name = "tabSyncing";
-            this.tabSyncing.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabSyncing.Padding = new System.Windows.Forms.Padding(4);
             this.tabSyncing.Size = new System.Drawing.Size(737, 412);
             this.tabSyncing.TabIndex = 3;
             this.tabSyncing.Text = "Syncing";
@@ -411,7 +417,7 @@
             // 
             this.btnSyncStart.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnSyncStart.Location = new System.Drawing.Point(8, 373);
-            this.btnSyncStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSyncStart.Margin = new System.Windows.Forms.Padding(4);
             this.btnSyncStart.Name = "btnSyncStart";
             this.btnSyncStart.Size = new System.Drawing.Size(719, 28);
             this.btnSyncStart.TabIndex = 9;
@@ -425,7 +431,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSyncLog.Location = new System.Drawing.Point(9, 217);
-            this.txtSyncLog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSyncLog.Margin = new System.Windows.Forms.Padding(4);
             this.txtSyncLog.Multiline = true;
             this.txtSyncLog.Name = "txtSyncLog";
             this.txtSyncLog.ReadOnly = true;
@@ -437,7 +443,7 @@
             // 
             this.btnSyncSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnSyncSave.Location = new System.Drawing.Point(8, 347);
-            this.btnSyncSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSyncSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSyncSave.Name = "btnSyncSave";
             this.btnSyncSave.Size = new System.Drawing.Size(719, 28);
             this.btnSyncSave.TabIndex = 7;
@@ -470,9 +476,9 @@
             this.grpSyncOptions.Controls.Add(this.lblSyncOptionsFrequency);
             this.grpSyncOptions.Controls.Add(this.numSyncOptionsFrequency);
             this.grpSyncOptions.Location = new System.Drawing.Point(9, 7);
-            this.grpSyncOptions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpSyncOptions.Margin = new System.Windows.Forms.Padding(4);
             this.grpSyncOptions.Name = "grpSyncOptions";
-            this.grpSyncOptions.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpSyncOptions.Padding = new System.Windows.Forms.Padding(4);
             this.grpSyncOptions.Size = new System.Drawing.Size(717, 202);
             this.grpSyncOptions.TabIndex = 4;
             this.grpSyncOptions.TabStop = false;
@@ -482,7 +488,7 @@
             // 
             this.btnSyncDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSyncDestinationSelect.Location = new System.Drawing.Point(609, 90);
-            this.btnSyncDestinationSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSyncDestinationSelect.Margin = new System.Windows.Forms.Padding(4);
             this.btnSyncDestinationSelect.Name = "btnSyncDestinationSelect";
             this.btnSyncDestinationSelect.Size = new System.Drawing.Size(100, 28);
             this.btnSyncDestinationSelect.TabIndex = 19;
@@ -494,7 +500,7 @@
             // 
             this.btnSyncSourceSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSyncSourceSelect.Location = new System.Drawing.Point(609, 37);
-            this.btnSyncSourceSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSyncSourceSelect.Margin = new System.Windows.Forms.Padding(4);
             this.btnSyncSourceSelect.Name = "btnSyncSourceSelect";
             this.btnSyncSourceSelect.Size = new System.Drawing.Size(100, 28);
             this.btnSyncSourceSelect.TabIndex = 18;
@@ -508,7 +514,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSyncDestination.Enabled = false;
             this.txtSyncDestination.Location = new System.Drawing.Point(12, 92);
-            this.txtSyncDestination.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSyncDestination.Margin = new System.Windows.Forms.Padding(4);
             this.txtSyncDestination.Name = "txtSyncDestination";
             this.txtSyncDestination.Size = new System.Drawing.Size(588, 22);
             this.txtSyncDestination.TabIndex = 17;
@@ -539,7 +545,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSyncSource.Enabled = false;
             this.txtSyncSource.Location = new System.Drawing.Point(12, 39);
-            this.txtSyncSource.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSyncSource.Margin = new System.Windows.Forms.Padding(4);
             this.txtSyncSource.Name = "txtSyncSource";
             this.txtSyncSource.Size = new System.Drawing.Size(588, 22);
             this.txtSyncSource.TabIndex = 14;
@@ -547,7 +553,7 @@
             // numSyncOptionsBandwidthLimit
             // 
             this.numSyncOptionsBandwidthLimit.Location = new System.Drawing.Point(400, 121);
-            this.numSyncOptionsBandwidthLimit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numSyncOptionsBandwidthLimit.Margin = new System.Windows.Forms.Padding(4);
             this.numSyncOptionsBandwidthLimit.Name = "numSyncOptionsBandwidthLimit";
             this.numSyncOptionsBandwidthLimit.Size = new System.Drawing.Size(67, 22);
             this.numSyncOptionsBandwidthLimit.TabIndex = 13;
@@ -565,7 +571,7 @@
             // numSyncOptionsMaxSize
             // 
             this.numSyncOptionsMaxSize.Location = new System.Drawing.Point(400, 174);
-            this.numSyncOptionsMaxSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numSyncOptionsMaxSize.Margin = new System.Windows.Forms.Padding(4);
             this.numSyncOptionsMaxSize.Name = "numSyncOptionsMaxSize";
             this.numSyncOptionsMaxSize.Size = new System.Drawing.Size(67, 22);
             this.numSyncOptionsMaxSize.TabIndex = 11;
@@ -583,7 +589,7 @@
             // numSyncOptionsMinSize
             // 
             this.numSyncOptionsMinSize.Location = new System.Drawing.Point(400, 146);
-            this.numSyncOptionsMinSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numSyncOptionsMinSize.Margin = new System.Windows.Forms.Padding(4);
             this.numSyncOptionsMinSize.Name = "numSyncOptionsMinSize";
             this.numSyncOptionsMinSize.Size = new System.Drawing.Size(67, 22);
             this.numSyncOptionsMinSize.TabIndex = 9;
@@ -606,7 +612,7 @@
             "True",
             "False"});
             this.cmbSyncOptionsEnabled.Location = new System.Drawing.Point(159, 121);
-            this.cmbSyncOptionsEnabled.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbSyncOptionsEnabled.Margin = new System.Windows.Forms.Padding(4);
             this.cmbSyncOptionsEnabled.Name = "cmbSyncOptionsEnabled";
             this.cmbSyncOptionsEnabled.Size = new System.Drawing.Size(65, 24);
             this.cmbSyncOptionsEnabled.TabIndex = 6;
@@ -641,7 +647,7 @@
             "sync",
             "copy"});
             this.cmbSyncOptionsSvC.Location = new System.Drawing.Point(159, 170);
-            this.cmbSyncOptionsSvC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbSyncOptionsSvC.Margin = new System.Windows.Forms.Padding(4);
             this.cmbSyncOptionsSvC.Name = "cmbSyncOptionsSvC";
             this.cmbSyncOptionsSvC.Size = new System.Drawing.Size(65, 24);
             this.cmbSyncOptionsSvC.TabIndex = 3;
@@ -669,7 +675,7 @@
             // numSyncOptionsFrequency
             // 
             this.numSyncOptionsFrequency.Location = new System.Drawing.Point(159, 146);
-            this.numSyncOptionsFrequency.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numSyncOptionsFrequency.Margin = new System.Windows.Forms.Padding(4);
             this.numSyncOptionsFrequency.Name = "numSyncOptionsFrequency";
             this.numSyncOptionsFrequency.Size = new System.Drawing.Size(67, 22);
             this.numSyncOptionsFrequency.TabIndex = 0;
@@ -742,9 +748,9 @@
             this.ctxtExplorerContext_Delete.Text = "Delete Selected Item";
             this.ctxtExplorerContext_Delete.Click += new System.EventHandler(this.ctxtExplorerContext_Delete_Click);
             // 
-            // colPID
+            // colDPID
             // 
-            this.colPID.Text = "PID";
+            this.colDPID.Text = "PID";
             // 
             // rcloneExplorer
             // 
@@ -757,7 +763,7 @@
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(794, 479);
             this.Name = "rcloneExplorer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -850,6 +856,7 @@
         private System.Windows.Forms.ColumnHeader colDSpeed;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
         private System.Windows.Forms.ColumnHeader colPID;
+        private System.Windows.Forms.ColumnHeader colDPID;
     }
 }
 

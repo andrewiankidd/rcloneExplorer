@@ -42,19 +42,20 @@ namespace rcloneExplorer
                 {
                     {
                         //check downloadPId proces.exists to see if uploadis complete yet
-                        int PID = Convert.ToInt32(downloadsHandler.downloadPID[i][0]);
+                        int PID = Convert.ToInt32(downloadsHandler.downloading[i][0]);
                         if (miscContainer.ProcessExists(PID))
                         {
-                            //upload still in progress
-                            lstDownloads.Items[i].SubItems[0].Text = downloadsHandler.downloadPID[i][1];
-                            lstDownloads.Items[i].SubItems[2].Text = downloadsHandler.downloadPID[i][2];
+                            //download still in progress
+                            lstDownloads.Items[i].SubItems[0].Text = downloadsHandler.downloading[i][0].ToString();
+                            lstDownloads.Items[i].SubItems[2].Text = downloadsHandler.downloading[i][2];
+                            lstDownloads.Items[i].SubItems[3].Text = downloadsHandler.downloading[i][3];
                         }
                         else
                         {
-                            if (lstDownloads.Items[i].SubItems[0].Text != "Done!")
+                            if (lstDownloads.Items[i].SubItems[2].Text != "Done!")
                             {
-                                //download complete
-                                lstDownloads.Items[i].SubItems[0].Text = "Done!";
+                                //download complete (guessing! probs best to validate this)
+                                lstDownloads.Items[i].SubItems[2].Text = "100!";
                             }
                         }
                     }
