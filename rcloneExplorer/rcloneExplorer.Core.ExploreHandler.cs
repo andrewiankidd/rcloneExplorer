@@ -254,6 +254,19 @@ namespace rcloneExplorer
       }
     }
 
+    public void ctxtExplorerContext_Rename_Click(object sender, EventArgs e)
+    {
+      ListView lstExplorer = rcloneExplorer.myform.Controls.Find("lstExplorer", true)[0] as ListView;
+      string oldName = rcloneExplorer.remoteCD + lstExplorer.SelectedItems[0].SubItems[3].Text;
+      string newName = PromptGenerator.ShowDialog("Folder Name:", "New Folder", oldName); 
+      internalExecHandler.Execute("moveto", iniSettings.Read("rcloneRemote") + ":\"" + oldName + "\" " + iniSettings.Read("rcloneRemote") + ":\"" + newName + "\"");
+      //refresh
+      if (iniSettings.Read("refreshAutomatically") == "true")
+      {
+        refreshlstExplorer();
+      }
+    }
+
     public void ctxtExplorerContext_Delete_Click(object sender, EventArgs e)
     {
       ListView lstExplorer = rcloneExplorer.myform.Controls.Find("lstExplorer", true)[0] as ListView;

@@ -209,6 +209,11 @@ namespace rcloneExplorer
       exploreHandler.ctxtExplorerContext_Delete_Click(sender, e);
     }
 
+    private void ctxtExplorerContext_Rename_Click(object sender, EventArgs e)
+    {
+      exploreHandler.ctxtExplorerContext_Rename_Click(sender, e);
+    }
+
     private void lstExplorer_DragDrop(object sender, DragEventArgs e)
     {
       exploreHandler.lstExplorer_DragDrop(e);

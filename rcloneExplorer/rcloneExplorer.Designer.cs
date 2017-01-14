@@ -57,8 +57,9 @@
             this.colfilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabDownloads = new System.Windows.Forms.TabPage();
             this.lstDownloads = new System.Windows.Forms.ListView();
-            this.colDProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabUploads = new System.Windows.Forms.TabPage();
             this.lstUploads = new System.Windows.Forms.ListView();
@@ -99,7 +100,7 @@
             this.streamMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtExplorerContext_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtExplorerContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.colDPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ctxtExplorerContext_Rename = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tabMainUI.SuspendLayout();
             this.tabRemote.SuspendLayout();
@@ -338,13 +339,17 @@
             this.lstDownloads.View = System.Windows.Forms.View.Details;
             this.lstDownloads.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstDownloads_MouseClick);
             // 
-            // colDProgress
+            // colDPID
             // 
-            this.colDProgress.Text = "Progress";
+            this.colDPID.Text = "PID";
             // 
             // colDPath
             // 
             this.colDPath.Text = "Path";
+            // 
+            // colDProgress
+            // 
+            this.colDProgress.Text = "Progress";
             // 
             // colDSpeed
             // 
@@ -722,9 +727,10 @@
             this.ctxtExplorerContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.streamMediaToolStripMenuItem,
             this.ctxtExplorerContext_NewFolder,
+            this.ctxtExplorerContext_Rename,
             this.ctxtExplorerContext_Delete});
             this.ctxtExplorerContext.Name = "ctxtExplorerContext";
-            this.ctxtExplorerContext.Size = new System.Drawing.Size(224, 82);
+            this.ctxtExplorerContext.Size = new System.Drawing.Size(224, 136);
             // 
             // streamMediaToolStripMenuItem
             // 
@@ -748,9 +754,12 @@
             this.ctxtExplorerContext_Delete.Text = "Delete Selected Item";
             this.ctxtExplorerContext_Delete.Click += new System.EventHandler(this.ctxtExplorerContext_Delete_Click);
             // 
-            // colDPID
+            // ctxtExplorerContext_Rename
             // 
-            this.colDPID.Text = "PID";
+            this.ctxtExplorerContext_Rename.Name = "ctxtExplorerContext_Rename";
+            this.ctxtExplorerContext_Rename.Size = new System.Drawing.Size(223, 26);
+            this.ctxtExplorerContext_Rename.Text = "Rename";
+            this.ctxtExplorerContext_Rename.Click += new System.EventHandler(this.ctxtExplorerContext_Rename_Click);
             // 
             // rcloneExplorer
             // 
@@ -857,6 +866,7 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
         private System.Windows.Forms.ColumnHeader colPID;
         private System.Windows.Forms.ColumnHeader colDPID;
+        private System.Windows.Forms.ToolStripMenuItem ctxtExplorerContext_Rename;
     }
 }
 

@@ -10,7 +10,7 @@ namespace rcloneExplorer
   public class PromptGenerator : rcloneExplorer
   {
     //http://stackoverflow.com/a/5427121
-    public static string ShowDialog(string text, string caption)
+    public static string ShowDialog(string text, string caption, string defaultvalue = null)
     {
       if (string.IsNullOrEmpty(caption)) { caption = text; text = ""; }
       Form prompt = new Form()
@@ -27,6 +27,7 @@ namespace rcloneExplorer
       TextBox textBox = new TextBox() { Left = 10, Top = 25, Width = 415 };
       Button confirmation = new Button() { Text = "OK", Left = 376, Width = 50, Top = 45, DialogResult = DialogResult.OK };
       confirmation.Click += (sender, e) => { prompt.Close(); };
+      if (defaultvalue != null) { textBox.Text = defaultvalue; }
       prompt.Controls.Add(textBox);
       prompt.Controls.Add(confirmation);
       prompt.Controls.Add(textLabel);
