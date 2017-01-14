@@ -16,8 +16,6 @@ namespace rcloneExplorer
     rcloneExplorerUploadHandler uploadsHandler;
     rcloneExplorerMiscContainer miscContainer;
     rcloneExplorerSyncHandler syncingHandler;   
-    ListView lstDownloads;
-    ListView lstUploads;
     static string output = "";
     static string errOutput = "";
 
@@ -28,7 +26,6 @@ namespace rcloneExplorer
       uploadsHandler = rcloneExplorer.uploadsHandler;
       miscContainer = rcloneExplorer.miscContainer;
       syncingHandler = rcloneExplorer.syncingHandler;
-      //
     }
 
     public string Execute(string command, string arguments, string operation = null, string prepend = null, string[] rcmdlist = null)
@@ -84,25 +81,18 @@ namespace rcloneExplorer
         }
         else if (operation == "up")
         {
-          if (lstUploads == null)
-          {
-            lstUploads = rcloneExplorer.myform.Controls.Find("lstUploads", true)[0] as ListView;
-          }
           //log the process in the uploading list with race conditions galore
           int id = uploadsHandler.uploading.Count - 1;
-          string percentage = "0%";
-          string speed = "0";
+          string percentage = uploadsHandler.uploading[id][2];
+          string speed = uploadsHandler.uploading[id][3];
           while (!process.HasExited)
           {
             if (errOutput != null)
             {
-                string newpercentage = "";
                 try
                 {
-                    newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
-                    string regexmatch = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
-                    if (!string.IsNullOrEmpty(regexmatch))
-                    { speed = regexmatch.Replace("cur: ", ""); }                   
+                    percentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
+                    speed = Regex.Match(errOutput, @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;                
                 }
                 catch(NullReferenceException e)
                 {
@@ -112,8 +102,9 @@ namespace rcloneExplorer
                 {
                     //
                 }
-                if (newpercentage!="") { percentage = newpercentage; }
+                errOutput = null;
             }
+            
             //upload list should be {PID, Name, Percent, Speed}
             uploadsHandler.uploading[id][0] = process.Id.ToString();
             uploadsHandler.uploading[id][1] = "";
@@ -123,29 +114,23 @@ namespace rcloneExplorer
           if (process.HasExited)
           {
              uploadsHandler.uploading[id][2] = "100%";
+             errOutput=null;
              return "";
           }
         }
         else if (operation == "down")
         {
-          if (lstDownloads == null)
-          {
-            lstDownloads = rcloneExplorer.myform.Controls.Find("lstDownloads", true)[0] as ListView;
-          }
           int id = downloadsHandler.downloading.Count - 1;
-          string percentage = "0%";
-          string speed = "0";
+          string percentage = downloadsHandler.downloading[id][2];
+          string speed = downloadsHandler.downloading[id][3];
           while (!process.HasExited)
           {
               if (errOutput != null)
               {
-                  string newpercentage = "";
                   try
                   {
-                      newpercentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
-                      string regexmatch = Regex.Match(errOutput, @"cur:[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
-                      if (!string.IsNullOrEmpty(regexmatch))
-                      { speed = regexmatch.Replace("cur: ", ""); }
+                      percentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
+                      speed = Regex.Match(errOutput, @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
                   }
                   catch (NullReferenceException e)
                   {
@@ -155,7 +140,7 @@ namespace rcloneExplorer
                   {
                       //
                   }
-                  if (newpercentage != "") { percentage = newpercentage; }
+                  errOutput = null;
               }
               //upload list should be {PID, Name, Percent, Speed}
               downloadsHandler.downloading[id][0] = process.Id.ToString();
@@ -166,6 +151,8 @@ namespace rcloneExplorer
           if (process.HasExited)
           {
              downloadsHandler.downloading[id][2] = "100%";
+             errOutput=null;
+             return "";
           }
         }
         else if (operation == "sync")
