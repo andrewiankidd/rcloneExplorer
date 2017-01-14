@@ -101,8 +101,8 @@ namespace rcloneExplorer
       lstExplorer.Columns[2].Width = -2;
       lstExplorer.Columns[3].Width = -2;
       lstDownloads.Columns[1].Width = -2;
-      lstUploads.Columns[1].Width = 30;
-      lstUploads.Columns[1].Width = -2;
+      //lstUploads.Columns[1].Width = 30;
+      //lstUploads.Columns[1].Width = -2;
     }
     public void initRcloneProcess()
     {

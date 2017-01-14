@@ -52,20 +52,19 @@ namespace rcloneExplorer
         {
           //its a file
           MessageBox.Show("Uploading file: " + file);
+          //store the path selected via the dialog and filename taken from the selected entry
+          string[] newuploadentry = new string[] { "", file, "0%", "0bytes/s" };
+          //store the info into the download history list
+          uploadsHandler.uploading.Add(newuploadentry);
+          //add tolistview
+          lstUploads.Items.Add(new ListViewItem(newuploadentry));
           //in a new thread start uploading the file
           new Thread(() =>
           {
-            //copy local path to rclone folder
-            internalExecHandler.Execute("copy", "\"" + file + "\" " + iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "\"", "up");
+              //copy local path to rclone folder
+              internalExecHandler.Execute("copy", "\"" + file + "\" " + iniSettings.Read("rcloneRemote") + ":\"" + rcloneExplorer.remoteCD + "\"", "up");
           }).Start();
         }
-
-        //store the path selected via the dialog and filename taken from the selected entry
-        string[] temp = new string[] { "Uploading", file, "" };
-        //store the info into the download history list
-        uploadsHandler.uploading.Add(temp);
-        //add tolistview
-        lstUploads.Items.Add(new ListViewItem(temp));
       }
     }
 

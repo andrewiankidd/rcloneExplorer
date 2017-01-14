@@ -22,7 +22,7 @@ namespace rcloneExplorer
     public static rcloneExplorerExploreHandler exploreHandler = new rcloneExplorerExploreHandler(); //misc, internal, downloads, uploads
     public static rcloneExplorerInitialization InitializationHandler = new rcloneExplorerInitialization(); //misc, explore, internal
     public static rcloneExplorerTickHandler tickHandler = new rcloneExplorerTickHandler(); //misc, explore, downloads, uploads, syncing
-
+    public static NotifyIcon notifyIconPub;
     public static Form myform = null;
 
     //set global vars
@@ -70,6 +70,7 @@ namespace rcloneExplorer
       InitializationHandler.initSyncSettings();
       //start rclone
       InitializationHandler.initRcloneProcess();
+      notifyIconPub = notifyIcon;
     }
 
     private void menuStripView_ToggleConsole_Click(object sender, EventArgs e)
