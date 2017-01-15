@@ -21,6 +21,11 @@ namespace rcloneExplorer
 
         private void rcloneExplorerSettings_Load(object sender, EventArgs e)
         {
+            getAssocs();
+        }
+
+        private void getAssocs()
+        {
             string[] definedFiletypes = iniSettings.Read("definedFiletypes").Split(',');
             foreach (string key in definedFiletypes)
             {
@@ -28,6 +33,16 @@ namespace rcloneExplorer
                 string[] item = { key, value };
                 lstSettingsFiletypeAssociation.Items.Add(new ListViewItem(item));
             }
+        }
+
+        private void btnNewFileAssoc_Click(object sender, EventArgs e)
+        {
+            string extension = PromptGenerator.ShowDialog("Extension (with dot):", "New Association");
+            string assoc = PromptGenerator.ShowDialog("Command:", "New Association");
+            string existingDefinedFiletypes = iniSettings.Read("definedFiletypes");
+            iniSettings.Write("definedFiletypes", existingDefinedFiletypes + "," + extension);
+            iniSettings.Write(extension, assoc, "FTA");
+            getAssocs();
         }
     }
 }

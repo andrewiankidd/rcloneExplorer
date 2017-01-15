@@ -40,6 +40,14 @@ namespace rcloneExplorer
           //config seems ok so read config settings
           iniSettings.Read("rcloneRemote");
         }
+        if (!iniSettings.KeyExists("definedFiletypes"))
+        {
+            iniSettings.Write("definedFiletypes", ".mkv,.avi,.mp4,.mov");
+            iniSettings.Write(".mkv","ffplay.exe -", "FTA");
+            iniSettings.Write(".avi","ffplay.exe -", "FTA");
+            iniSettings.Write(".mp4"," > file.mp4 && ffplay file.mp4 && del file.mp4", "FTA");
+            iniSettings.Write(".mov", "\"" + @"C:\Program Files (x86)\VideoLAN\VLC\vlc.exe" + "\" -", "FTA");
+        }
       }
       else
       {
@@ -62,12 +70,13 @@ namespace rcloneExplorer
             configpass = PromptGenerator.ShowDialog("config password:", "Encrypted config check");
         }
         iniSettings.Write("rcloneConfigPass", configpass);
+        iniSettings.Write("definedFiletypes", ".mkv,.avi,.mp4,.mov");
+        iniSettings.Write(".mkv","ffplay.exe -", "FTA");
+        iniSettings.Write(".avi","ffplay.exe -", "FTA");
+        iniSettings.Write(".mp4"," > file.mp4 && ffplay file.mp4 && del file.mp4", "FTA");
+        iniSettings.Write(".mov", "\"" + @"C:\Program Files (x86)\VideoLAN\VLC\vlc.exe" + "\" -", "FTA");
         MessageBox.Show("ERR: No ini file found!\r\n\r\nLoading config screen, this may take a minute...");
         rcloneExplorer.initialSetup = true;
-      }
-      if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\ffplay.exe"))
-      {
-        rcloneExplorer.streamingEnabled = true;
       }
     }
     public void initSyncSettings()

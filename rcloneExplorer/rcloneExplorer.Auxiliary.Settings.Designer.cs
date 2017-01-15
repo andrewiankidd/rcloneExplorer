@@ -29,20 +29,17 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.ColumnHeader colValue;
-            this.lblSettingsFiletypeAssoc = new System.Windows.Forms.Label();
             this.lstSettingsFiletypeAssociation = new System.Windows.Forms.ListView();
-            this.colSetting = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colExtension = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnNewFileAssoc = new System.Windows.Forms.Button();
+            this.grpFileTypeAssoc = new System.Windows.Forms.GroupBox();
             colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.grpFileTypeAssoc.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblSettingsFiletypeAssoc
+            // colValue
             // 
-            this.lblSettingsFiletypeAssoc.AutoSize = true;
-            this.lblSettingsFiletypeAssoc.Location = new System.Drawing.Point(10, 113);
-            this.lblSettingsFiletypeAssoc.Name = "lblSettingsFiletypeAssoc";
-            this.lblSettingsFiletypeAssoc.Size = new System.Drawing.Size(108, 13);
-            this.lblSettingsFiletypeAssoc.TabIndex = 0;
-            this.lblSettingsFiletypeAssoc.Text = "Filetype Associations:";
+            colValue.Text = "Value";
             // 
             // lstSettingsFiletypeAssociation
             // 
@@ -50,43 +47,59 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstSettingsFiletypeAssociation.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colSetting,
+            this.colExtension,
             colValue});
             this.lstSettingsFiletypeAssociation.FullRowSelect = true;
-            this.lstSettingsFiletypeAssociation.Location = new System.Drawing.Point(13, 129);
+            this.lstSettingsFiletypeAssociation.Location = new System.Drawing.Point(6, 19);
             this.lstSettingsFiletypeAssociation.Name = "lstSettingsFiletypeAssociation";
-            this.lstSettingsFiletypeAssociation.Size = new System.Drawing.Size(559, 270);
+            this.lstSettingsFiletypeAssociation.Size = new System.Drawing.Size(398, 362);
             this.lstSettingsFiletypeAssociation.TabIndex = 1;
             this.lstSettingsFiletypeAssociation.UseCompatibleStateImageBehavior = false;
             this.lstSettingsFiletypeAssociation.View = System.Windows.Forms.View.Details;
             // 
-            // colSetting
+            // colExtension
             // 
-            this.colSetting.Text = "Setting";
+            this.colExtension.Text = "Extension";
             // 
-            // colValue
+            // btnNewFileAssoc
             // 
-            colValue.Text = "Value";
+            this.btnNewFileAssoc.Location = new System.Drawing.Point(410, 19);
+            this.btnNewFileAssoc.Name = "btnNewFileAssoc";
+            this.btnNewFileAssoc.Size = new System.Drawing.Size(140, 23);
+            this.btnNewFileAssoc.TabIndex = 2;
+            this.btnNewFileAssoc.Text = "Add New";
+            this.btnNewFileAssoc.UseVisualStyleBackColor = true;
+            this.btnNewFileAssoc.Click += new System.EventHandler(this.btnNewFileAssoc_Click);
+            // 
+            // grpFileTypeAssoc
+            // 
+            this.grpFileTypeAssoc.Controls.Add(this.btnNewFileAssoc);
+            this.grpFileTypeAssoc.Controls.Add(this.lstSettingsFiletypeAssociation);
+            this.grpFileTypeAssoc.Location = new System.Drawing.Point(12, 12);
+            this.grpFileTypeAssoc.Name = "grpFileTypeAssoc";
+            this.grpFileTypeAssoc.Size = new System.Drawing.Size(560, 387);
+            this.grpFileTypeAssoc.TabIndex = 3;
+            this.grpFileTypeAssoc.TabStop = false;
+            this.grpFileTypeAssoc.Text = "FileType Associations";
             // 
             // rcloneExplorerSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 411);
-            this.Controls.Add(this.lstSettingsFiletypeAssociation);
-            this.Controls.Add(this.lblSettingsFiletypeAssoc);
+            this.Controls.Add(this.grpFileTypeAssoc);
             this.Name = "rcloneExplorerSettings";
             this.Text = "rcloneExplorerSettings";
             this.Load += new System.EventHandler(this.rcloneExplorerSettings_Load);
+            this.grpFileTypeAssoc.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblSettingsFiletypeAssoc;
         private System.Windows.Forms.ListView lstSettingsFiletypeAssociation;
-        private System.Windows.Forms.ColumnHeader colSetting;
+        private System.Windows.Forms.ColumnHeader colExtension;
+        private System.Windows.Forms.Button btnNewFileAssoc;
+        private System.Windows.Forms.GroupBox grpFileTypeAssoc;
     }
 }

@@ -233,8 +233,11 @@ namespace rcloneExplorer
       {
         //we're on the honor system for filetypes
         string ext = Path.GetExtension(storedFilepath);
-        string cmd = iniSettings.Read(ext, "FTA");
-        Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | " + cmd);
+        if (iniSettings.KeyExists(ext, "FTA"))
+        {
+            string cmd = iniSettings.Read(ext, "FTA");
+            Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | " + cmd);
+        }
       }
       else
       {

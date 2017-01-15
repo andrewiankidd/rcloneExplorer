@@ -33,7 +33,6 @@ namespace rcloneExplorer
     public static bool loaded = false;
     public static bool initialSetup = false;
     public static bool configEncrypted = false;
-    public static bool streamingEnabled = false;
     public static bool consoleEnabled = false;
     public static System.Windows.Forms.Timer transferTimer = new System.Windows.Forms.Timer();
 
@@ -181,7 +180,6 @@ namespace rcloneExplorer
       {
         if (lstExplorer.FocusedItem.Bounds.Contains(e.Location) == true)
         {
-          if (streamingEnabled) { streamMediaToolStripMenuItem.Enabled = true; }
           ctxtExplorerContext.Show(Cursor.Position);
         }
       }
