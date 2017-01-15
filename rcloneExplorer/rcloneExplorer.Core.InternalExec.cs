@@ -17,7 +17,7 @@ namespace rcloneExplorer
     rcloneExplorerMiscContainer miscContainer;
     rcloneExplorerSyncHandler syncingHandler;   
     static string output = "";
-    static string errOutput = "";
+    static Dictionary<int, string> errOutput = new Dictionary<int, string>();
 
     public void init()
     {
@@ -30,8 +30,10 @@ namespace rcloneExplorer
 
     public string Execute(string command, string arguments, string operation = null, string prepend = null, string[] rcmdlist = null)
     {
-      output = null; errOutput = null;
+      output = null;
       string rcloneLogs = "";
+      string threadIdTxt = DateTime.Now.Ticks.ToString().Substring(DateTime.Now.Ticks.ToString().Length - 9);
+      int threadId = Convert.ToInt32(threadIdTxt);
       //check for verbose logging
       if (operation == "sync")
       {
@@ -57,7 +59,7 @@ namespace rcloneExplorer
       process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
       process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
       process.OutputDataReceived += (sender, args) => proc_OutputDataReceived(sender, args);
-      process.ErrorDataReceived += (sender, args) => proc_ErrorDataReceived(sender, args);
+      process.ErrorDataReceived += (sender, args) => proc_ErrorDataReceived(sender, args, operation, threadId);
       process.Start();
       process.BeginOutputReadLine();
       process.BeginErrorReadLine();
@@ -89,16 +91,21 @@ namespace rcloneExplorer
           uploadsHandler.uploading[id][0] = process.Id.ToString();
           uploadsHandler.uploading[id][1] = "";
           uploadsHandler.uploading[id][2] = percentage;
-          uploadsHandler.uploading[id][3] = speed;                   
+          uploadsHandler.uploading[id][3] = speed;    
+          //add entry in erroutput dictionary
+          if (!errOutput.ContainsKey(threadId))
+          {
+              errOutput.Add(threadId, "");
+          }               
           //monitor process output
           while (!process.HasExited)
           {
-            if (errOutput != null)
+            if (errOutput[threadId] != null)
             {
                 try
                 {
-                    percentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
-                    speed = Regex.Match(errOutput, @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
+                    percentage = Regex.Match(errOutput[threadId], @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
+                    speed = Regex.Match(errOutput[threadId], @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
                     if (!string.IsNullOrEmpty(percentage))
                     { uploadsHandler.uploading[id][2] = percentage; }
                     if (!string.IsNullOrEmpty(speed))
@@ -106,19 +113,19 @@ namespace rcloneExplorer
                 }
                 catch(NullReferenceException e)
                 {
-                    //
+                    Console.Write(e);
                 }
                 catch(ArgumentNullException e)
                 {
-                    //
+                    Console.Write(e);
                 }
-                errOutput = null;
+                errOutput[threadId] = null;
             }
           }
           if (process.HasExited)
           {
              uploadsHandler.uploading[id][2] = "100%";
-             errOutput=null;
+             errOutput.Remove(threadId);
              return "";
           }
         }
@@ -132,14 +139,20 @@ namespace rcloneExplorer
           downloadsHandler.downloading[id][1] = "";
           downloadsHandler.downloading[id][2] = percentage;
           downloadsHandler.downloading[id][3] = speed;
+          //add entry in erroutput dictionary
+          if (!errOutput.ContainsKey(threadId))
+          {
+              errOutput.Add(threadId, "");
+          }
+          //monitor process output
           while (!process.HasExited)
           {
-              if (errOutput != null)
+              if (errOutput[threadId] != null)
               {
                   try
                   {
-                      percentage = Regex.Match(errOutput, @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
-                      speed = Regex.Match(errOutput, @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
+                      percentage = Regex.Match(errOutput[threadId], @"\d+(?=%)% done", RegexOptions.RightToLeft).Value;
+                      speed = Regex.Match(errOutput[threadId], @"[ \t]+\d+(.\d+)? [a-zA-Z]+[/s]s", RegexOptions.RightToLeft).Value;
                       if (!string.IsNullOrEmpty(percentage))
                       { downloadsHandler.downloading[id][2] = percentage; }
                       if (!string.IsNullOrEmpty(speed))
@@ -147,20 +160,20 @@ namespace rcloneExplorer
                   }
                   catch (NullReferenceException e)
                   {
-                      //
+                      Console.Write(e);
                   }
                   catch (ArgumentNullException e)
                   {
-                      //
+                      Console.Write(e);
                   }
-                  errOutput = null;
+                  errOutput[threadId] = null;
               }
               
           }
           if (process.HasExited)
           {
              downloadsHandler.downloading[id][2] = "100%";
-             errOutput=null;
+             errOutput.Remove(threadId);
              return "";
           }
         }
@@ -238,13 +251,21 @@ namespace rcloneExplorer
         }
     }
     //process stderr
-    static void proc_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+    static void proc_ErrorDataReceived(object sender, DataReceivedEventArgs e, string operation, int threadId)
     {
         if (e.Data != null)
         {
-            errOutput += e.Data.ToString() + Environment.NewLine;
+            //add entry in erroutput dictionary
+            if (!errOutput.ContainsKey(threadId))
+            {
+                errOutput.Add(threadId, "");
+            }    
+            //append data received
+            if (operation == "up" || operation == "down")
+            { errOutput[threadId] += e.Data.ToString() + Environment.NewLine; }
+            //show in console if needed
             if (rcloneExplorer.consoleEnabled) {
-                rcloneExplorer.rawOutputBuffer += "Thread: " + Thread.CurrentThread.ManagedThreadId + ": STDERR: " + errOutput;
+                rcloneExplorer.rawOutputBuffer += "Thread: " + threadId + ": STDERR: " + errOutput[threadId];
             }
         }
     }
