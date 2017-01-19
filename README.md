@@ -19,7 +19,7 @@ rcloneExplorer can only access rclone configured remotes.
 
 ###Streaming
 <img align="left" style="margin-right:20px;" width="50%" src="https://i.imgur.com/S1p4FHQ.jpg">
->Making use of ['rclone cat'](http://rclone.org/commands/rclone_cat/) and [ffplay](https://ffmpeg.org/ffplay.html), media files can be streamed directly from remote
+>Making use of ['rclone cat'](http://rclone.org/commands/rclone_cat/) and modifiable filetype associations, media files can be streamed directly from remote and into applications like ffplay or vlc
 
 <br/><br/>
 <br/><br/>
