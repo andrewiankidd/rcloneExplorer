@@ -157,27 +157,27 @@ namespace rcloneExplorer
       //build command list
       if (nRemoteProvider == "amazon cloud drive")
       {
-        rcmdlist = new[] { "amazon cloud drive", nRemoteName, "1", "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
+        rcmdlist = new[] { "n", nRemoteName, nRemoteProvider, "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
       }
       else if (nRemoteProvider == "dropbox")
       {
-        rcmdlist = new[] { "dropbox", nRemoteName, "4", "\r\n", "\r\n", @"OPN|https\:\/\/www\.dropbox(.*?)response_type=code", "REQ:Dropbox Code", "y", "q", "q" };
+        rcmdlist = new[] { "n", nRemoteName, nRemoteProvider, "\r\n", "\r\n", @"OPN|https\:\/\/www\.dropbox(.*?)response_type=code", "REQ:Dropbox Code", "y", "q", "q" };
       }
       else if(nRemoteProvider == "drive")
       {
-        rcmdlist = new[] { "drive", nRemoteName, "7", "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
+        rcmdlist = new[] { "n", nRemoteName, nRemoteProvider, "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
       }
       else if (nRemoteProvider == "hubic")
       {
-        rcmdlist = new[] { "drive", nRemoteName, "8", "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
+        rcmdlist = new[] { "n", nRemoteName, nRemoteProvider, "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
       } 
       else if (nRemoteProvider == "onedrive")
       {
-        rcmdlist = new[] { "onedrive", nRemoteName, "10", "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
+        rcmdlist = new[] { "n", nRemoteName, nRemoteProvider, "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
       }
       else if (nRemoteProvider == "yandex")
       {
-        rcmdlist = new[] { "yandex", nRemoteName, "12", "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
+        rcmdlist = new[] { "n", nRemoteName, nRemoteProvider, "\r\n", "\r\n", "y", "MSG: Please Accept the oauth req in your browser before continuing", "y", "q" };
       }
       else
       {

@@ -231,13 +231,19 @@ namespace rcloneExplorer
       string storedFilepath = rcloneExplorer.remoteCD + lstExplorer.SelectedItems[0].SubItems[3].Text;
       if (storedFilesizeHuman != "<dir>" && storedFilesizeHuman != "<up>")
       {
-        //we're on the honor system for filetypes
+        //grab the file extension and prepare command
         string ext = Path.GetExtension(storedFilepath);
-        if (iniSettings.KeyExists(ext, "FTA"))
-        {
-            string cmd = iniSettings.Read(ext, "FTA");
-            Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | " + cmd);
+        string cmd = "";
+        //check if filetype is defined     
+        if (iniSettings.KeyExists(ext, "FTA") && !string.IsNullOrEmpty(iniSettings.Read(ext, "FTA")))
+        {           
+            cmd = iniSettings.Read(ext, "FTA");
         }
+        else{ //default to ffplay
+            cmd = "ffplay -window_title " + "\"" + storedFilepath + "\"" + " -";
+        }
+        //run command
+        Process.Start("cmd.exe", "/c rclone.exe cat " + iniSettings.Read("rcloneRemote") + ":\"" + storedFilepath + "\" | " + cmd);
       }
       else
       {
