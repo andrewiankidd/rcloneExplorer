@@ -2,7 +2,8 @@
 <hr>
 [Download rclone here](https://github.com/ncw/rclone/releases)    
 [Download rcloneExplorer here](https://github.com/andrewiankidd/rcloneExplorer/releases)    
-[Visit the Wiki!](https://github.com/andrewiankidd/rcloneExplorer/wiki)
+[Visit the Wiki!](https://github.com/andrewiankidd/rcloneExplorer/wiki)                  
+Also See Multi-Platform Alternative: [RcloneBrowser](https://github.com/mmozeiko/RcloneBrowser/)
 <br/><br/>
 
 ##About
