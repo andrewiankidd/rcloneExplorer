@@ -20,7 +20,7 @@ rcloneExplorer can only access rclone configured remotes.
 <hr>
 
 ### Streaming
-<img align="left" style="margin-right:20px;" width="50%" src="https://i.imgur.com/e1duFC2.png">
+<img align="left" style="margin-right:20px;" width="50%" src="https://i.imgur.com/hHDITFd.png">
 Making use of 'rclone cat' and ffplay, compatible media can be streamed without writing to disk
 
 <br/><br/>
@@ -30,5 +30,5 @@ Making use of 'rclone cat' and ffplay, compatible media can be streamed without 
 <br/><br/>
 
 ### File Transfers
-<img align="left" width="50%" src="https://i.imgur.com/KodgC3I.png">
+<img align="left" width="50%" src="https://i.imgur.com/e1duFC2.png">
 You can easily upload & download files to and from configured remotes, with a nice easy to use GUI and transparent on-the-fly encryption/decryption as needed. Copy paste or drag and drop.
